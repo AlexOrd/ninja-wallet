@@ -7,17 +7,21 @@ const schema = new Schema({
         type: Schema.ObjectId,
         required: true
     },
-    accountNumber: {
+    userId: {
+        type: String,
+        required: true
+    },
+    cardNumber: {
         type: String, 
         required: true
     },
     currency: {
         type: String,
     },
-    accountName: {
+    cardName: {
         type: String
     },
-    accountMoney: {
+    cardMoney: {
         type: Number
     }
 });
