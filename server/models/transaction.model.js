@@ -20,14 +20,10 @@ const schema = new Schema({
       ref: 'User',
       required: true 
     },
-    accountNumber: {
+    accountId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Account',
       required: true   
-    },
-    transactionCurrency: {
-        type: String,
-        required: true
     },
     sum: {
       type: Number,
