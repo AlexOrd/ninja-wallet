@@ -17,12 +17,15 @@ const schema = new Schema({
     },
     currency: {
         type: String,
+        required: true
     },
     cardName: {
-        type: String
+        type: String,
+        required: true
     },
-    cardMoney: {
-        type: Number
+    balance: {
+        type: Number,
+        default: 0
     }
 });
 
