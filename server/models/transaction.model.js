@@ -29,7 +29,10 @@ const schema = new Schema({
       type: Number,
       required: true
     }
-});
+    merchantName: {
+      type: String
+    }
+}, {timestamps: true, collection: 'transactions'});
 
 const Transaction = mongoose.model('Transaction', schema);
 
