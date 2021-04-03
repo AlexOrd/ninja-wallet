@@ -32,8 +32,8 @@ const schema = new Schema({
     merchantName: {
       type: String
     }
-}, {timestamps: true, collection: 'transactions'});
+}, {timestamps: true, collection: 'Transactions'});
 
-const Transaction = mongoose.model('Transaction', schema);
+const Transaction = mongoose.model('Transactions', schema);
 
 export { Transaction };
