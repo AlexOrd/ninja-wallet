@@ -28,7 +28,7 @@ const schema = new Schema({
     sum: {
       type: Number,
       required: true
-    }
+    },
     merchantName: {
       type: String
     }
