@@ -29,6 +29,6 @@ const schema = new Schema({
     }
 });
 
-const Account = mongoose.model('Account', schema);
+const Card = mongoose.model('Card', schema);
 
-export { Account };
+export { Card };
