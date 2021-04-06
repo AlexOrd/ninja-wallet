@@ -1,23 +1,74 @@
-const Transaction = require('../models/transaction.model')
+const Transaction = require('./sever/models/transaction.model');
 
+// ROUTE HANDLERS
+// exports.create = async (req, res) => {
+//   try {
+//     const newItem = await Transaction.create(req.body);
 
-//ROUTE HANDLERS
+//     res.status(201).json({
+//       status: 'success',
+//       data: {
+//         
+//       }
+//     });
+//   } catch (err) {
+//     res.status(400).json({
+//       status: 'fail',
+//       message: err
+//     });
+//   }
+// }; 
 exports.getAllTransactions = async (req, res) => {
   try {
-    const transactions = await Transaction.find()
+    const transactions = await Transaction.find();
     res.status(200).json({
       status: 'success',
       results: transactions.length,
       data: {
-        transactions
+        transactions,
       },
     });
-
   } catch (err) {
     res.send(404).json({
       status: 'fail',
-      message: err
-    })
+      message: err,
+    });
+  }
+};
+exports.getTransactionsByAccountId = async (req, res) => {
+  try {
+    const transactions = await Transaction.find({ accountId: req.params.accountId });
+    res.status(200).json({
+      status: 'success',
+      results: transactions.length,
+      data: {
+        transactions,
+      },
+    });
+  } catch (err) {
+    res.send(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+exports.getTransactionsByCategory = async (req, res) => {
+  try {
+    const transactions = await Transaction.find({
+      transactionCategory: req.params.transactionCategory,
+    }).exec();
+    res.status(200).json({
+      status: 'success',
+      results: transactions.length,
+      data: {
+        transactions,
+      },
+    });
+  } catch (err) {
+    res.send(404).json({
+      status: 'fail',
+      message: err,
+    });
   }
 };
 exports.createTransaction = async (req, res) => {
@@ -27,13 +78,30 @@ exports.createTransaction = async (req, res) => {
     res.status(201).json({
       status: 'success',
       data: {
-        transaction: newTransaction
-      }
+        transaction: newTransaction,
+      },
     });
   } catch (err) {
     res.status(400).json({
       status: 'fail',
-      message: err
+      message: err,
+    });
+  }
+};
+exports.getTransaction = async (req, res) => {
+  try {
+    const transaction = await Transaction.findById(req.params.id);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        transaction,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
     });
   }
 };
@@ -41,33 +109,32 @@ exports.updateTransaction = async (req, res) => {
   try {
     const transaction = await Transaction.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
-      runValidators: true
-    })
+      runValidators: true,
+    });
     res.status(200).json({
       status: 'success',
       data: {
-        transaction
+        transaction,
       },
     });
-
   } catch (err) {
     res.status(404).json({
       status: 'fail',
-      message: 'notUpdated'
-    })
+      message: 'notUpdated',
+    });
   }
 };
 exports.deleteTransaction = async (req, res) => {
   try {
-    await Bank.findByIdAndDelete(req.params.id)
+    await Transaction.findByIdAndDelete(req.params.id);
     res.send(204).json({
       status: 'success',
-      data: null
-    })
+      data: null,
+    });
   } catch (err) {
     res.send(404).json({
       status: 'fail',
-      message: err
-    })
+      message: err,
+    });
   }
 };

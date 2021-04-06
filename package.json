@@ -4,6 +4,7 @@
   "description": "MySQL, Express, React/Redux Boilerplate Application",
   "scripts": {
     "start": "babel-node server/app.js",
+    "seed": "babel-node server/seeds/transaction.seed.js",
     "dev": "nodemon --exec npm run start",
     "clean": "rimraf node_modules && rimraf dist && npm install",
     "webpack:dev": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.config.dev.js",
@@ -49,6 +50,7 @@
     "jwt-decode": "^2.2.0",
     "method-override": "^3.0.0",
     "mongoose": "^5.12.0",
+    "mongoose-seed": "^0.6.0",
     "morgan": "^1.9.1",
     "mysql": "^2.17.1",
     "path": "^0.12.7",
