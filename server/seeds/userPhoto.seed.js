@@ -3,16 +3,17 @@ import seeder from 'mongoose-seed';
 const db = 'mongodb+srv://ninja:M0CsLZBLqPOnXGnE@ninja-wallet.nkpko.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
 seeder.connect(db, () => {
-  seeder.loadModels(['./models/userPhoto.model']);
-  seeder.clearModels(['userPhoto']);
-  seeder.popularModels(data, (err, done) => {
-    if (err) {
-      return console.log('seed err', err);
-    }
-    if (done) {
-      return console.log('seed done', done);
-    }
-    seeder.disconnect();
+  seeder.loadModels(['./server/models/userPhoto.model']);
+  seeder.clearModels(['userPhoto'], function() {
+    seeder.populateModels(data, (err, done) => {
+      if (err) {
+        return console.log('seed err', err);
+      }
+      if (done) {
+        return console.log('seed done', done);
+      }
+      seeder.disconnect();
+    });
   });
 });
 
