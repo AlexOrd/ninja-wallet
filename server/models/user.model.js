@@ -37,13 +37,6 @@ const schema = new Schema({
 },
 });
 
+
 const User = mongoose.model('User', schema);
-
 export { User };
-
-
-const UserSchema = new mongoose.Schema({
-
-
-
-});
