@@ -1,23 +1,6 @@
 const Transaction = require('./sever/models/transaction.model');
 
-// ROUTE HANDLERS
-// exports.create = async (req, res) => {
-//   try {
-//     const newItem = await Transaction.create(req.body);
 
-//     res.status(201).json({
-//       status: 'success',
-//       data: {
-//         
-//       }
-//     });
-//   } catch (err) {
-//     res.status(400).json({
-//       status: 'fail',
-//       message: err
-//     });
-//   }
-// }; 
 exports.getAllTransactions = async (req, res) => {
   try {
     const transactions = await Transaction.find();

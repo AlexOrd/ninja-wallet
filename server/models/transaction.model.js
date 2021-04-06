@@ -28,10 +28,10 @@ const schema = new Schema(
     },
     sum: {
       type: Number,
-      required: true,
+      required: true
     },
     merchantName: {
-      type: String,
+      type: String
     },
   },
   { timestamps: true, collection: 'Transactions' }
