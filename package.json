@@ -10,7 +10,8 @@
     "webpack:prod": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
     "build": "rimraf dist && npm run webpack:dev && npm run start",
     "build:prod": "rimraf dist && npm run webpack:prod && npm run start",
-    "lint": "eslint client server; exit 0"
+    "lint": "eslint client server; exit 0",
+    "seed": "babel-node ./server/seeds/card.seed.js"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,7 @@
     "@loadable/component": "^5.13.1",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.5.1",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "classnames": "^2.2.6",
@@ -49,6 +50,7 @@
     "jwt-decode": "^2.2.0",
     "method-override": "^3.0.0",
     "mongoose": "^5.12.0",
+    "mongoose-seed": "^0.6.0",
     "morgan": "^1.9.1",
     "mysql": "^2.17.1",
     "path": "^0.12.7",
@@ -66,7 +68,7 @@
     "winston-daily-rotate-file": "^4.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
+    "@babel/cli": "^7.13.14",
     "@babel/core": "^7.10.5",
     "@babel/node": "^7.10.5",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
