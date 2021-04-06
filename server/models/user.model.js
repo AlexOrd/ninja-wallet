@@ -1,34 +1,49 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const verificationCode = new mongoose.Schema({
-  _id: false,
-  value: {
-      type: String, 
-      required: true
+const deviceSchema = new mongoose.Schema({
+  confirmCode: String,
+  deviceType: {
+      type: String,
+      default: 'pc'
   },
-  emitted: {
-      type: Date,
-      required: true
-  }
+  lastLogin: Date
 })
 
 const schema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
+  email: {
+    type: String,
+    required: true
+  },
+
+  isVerifiedEmail: {
+      type: Boolean,
+      default: false
+  },
+  
   auth: {
-    email: String,
-    password: String,
-    refreshToken: String,
-    isVerificationEmail: {
-        type: Boolean,
-        default: false
+    password: {
+        type: String,
+        required: true
     },
-    changePasswordCode: verificationCode,
-    verificationCode: verificationCode,
-  }
+    openedOnDevices: [deviceSchema],
+    codeForPasswordChanging: String,
+    codeForEmailVerification: {
+        value: String,
+        emitted: Date
+    },
+},
 });
 
 const User = mongoose.model('User', schema);
 
 export { User };
+
+
+const UserSchema = new mongoose.Schema({
+
+
+
+});
