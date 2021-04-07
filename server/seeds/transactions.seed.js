@@ -1,5 +1,5 @@
 export const transactionsSeedData = {
-  model: ‘Transaction’,
+  model: 'Transaction',
   documents: [
     {
       _id: 92082309483290821,
