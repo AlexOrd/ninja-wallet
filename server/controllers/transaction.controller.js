@@ -1,4 +1,4 @@
-const Transaction = require('./sever/models/transaction.model');
+const {Transaction} = require('../models/transaction.model');
 
 
 exports.getAllTransactions = async (req, res) => {
@@ -8,7 +8,7 @@ exports.getAllTransactions = async (req, res) => {
       status: 'success',
       results: transactions.length,
       data: {
-        transactions,
+        transactions
       },
     });
   } catch (err) {
@@ -115,7 +115,7 @@ exports.deleteTransaction = async (req, res) => {
       data: null,
     });
   } catch (err) {
-    res.send(404).json({
+    res.status(404).json({
       status: 'fail',
       message: err,
     });

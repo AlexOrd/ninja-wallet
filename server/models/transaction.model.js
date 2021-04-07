@@ -4,10 +4,6 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema(
   {
-    _id: {
-      type: Schema.ObjectId,
-      required: true,
-    },
     transactionName: {
       type: String,
       required: true,
