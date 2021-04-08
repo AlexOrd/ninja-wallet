@@ -10,7 +10,10 @@
     "webpack:prod": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
     "build": "rimraf dist && npm run webpack:dev && npm run start",
     "build:prod": "rimraf dist && npm run webpack:prod && npm run start",
-    "lint": "eslint client server; exit 0"
+    "lint": "eslint client server; exit 0",
+    "seed-auth:populate": "babel-node ./server/seeds/auth/seed.populate.js",
+    "seed-auth:clear": "babel-node ./server/seeds/auth/seed.clear.js",
+    "seed-auth:refresh": "babel-node ./server/seeds/auth/seed.refresh.js"
   },
   "repository": {
     "type": "git",

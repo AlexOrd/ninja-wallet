@@ -1,5 +1,6 @@
-const seeder = require('mongoose-seed')
-const data = [
+import process from 'process'
+export const dbURL = process.env.DBURL || 'mongodb://localhost:27017/seed'
+export const data = [
     {
         'model': 'User',
         'documents': [
@@ -41,6 +42,25 @@ const data = [
                         emitted: new Date()
                     },
                 }
+            },
+            {
+                firstName: 'Test3',
+                lastName: 'Test3',
+                email: 'seddasdasda@test.com',
+                isVerifiedEmail: false,
+                auth: {
+                    password: 'simplasdasdasepassword',
+                    openedOnDevices: [{
+                        confirmCode: '874431',
+                        deviceType: 'pc',
+                        lastLogin: new Date()
+                    }],
+                    codeForPasswordChanging: '',
+                    codeForEmailVerification: {
+                        value: '597860',
+                        emitted: new Date()
+                    },
+                }
             }
             
         
@@ -48,33 +68,3 @@ const data = [
         ]
     }
 ]
-
-const db = 'mongodb://localhost:27017/seed'
-
-seeder.connect(db, function() {
-    seeder.loadModels([
-        '../models/user.model.js',
-    ])
-
-    seeder.clearModels(['User'], (err, done) => {
-        if(err) {
-            return console.log('clearModels err', err)
-        }
-
-        if(done) {
-            return console.log('clearModels done', done)
-        }
-    })
-
-    seeder.populateModels(data, function(err, done) {
-        if(err) {
-            return console.log('populateModels err', err)
-        }
-
-        if(done) {
-            return console.log('populateModels done', done)
-        }
-
-        seeder.disconnect()
-    })
-})
