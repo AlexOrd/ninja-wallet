@@ -7,7 +7,7 @@ const schema = new Schema({
         type: Schema.ObjectId,
         required: true
     },
-    transactionName: {
+    transactionType: {
         type: String, 
         required: true
     },
