@@ -10,7 +10,8 @@
     "webpack:prod": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
     "build": "rimraf dist && npm run webpack:dev && npm run start",
     "build:prod": "rimraf dist && npm run webpack:prod && npm run start",
-    "lint": "eslint client server; exit 0"
+    "lint": "eslint client server; exit 0",
+    "seed-user": "babel-node ./server/seeds/user.seed.js"
   },
   "repository": {
     "type": "git",
