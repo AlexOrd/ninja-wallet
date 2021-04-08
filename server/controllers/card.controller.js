@@ -4,7 +4,7 @@ import { Card } from '../models/card.model';
 export const createCard = (req, res) => {
     const card = new Card({
         _id: new mongoose.Types.ObjectId(),
-        userId: req.body.userID,
+        userId: req.body.userId,
         ...req.body
     });
 
