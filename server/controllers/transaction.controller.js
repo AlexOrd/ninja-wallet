@@ -5,7 +5,7 @@ exports.getAllTransactions = async (req, res) => {
   try {
     const transactions = await Transaction.find();
     res.status(200).json({
-      status: 'success',
+      success: 'true',
       results: transactions.length,
       data: {
         transactions
@@ -13,7 +13,7 @@ exports.getAllTransactions = async (req, res) => {
     });
   } catch (err) {
     res.send(404).json({
-      status: 'fail',
+      success: 'false',
       message: err,
     });
   }
@@ -22,7 +22,7 @@ exports.getTransactionsByAccountId = async (req, res) => {
   try {
     const transactions = await Transaction.find({ accountId: req.params.accountId });
     res.status(200).json({
-      status: 'success',
+      success: 'true',
       results: transactions.length,
       data: {
         transactions,
@@ -30,7 +30,7 @@ exports.getTransactionsByAccountId = async (req, res) => {
     });
   } catch (err) {
     res.send(404).json({
-      status: 'fail',
+      success: 'false',
       message: err,
     });
   }
@@ -41,7 +41,7 @@ exports.getTransactionsByCategory = async (req, res) => {
       transactionCategory: req.params.transactionCategory,
     }).exec();
     res.status(200).json({
-      status: 'success',
+      success: 'true',
       results: transactions.length,
       data: {
         transactions,
@@ -49,7 +49,7 @@ exports.getTransactionsByCategory = async (req, res) => {
     });
   } catch (err) {
     res.send(404).json({
-      status: 'fail',
+      success: 'false',
       message: err,
     });
   }
@@ -59,14 +59,14 @@ exports.createTransaction = async (req, res) => {
     const newTransaction = await Transaction.create(req.body);
 
     res.status(201).json({
-      status: 'success',
+      success: 'true',
       data: {
         transaction: newTransaction,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: 'fail',
+      success: 'false',
       message: err,
     });
   }
@@ -76,14 +76,14 @@ exports.getTransaction = async (req, res) => {
     const transaction = await Transaction.findById(req.params.id);
 
     res.status(200).json({
-      status: 'success',
+      success: 'true',
       data: {
         transaction,
       },
     });
   } catch (err) {
     res.status(404).json({
-      status: 'fail',
+      success: 'false',
       message: err,
     });
   }
@@ -95,14 +95,14 @@ exports.updateTransaction = async (req, res) => {
       runValidators: true,
     });
     res.status(200).json({
-      status: 'success',
+      success: 'true',
       data: {
         transaction,
       },
     });
   } catch (err) {
     res.status(404).json({
-      status: 'fail',
+      success: 'false',
       message: 'notUpdated',
     });
   }
@@ -111,12 +111,12 @@ exports.deleteTransaction = async (req, res) => {
   try {
     await Transaction.findByIdAndDelete(req.params.id);
     res.send(204).json({
-      status: 'success',
+      success: 'true',
       data: null,
     });
   } catch (err) {
     res.status(404).json({
-      status: 'fail',
+      success: 'false',
       message: err,
     });
   }
