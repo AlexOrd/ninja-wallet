@@ -8,6 +8,8 @@ import requestLogger from './middlewares/requestLogger';
 
 import { connect } from './config/database';
 import { User } from './models/user.model';
+import authRoutes from './routes/auth.router'
+
 
 // enable webpack hot module replacement in development mode
 import webpack from 'webpack';
@@ -32,7 +34,7 @@ app.get('/swagger.json', (req, res) => {
 
 // Request logger
 app.use(requestLogger);
-
+app.use('/auth', authRoutes)
 // Router
 
 app.get('/getAll', (req, res) => {
