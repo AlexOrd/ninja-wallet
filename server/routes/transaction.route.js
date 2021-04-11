@@ -17,7 +17,7 @@ router
   
 router
   .route('/cardId/:cardId')
-  .get(transactionController.getTransactionsByAccountId);
+  .get(transactionController.getTransactionsByCardId);
 router
   .route('/category/:transactionCategory')
   .get(transactionController.getTransactionsByCategory);
