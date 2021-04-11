@@ -18,9 +18,9 @@ exports.getAllTransactions = async (req, res) => {
     });
   }
 };
-exports.getTransactionsByAccountId = async (req, res) => {
+exports.getTransactionsByCardId = async (req, res) => {
   try {
-    const transactions = await Transaction.find({ accountId: req.params.accountId });
+    const transactions = await Transaction.find({ cardId: req.params.accountId });
     res.status(200).json({
       success: 'true',
       results: transactions.length,
