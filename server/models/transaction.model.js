@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema(
   {
-    transactionName: {
+    transactionType: {
       type: String,
       required: true,
     },
@@ -30,7 +30,7 @@ const schema = new Schema(
       type: String
     },
   },
-  { timestamps: true, collection: 'Transactions' }
+  { timestamps: true, collection: 'transactions' }
 );
 
 const Transaction = mongoose.model('Transactions', schema);

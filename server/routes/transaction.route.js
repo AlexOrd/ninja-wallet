@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const transactionController = require('../controllers/transaction.controller');
-const validate = require ('../config/joi.validate');
-const schema = require ('../utils/validator');
+import validate from '../config/joi.validate';
+import schema from '../utils/validator';
 
 router
   .route('/')
@@ -16,7 +16,7 @@ router
   .delete(transactionController.deleteTransaction);
   
 router
-  .route('/accountId/:accountId')
+  .route('/cardId/:cardId')
   .get(transactionController.getTransactionsByAccountId);
 router
   .route('/category/:transactionCategory')
