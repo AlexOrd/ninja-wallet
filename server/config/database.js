@@ -1,8 +1,6 @@
-require('dotenv').config();
-
 import mongoose from 'mongoose';
 export function connect() {
-  const URL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_NAME}.nkpko.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+  const URL = process.env.MONGODB_URI;
   mongoose.set('useCreateIndex', true);
 
   // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`

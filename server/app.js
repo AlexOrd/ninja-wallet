@@ -5,15 +5,17 @@ import swagger from './config/swagger';
 import * as errorHandler from './middlewares/errorHandler';
 import joiErrorHandler from './middlewares/joiErrorHandler';
 import requestLogger from './middlewares/requestLogger';
+require('dotenv').config();
 
 import { connect } from './config/database';
-import { User } from './models/user.model';
+import User from './models/user.model';
 
 // enable webpack hot module replacement in development mode
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack/webpack.config.dev';
+import Transaction from './models/transaction.model';
 
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(webpackConfig);
@@ -34,15 +36,14 @@ app.get('/swagger.json', (req, res) => {
 app.use(requestLogger);
 
 // Router
-
-app.get('/getAll', (req, res) => {
-  User.find({}, function (err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(result);
-    }
-  });
+app.get('/getAll', async (req, response) => {
+  const res = await User.find({}).populate('avatarId').exec();
+  const res2 = await Transaction.find({})
+    .populate('userId')
+    .populate('cardId')
+    .populate('transactionCategory')
+    .exec();
+  response.json({ res, res2 });
 });
 
 app.use('/api', routes);
