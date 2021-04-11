@@ -20,9 +20,9 @@ const schema = new Schema({
       ref: 'User',
       required: true 
     },
-    accountId: {
+    cardId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Account',
+      ref: 'Card',
       required: true   
     },
     sum: {
