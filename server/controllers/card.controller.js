@@ -1,7 +1,14 @@
 import mongoose from 'mongoose';
 import { Card } from '../models/card.model';
-
+import { validateCard, isCardExist } from '../utils/card-validations'
+ 
 export const createCard = async (req, res) => {
+  const checkCreditCard = await validateCard(req.body, req.body.userId)
+
+  if(!checkCreditCard.success) {
+    return res.status(406).send({ success: false, message: checkCreditCard.message })
+  }
+
   const card = new Card({
     _id: new mongoose.Types.ObjectId(),
     userId: req.body.userID,
@@ -17,6 +24,12 @@ export const createCard = async (req, res) => {
 }
 
 export const editCard = async (req, res) => {
+  const cardExist = await isCardExist(req.params.id)
+
+  if(!cardExist.success) {
+    return res.status(400).send(cardExist.message)
+  }
+
   try {
     const updatedCard = await Card.updateOne({ _id: req.params.id }, card);
     res.status(200).send({
@@ -39,6 +52,12 @@ export const getCards = async (req, res) => {
 }
 
 export const getCardById = async (req, res) => {
+  const cardExist = await isCardExist(req.params.id)
+
+  if(!cardExist.success) {
+    return res.status(400).send(cardExist.message)
+  }
+
   try {
     const card = await Card.findOne({ _id: req.params.id });
     res.status(200).send({ card, success: true });
@@ -48,9 +67,15 @@ export const getCardById = async (req, res) => {
 }
 
 export const removeCardById = async (req, res) => {
+  const cardExist = await isCardExist(req.params.id)
+
+  if(!cardExist.success) {
+    return res.status(400).send({ success: cardExist.success, message: cardExist.message})
+  }
+
   try {
-    const deletedCard = Card.deleteOne({ _id: req.params.id });
-    res.status(200).send({ message: 'Card was deleted', deletedCard, success: true });
+    await Card.deleteOne({ _id: req.params.id });
+    res.status(200).send({ message: 'Card was deleted', success: true });
   } catch (err) {
     res.status(400).send({ err, success: false });
   }
