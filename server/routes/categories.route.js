@@ -1,6 +1,4 @@
 import express from 'express';
-import * as userCtrl from '../controllers/user.controller';
-import isAuthenticated from '../middlewares/authenticate';
 import validate from '../config/joi.validate';
 import schema from '../utils/validator';
 
@@ -10,9 +8,9 @@ const router = express.Router();
 
 router.route('/get-categories').get(categoriesCtrl.getUserCategories);
 
-router.route('/create').post(categoriesCtrl.createCategory);
+router.route('/create').post(validate(schema.category), categoriesCtrl.createCategory);
 
-router.route('/edit/:id').put(categoriesCtrl.editCategory);
+router.route('/edit/:id').put(validate(schema.category), categoriesCtrl.editCategory);
 
 router.route('/delete/:id').delete(categoriesCtrl.deleteCategory);
 

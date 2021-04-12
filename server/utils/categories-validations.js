@@ -21,20 +21,22 @@ export const validateCategory = async (category, userId) => {
 };
 
 export const isCategoryExists = async (categoryId) => {
-  const isExists = await Category.findOne({_id: categoryId})
+  const isExists = await Category.findOne({ _id: categoryId });
 
   if (isExists) {
-    return true
+    return true;
   }
 
-  return false
-}
+  return false;
+};
 
 export const isUserCategoryOwner = (category, userId) => {
-  return category.userId === userId ? {
-    response: true
-  } : {
-    response: false,
-    error: 'You dont have permissions for this operation'
-  }
-}
+  return category.userId._id.toString() === userId
+    ? {
+        response: true,
+      }
+    : {
+        response: false,
+        error: 'You dont have permissions for this operation',
+      };
+};

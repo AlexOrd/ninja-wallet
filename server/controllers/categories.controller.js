@@ -3,7 +3,7 @@ import { Category } from '../models/category.model';
 import { isCategoryExists, isUserCategoryOwner, validateCategory } from '../utils/categories-validations';
 
 export const createCategory = async (req, res) => {
-  const isCategoryValidCheck = await validateCategory(req.body.category, req.userID);
+  const isCategoryValidCheck = await validateCategory(req.body, req.userID);
 
   if (!isCategoryValidCheck.success) {
     return res.status(HttpStatus.NOT_ACCEPTABLE).json({
@@ -14,9 +14,9 @@ export const createCategory = async (req, res) => {
 
   const newCategory = new Category({
     userId: req.userID,
-    name: req.body.category.name,
-    description: req.body.category.description,
-    color: req.body.category.color,
+    name: req.body.name,
+    description: req.body.description,
+    color: req.body.color,
   });
 
   try {
@@ -34,6 +34,7 @@ export const createCategory = async (req, res) => {
 
 export const getUserCategories = async (req, res) => {
   try {
+    console.log(req.userID);
     const categories = await Category.find({ userId: req.userID });
 
     res.status(HttpStatus.OK).json({
@@ -49,39 +50,39 @@ export const getUserCategories = async (req, res) => {
 };
 
 export const editCategory = async (req, res) => {
-  const categoryFromReq = req.body.category
+  const categoryFromReq = req.body;
 
   if (!isCategoryExists(req.params.id)) {
     return res.status(HttpStatus.NOT_ACCEPTABLE).json({
       success: false,
       msg: 'Category with this id doesn`t exists'
-    })
+    });
   }
 
-  const category = await Category.findOne({_id: req.params.id})
+  const category = await Category.findOne({_id: req.params.id});
 
-  const isUserOwner = isUserCategoryOwner(category, req.userID)
+  const isUserOwner = isUserCategoryOwner(category, req.userID);
   
   if (!isUserOwner.response) {
     return res.status(HttpStatus.NOT_ACCEPTABLE).json({
       success: false,
       msg: isUserOwner.error
-    })
+    });
   }
 
   try {
-    category.name = categoryFromReq.name || category.name
-    category.description = categoryFromReq.description || category.description
-    category.color = categoryFromReq.color || category.color
+    category.name = categoryFromReq.name || category.name;
+    category.description = categoryFromReq.description || category.description;
+    category.color = categoryFromReq.color || category.color;
 
-    await category.save()
+    await category.save();
 
     res.status(HttpStatus.OK).json({
       success: true,
       category: createCategory._doc,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
     });
@@ -89,27 +90,27 @@ export const editCategory = async (req, res) => {
 };
 
 export const deleteCategory = async (req, res) => {
-  const categoryId = req.params.id
+  const categoryId = req.params.id;
   if (!isCategoryExists(categoryId)) {
     return res.status(HttpStatus.NOT_ACCEPTABLE).json({
       success: false,
       msg: 'Category with this id doesn`t exists'
-    })
+    });
   }
   
-  const category = await Category.findOne({_id: categoryId})
+  const category = await Category.findOne({_id: categoryId});
 
-  const isUserOwner = isUserCategoryOwner(category, req.userID)
+  const isUserOwner = isUserCategoryOwner(category, req.userID);
   
   if (!isUserOwner.response) {
     return res.status(HttpStatus.NOT_ACCEPTABLE).json({
       success: false,
       msg: isUserOwner.error
-    })
+    });
   }
 
   try {
-    await Category.deleteOne({_id: categoryId})
+    await Category.deleteOne({_id: categoryId});
 
     res.status(HttpStatus.OK).json({
       success: true,
@@ -119,4 +120,4 @@ export const deleteCategory = async (req, res) => {
       success: false,
     });
   }
-}
+};
