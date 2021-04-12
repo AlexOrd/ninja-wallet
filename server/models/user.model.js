@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-require('./userPhoto.model');
+import mongoose from 'mongoose';
+import './userPhoto.model';
 
 const Schema = mongoose.Schema;
 
@@ -41,5 +41,4 @@ const schema = new Schema({
   },
 });
 
-const User = mongoose.model('User', schema);
-module.exports = User;
+export default mongoose.model('User', schema);

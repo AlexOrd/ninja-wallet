@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-require('./category.model');
-require('./user.model');
-require('./card.model');
+import mongoose from 'mongoose';
+import './category.model';
+import './user.model';
+import './card.model';
 
 const Schema = mongoose.Schema;
 

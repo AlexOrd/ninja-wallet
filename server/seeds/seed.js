@@ -1,5 +1,5 @@
-const seeder = require('mongoose-seed');
-const mongoose = require('mongoose');
+import seeder from 'mongoose-seed';
+import mongoose from 'mongoose';
 require('dotenv').config();
 
 const user1Id = new mongoose.Types.ObjectId();
