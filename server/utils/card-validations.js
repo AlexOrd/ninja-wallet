@@ -32,3 +32,6 @@ export const isCardExist = async cardId => {
 
   return { success: false, message: 'Card does not exist.' }
 }
+
+
+export const checkCardOwner = (card, userId) => userId === card.userId ? true: false
