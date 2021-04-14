@@ -6,7 +6,7 @@ import * as errorHandler from './middlewares/errorHandler';
 import joiErrorHandler from './middlewares/joiErrorHandler';
 import requestLogger from './middlewares/requestLogger';
 import cors from 'cors';
-
+import {corsOptions} from './config/cors';
 import { connect } from './config/database';
 import { User } from './models/user.model';
 // import authRoutes from './routes/auth.route';
@@ -17,7 +17,8 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack/webpack.config.dev';
-// import { checkAccessAndProvideUserID } from './middlewares/auth/route_verifiers/check_access_and_provide_user_id';
+import {checkAccessAndProvideUserID} from './middlewares/auth/route_verifiers';
+import authRouter from './routes/auth.route'
 // import swaggerUI from 'swagger-ui-express'
 // import YAML from 'js-yaml'
 // const swaggerDocument = YAML.load(fs.readFileSync('./docs/auth_api.yaml', 'utf8'));
@@ -32,14 +33,6 @@ if (process.env.NODE_ENV === 'development') {
 
 connect();
 
-const corsOptions = {
-  origin: '*',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  exposedHeaders: ['Access-Token', 'Refresh-Token'],
-
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-};
 cors(corsOptions);
 
 // Swagger API documentation
@@ -54,7 +47,6 @@ app.get('/swagger', (req, res) => {
 // app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use(requestLogger);
 // app.use('/auth', authRoutes);
-// app.use(checkAccessAndProvideUserID);
 // app.use('/user-email', emailRoutes);
 // Router
 
@@ -69,7 +61,11 @@ app.get('/getAll', (req, res) => {
 });
 
 // app.use('/api', routes);
-app.use('/api', routes);
+app.use('/auth', authRouter)
+app.use(checkAccessAndProvideUserID);
+app.use('/app', routes);
+
+// app.use('/api', routes);
 
 // Landing page
 app.get('*', (req, res) => {
@@ -85,7 +81,7 @@ app.use(errorHandler.genericErrorHandler);
 app.use(errorHandler.notFound);
 app.use(errorHandler.methodNotAllowed);
 
-app.listen(4000, app.get('host'), () => {
+app.listen(3000, app.get('host'), () => {
   console.log(`Server running at http://${app.get('host')}:${app.get('port')}`);
 });
 

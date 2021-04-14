@@ -1,10 +1,11 @@
 import { unexpectedError } from '../../../utils/auth/errors';
 import { validate } from '../../../utils/validation/validate';
 
-export const validateCredentialsIssue = (req, res, next) => {
+export const validateNewEmail = (req, res, next) => {
   try {
-    const { err: validateEmailError } = validate('email', 'auth')(req.body);
-    if (validateEmailError) return next(validateEmailError);
+    const { err } = validate('email', 'auth')(req.body);
+    if (err) return next(err);
+
     return next();
   } catch (error) {
     unexpectedError(error, next);

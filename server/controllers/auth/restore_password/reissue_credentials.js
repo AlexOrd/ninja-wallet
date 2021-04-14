@@ -1,11 +1,11 @@
-const { encryptData, generateRandomNumbers } = require('../../../utils/auth/aux_functions/common');
-const { unexpectedError } = require('../../../utils/auth/errors');
-const { tokensNames } = require('../../../utils/auth/constants');
-const { createJWToken } = require('../../../utils/auth/aux_functions/for_tokens');
-const { findUserById } = require('../../../utils/auth/aux_functions/selectors');
-const { sendEmail } = require('../../../utils/auth/aux_functions/for_mail');
+import { encryptData, generateRandomNumbers } from '../../../utils/auth/aux_functions/common';
+import { unexpectedError } from '../../../utils/auth/errors';
+import { tokensNames } from '../../../utils/auth/constants';
+import { createJWToken } from '../../../utils/auth/aux_functions/for_tokens';
+import { findUserById } from '../../../utils/auth/aux_functions/selectors';
+import { sendEmail } from '../../../utils/auth/aux_functions/for_mail';
 
-exports.reissueCredentials = async (req, res, next) => {
+export const reissueCredentials = async (req, res, next) => {
   try {
     const { userID } = req.tokenPayload;
 

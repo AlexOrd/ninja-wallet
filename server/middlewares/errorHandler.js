@@ -1,5 +1,7 @@
 import HttpStatus from 'http-status-codes';
 import logger from '../config/winston';
+import {ResponseError} from '../utils/error_handling/response_error';
+import {createRespErr} from '../utils/error_handling/create_resp_err';
 
 /**
  * NOT_FOUND(404) middleware to catch error response
@@ -8,13 +10,9 @@ import logger from '../config/winston';
  * @param  {Object}   res
  * @param  {Function} next
  */
+
 export function notFound(req, res, next) {
-  res.status(HttpStatus.NOT_FOUND).json({
-    error: {
-      code: HttpStatus.NOT_FOUND,
-      message: HttpStatus.getStatusText(HttpStatus.NOT_FOUND),
-    },
-  });
+  return next(createRespErr('NOT_FOUND', 404, 'request resource not found'));
 }
 
 /**
@@ -42,11 +40,20 @@ export function methodNotAllowed(req, res) {
  * @param  {Function} next
  */
 export function genericErrorHandler(err, req, res, next) {
-  logger.error(err);
-  res.status(err.status || HttpStatus.INTERNAL_SERVER_ERROR).json({
-    error: {
-      code: err.code || HttpStatus.INTERNAL_SERVER_ERROR,
-      message: err.message || HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR),
-    },
-  });
+    const isErrorHandled = err instanceof ResponseError;
+    if (isErrorHandled) {
+      const { code, status, message } = err;
+  
+      return res.status(status).json({
+        error: code,
+        statusCode: status,
+        description: message,
+        
+      });
+    } else {
+      return res.status(500).send({
+        error: 'GENERIC',
+        description: 'Something went wrong. Please try again',
+      });
+    }
 }

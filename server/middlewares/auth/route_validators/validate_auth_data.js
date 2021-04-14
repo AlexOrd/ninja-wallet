@@ -1,11 +1,10 @@
-const { unexpectedError } = require('../../../utils/auth/errors');
-const { validatorFactory } = require('../../../utils/auth/aux_functions/validator_factory');
+import { unexpectedError } from '../../../utils/auth/errors';
+import { validate } from '../../../utils/validation/validate';
 
-//! change import type
-
-exports.validateAuthData = (req, res, next) => {
+export const validateAuthData = (req, res, next) => {
   try {
-    const { err } = validatorFactory('authData')(req.body);
+    const { err } = validate('authData', 'auth')(req.body);
+    console.log('err', err)
     if (err) return next(err);
 
     return next();

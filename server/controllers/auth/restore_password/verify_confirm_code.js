@@ -1,9 +1,9 @@
-const User = require('../../../models/user.model');
-const { authErrors, unexpectedError } = require('../../../utils/auth/errors');
-const { authVerifiers } = require('../../../utils/auth/aux_functions/verifiers');
+import User from '../../../models/user.model';
+import { authErrors, unexpectedError } from '../../../utils/auth/errors';
+import { authVerifiers } from '../../../utils/auth/aux_functions/verifiers';
 const { USER_NOT_FOUND } = authErrors;
 
-exports.verifyConfirmCode = async (req, res, next) => {
+export const verifyConfirmCode = async (req, res, next) => {
   try {
     const user = await User.findById(req.tokenPayload.userID);
     if (!user) return next(USER_NOT_FOUND);

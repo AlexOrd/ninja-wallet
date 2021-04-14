@@ -1,7 +1,7 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { authErrors } = require('../errors');
-const { getTokensInfo } = require('./for_tokens');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { authErrors } from '../errors';
+import { getTokensInfo } from './for_tokens';
 const {
   MISSING_TOKEN,
   INVALID_TOKEN,
@@ -11,7 +11,7 @@ const {
   INCORRECT_CONFIRMATION_CODE,
 } = authErrors;
 
-exports.authVerifiers = {
+export const authVerifiers = {
   password: async function (user, password) {
     const isCorrectPassword = await bcrypt.compare(password, user.auth.password);
     if (!isCorrectPassword) return { err: INCORRECT_AUTH_DATA };

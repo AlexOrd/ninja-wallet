@@ -1,9 +1,9 @@
-const { encryptData } = require('../../utils/auth/aux_functions/common');
-const { findUserById } = require('../../utils/auth/aux_functions/selectors');
-const { unexpectedError, authErrors } = require('../../utils/auth/errors');
-const { authVerifiers } = require('../../utils/auth/aux_functions/verifiers');
+import { encryptData } from '../../utils/auth/aux_functions/common';
+import { findUserById } from '../../utils/auth/aux_functions/selectors';
+import { unexpectedError, authErrors } from '../../utils/auth/errors';
+import { authVerifiers } from '../../utils/auth/aux_functions/verifiers';
 
-exports.changePassword = async (req, res, next) => {
+export const changePassword = async (req, res, next) => {
   try {
     const { err: errFindingUser, user } = await findUserById(req.userID);
     if (errFindingUser) return next(errFindingUser);

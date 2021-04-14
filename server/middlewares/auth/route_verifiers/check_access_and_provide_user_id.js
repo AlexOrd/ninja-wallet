@@ -1,15 +1,17 @@
-const { tokensNames } = require('../../../utils/auth/constants');
-const { authErrors, unexpectedError } = require('../../../utils/auth/errors');
-const { setAuthHeaders } = require('../../../utils/auth/aux_functions/common');
-const { getTokensFromReq } = require('../../../utils/auth/aux_functions/for_tokens');
-const { updateTokens } = require('../../../utils/auth/aux_functions/update_tokens');
-const { authVerifiers } = require('../../../utils/auth/aux_functions/verifiers');
+import { tokensNames } from '../../../utils/auth/constants';
+import { authErrors, unexpectedError } from '../../../utils/auth/errors';
+import { setAuthHeaders } from '../../../utils/auth/aux_functions/common';
+import { getTokensFromReq } from '../../../utils/auth/aux_functions/for_tokens';
+import { updateTokens } from '../../../utils/auth/aux_functions/update_tokens';
+import { authVerifiers } from '../../../utils/auth/aux_functions/verifiers';
+
 const { EXPIRED_TOKEN } = authErrors;
 const { verifyingAndDecodeJWT } = authVerifiers;
 const { ACCESS } = tokensNames;
 
-exports.checkAccessAndProvideUserID = async (req, res, next) => {
+export const checkAccessAndProvideUserID = async (req, res, next) => {
   try {
+    console.log('this one')
     const { err: parsingTokensErr, parsedTokens } = getTokensFromReq(req);
     if (parsingTokensErr) return next(parsingTokensErr);
 

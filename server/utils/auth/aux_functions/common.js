@@ -1,8 +1,8 @@
-const { v4: uuid } = require('uuid');
-const bcrypt = require('bcrypt');
+import  { v4 as uuid } from 'uuid';
+import bcrypt from 'bcrypt';
 
-exports.generateRandomString = () => uuid();
-exports.generateRandomNumbers = (length = 6) => {
+export const generateRandomString = () => uuid();
+export const generateRandomNumbers = (length = 6) => {
   const code = [];
   for (let i = 0; i < length; i++) {
     const randomNumber = Math.round(Math.random() * (9 - 0) + 0);
@@ -12,8 +12,8 @@ exports.generateRandomNumbers = (length = 6) => {
   return code.join('');
 };
 
-exports.encryptData = (data) => bcrypt.hashSync(data, 10);
-exports.setAuthHeaders = function (accessToken = null, refreshToken = null, res) {
+export const encryptData = (data) => bcrypt.hashSync(data, 10);
+export const setAuthHeaders = function (accessToken = null, refreshToken = null, res) {
   res.header('Access-Token', accessToken);
   res.header('Refresh-Token', refreshToken);
 };

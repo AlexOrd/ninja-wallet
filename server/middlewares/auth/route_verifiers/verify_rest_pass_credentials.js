@@ -1,10 +1,11 @@
-const { tokensNames } = require('../../../utils/auth/constants');
-const { unexpectedError, authErrors } = require('../../../utils/auth/errors');
-const { authVerifiers } = require('../../../utils/auth/aux_functions/verifiers');
+import { tokensNames } from '../../../utils/auth/constants';
+import { unexpectedError, authErrors } from '../../../utils/auth/errors';
+import { authVerifiers } from '../../../utils/auth/aux_functions/verifiers';
+
 const { verifyingAndDecodeJWT } = authVerifiers;
 const { RESTORE } = tokensNames;
 
-exports.verifyCredentials = (req, res, next) => {
+export const verifyCredentials = (req, res, next) => {
   try {
     const { err: errVerifyResToken, tokenPayload } = verifyingAndDecodeJWT(
       req.body.confirmToken,

@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
-const { authErrors } = require('../errors');
-const { tokensNames, tokensDevKeys } = require('../constants');
+import jwt from 'jsonwebtoken';
+import { authErrors } from '../errors';
+import { tokensNames, tokensDevKeys } from '../constants';
 
-const getTokensInfo = (tokenName) => {
+export const getTokensInfo = (tokenName) => {
   const { ACCESS, REFRESH, RESTORE } = tokensNames;
   const settings = {
     [ACCESS]: {
@@ -28,7 +28,7 @@ const getTokensInfo = (tokenName) => {
   return settings[tokenName];
 };
 
-exports.getTokensFromReq = function (req) {
+export const getTokensFromReq = function (req) {
   const refreshToken = req.headers['refresh-token'];
   const accessToken = req.headers.authorization;
   if (!refreshToken || !accessToken) {
@@ -38,11 +38,8 @@ exports.getTokensFromReq = function (req) {
   return { err: null, parsedTokens: { refreshToken, accessToken } };
 };
 
-exports.createJWToken = (payload, tokenName) => {
+export const createJWToken = (payload, tokenName) => {
   const { key, options } = getTokensInfo(tokenName);
   const token = jwt.sign(payload, key, options);
   return token;
 };
-
-
-exports.getTokensInfo = getTokensInfo

@@ -1,9 +1,9 @@
-const { unexpectedError } = require('../../../utils/auth/errors');
-const { validatorFactory } = require('../../../utils/auth/aux_functions/validator_factory');
+import { unexpectedError } from '../../../utils/auth/errors';
+import { validate } from '../../../utils/validation/validate';
 
-exports.validateConfirmCode = (req, res, next) => {
+export const validateConfirmCode = (req, res, next) => {
   try {
-    const { err } = validatorFactory('verifyingRestPassConfirmCode')(req.body);
+    const { err } = validate('verifyingRestPassConfirmCode', 'auth')(req.body);
     if (err) return next(err);
 
     return next();

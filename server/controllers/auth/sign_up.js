@@ -1,16 +1,16 @@
-const User = require('../../models/user.model');
-const {
+import User from '../../models/user.model';
+import {
   setAuthHeaders,
   generateRandomString,
   generateRandomNumbers,
   encryptData,
-} = require('../../utils/auth/aux_functions/common');
-const { sendEmail } = require('../../utils/auth/aux_functions/for_mail');
-const { unexpectedError, authErrors } = require('../../utils/auth/errors');
-const { tokensNames } = require('../../utils/auth/constants');
-const { createJWToken } = require('../../utils/auth/aux_functions/for_tokens');
+} from '../../utils/auth/aux_functions/common';
+import { sendEmail } from '../../utils/auth/aux_functions/for_mail';
+import { unexpectedError, authErrors } from '../../utils/auth/errors';
+import { tokensNames } from '../../utils/auth/constants';
+import { createJWToken } from '../../utils/auth/aux_functions/for_tokens';
 
-exports.signUp = async (req, res, next) => {
+export const signUp = async (req, res, next) => {
   try {
     const { email, password, deviceType } = req.body;
 

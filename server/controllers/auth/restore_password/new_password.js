@@ -1,11 +1,11 @@
-const { encryptData, generateRandomNumbers, setAuthHeaders } = require('../../../utils/auth/aux_functions/common');
-const { unexpectedError } = require('../../../utils/auth/errors');
-const { tokensNames } = require('../../../utils/auth/constants');
-const { createJWToken } = require('../../../utils/auth/aux_functions/for_tokens');
-const { findUserById } = require('../../../utils/auth/aux_functions/selectors');
+import { encryptData, generateRandomNumbers, setAuthHeaders } from '../../../utils/auth/aux_functions/common';
+import { unexpectedError } from '../../../utils/auth/errors';
+import { tokensNames } from '../../../utils/auth/constants';
+import { createJWToken } from '../../../utils/auth/aux_functions/for_tokens';
+import { findUserById } from '../../../utils/auth/aux_functions/selectors';
 const { ACCESS, REFRESH } = tokensNames;
 
-exports.createNewPassword = async (req, res, next) => {
+export const createNewPassword = async (req, res, next) => {
   try {
     const {err: errFindingUser, user} = await findUserById(req.tokenPayload.userID);
     if (errFindingUser) return next(errFindingUser);

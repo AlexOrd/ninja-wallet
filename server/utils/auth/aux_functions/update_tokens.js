@@ -1,11 +1,10 @@
-const { authVerifiers } = require("./verifiers");
-const { getDeviceByID, findUserById } = require("./selectors");
-const { generateRandomString, encryptData } = require("./common");
-const { createJWToken } = require("./for_tokens");
-const { tokensNames } = require("../constants");
+import { authVerifiers } from "./verifiers";
+import { getDeviceByID, findUserById } from "./selectors";
+import { generateRandomString, encryptData } from "./common";
+import { createJWToken } from "./for_tokens";
+import { tokensNames } from "../constants";
 
-exports.updateTokens = async (userID, refreshToken) => {
-    console.log('updateTokens ----------------------------------------------------------------')
+export const updateTokens = async (userID, refreshToken) => {
     const { err: findingUserErr, user } = await findUserById(userID);
     if (findingUserErr) return { err: findingUserErr };
     const { err: errRefreshToken, tokenPayload } = authVerifiers.verifyingAndDecodeJWT(

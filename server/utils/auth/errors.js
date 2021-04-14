@@ -1,4 +1,4 @@
-const ResponseError = require("./response_error")
+import { ResponseError } from '../error_handling/response_error'
 
 exports.authErrors = {
     EXPIRED_TOKEN: new ResponseError('EXPIRED_TOKEN', 403, 'access is expired'),
@@ -16,7 +16,7 @@ exports.authErrors = {
     ACCESS_DENIED: new ResponseError('ACCESS_DENIED', 403, 'access denied'),
 }
 
-exports.unexpectedError = (error, next) => {
+export const unexpectedError = (error, next) => {
     console.error(error)
     const responseError = new Error('UNEXPECTED_SERVER_ERROR', 500, 'unexpected server error')
     return next(responseError)

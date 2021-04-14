@@ -2,7 +2,7 @@
 /* eslint-disable newline-before-return */
 import Joi from '@hapi/joi';
 Joi.objectId = require('joi-objectid')(Joi);
-import { ResponseError } from '../middlewares/errors/response_error';
+import { createRespErr } from './error_handling/create_resp_err';
 
 const validationSchemas = {
   auth: {
@@ -77,26 +77,29 @@ const validationSchemas = {
   }),
 };
 
+
+
+const detectErrorType = (joiError) => {
+  const getErrType = (err) => err && err.details[0].type;
+  const getErrMessage = (err) => err && err.details[0].message;
+
+  if (getErrType(joiError) === 'any.required' || getErrType(joiError) === 'object.and') {
+    const errMessage = `passed object DOESN'T contain required field(s), ${getErrMessage(joiError)}`;
+    return { err: new ResponseError('MISSING_REQUIRED_FIELD', 400, errMessage), joiError };
+  }
+
+  if (getErrType(joiError) === 'object.unknown') {
+    const errMessage = `passed object CONTAIN excess field(s), ${getErrMessage(joiError)}`;
+    return { err: createRespErr('EXCESS_FIELD', 400, errMessage), joiError };
+  }
+
+  const errMessage = `passed data is invalid, ${getErrMessage(joiError)}`;
+  return { err: createRespErr('INVALID_DATA', 400, errMessage), joiError };
+};
+
+
+
 export const validate = (schemaName, subObject) => {
-  const detectErrorType = (error) => {
-    const getErrType = (err) => err && err.details[0].type;
-    const getErrMessage = (err) => err && err.details[0].message;
-
-    if (getErrType(error) === 'any.required' || getErrType(error) === 'object.and') {
-      const errMessage = `passed object DOESN'T contain required field(s), ${getErrMessage(error)}`;
-      return { err: new ResponseError('LACK_NEEDED_FIELD', 400, errMessage), joiError: error };
-    }
-
-    if (getErrType(error) === 'object.unknown') {
-      const errMessage = `passed object CONTAIN excess field(s), ${getErrMessage(error)}`;
-      // eslint-disable-next-line newline-before-return
-      return { err: new ResponseError('EXCESS_FIELD', 400, errMessage), joiError: error };
-    }
-
-    const errMessage = `passed data is invalid, ${getErrMessage(error)}`;
-    return { err: new ResponseError('INVALID_DATA', 400, errMessage), joiError: error };
-  };
-
   return (data) => {
     if (subObject) {
       const { error } = validationSchemas[subObject][schemaName].validate(data);

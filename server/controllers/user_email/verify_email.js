@@ -1,8 +1,8 @@
-const { unexpectedError } = require('../../utils/auth/errors');
-const { authVerifiers } = require('../../utils/auth/aux_functions/verifiers');
-const { findUserById } = require('../../utils/auth/aux_functions/selectors');
+import { unexpectedError } from '../../utils/auth/errors';
+import { authVerifiers } from '../../utils/auth/aux_functions/verifiers';
+import { findUserById } from '../../utils/auth/aux_functions/selectors';
 
-exports.verifyEmail = async (req, res, next) => {
+export const verifyEmail = async (req, res, next) => {
   try {
     const { err: errFindingUser, user } = await findUserById(req.userID);
     if (errFindingUser) return next(errFindingUser);

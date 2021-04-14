@@ -1,16 +1,16 @@
-const User = require('../../models/user.model');
-const { unexpectedError, authErrors } = require('../../utils/auth/errors');
-const { authVerifiers } = require('../../utils/auth/aux_functions/verifiers');
-const { createJWToken } = require('../../utils/auth/aux_functions/for_tokens');
-const {
+import User from '../../models/user.model';
+import { unexpectedError, authErrors } from '../../utils/auth/errors';
+import { authVerifiers } from '../../utils/auth/aux_functions/verifiers';
+import { createJWToken } from '../../utils/auth/aux_functions/for_tokens';
+import {
   setAuthHeaders,
   encryptData,
   generateRandomNumbers,
-} = require('../../utils/auth/aux_functions/common');
-const { tokensNames } = require('../../utils/auth/constants');
+} from '../../utils/auth/aux_functions/common';
+import { tokensNames } from '../../utils/auth/constants';
 const { INCORRECT_AUTH_DATA } = authErrors;
 
-exports.signIn = async (req, res, next) => {
+export const signIn = async (req, res, next) => {
   try {
     const { email, password, deviceType } = req.body;
 

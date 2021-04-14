@@ -1,7 +1,7 @@
-const { unexpectedError } = require('../../../utils/auth/errors');
-const { findUserById } = require('../../../utils/auth/aux_functions/selectors');
+import { unexpectedError } from '../../../utils/auth/errors';
+import { findUserById } from '../../../utils/auth/aux_functions/selectors';
 
-exports.signOutEveryDevice = async (req, res, next) => {
+export const signOutEveryDevice = async (req, res, next) => {
   try {
     const { err: findingUserErr, user } = await findUserById(req.userID);
     if (findingUserErr) return next(findingUserErr);
