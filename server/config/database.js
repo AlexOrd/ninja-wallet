@@ -15,7 +15,9 @@ export function connect() {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
+    dbName: 'project_test' // !FOR DEV MODE
   });
+
 
   const db = mongoose.connection;
 

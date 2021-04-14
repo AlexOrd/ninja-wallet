@@ -5,17 +5,22 @@ import swagger from './config/swagger';
 import * as errorHandler from './middlewares/errorHandler';
 import joiErrorHandler from './middlewares/joiErrorHandler';
 import requestLogger from './middlewares/requestLogger';
+import cors from 'cors';
 
 import { connect } from './config/database';
 import { User } from './models/user.model';
-import authRoutes from './routes/auth.router'
-
+// import authRoutes from './routes/auth.route';
+// import emailRoutes from './routes/email.route';
 
 // enable webpack hot module replacement in development mode
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack/webpack.config.dev';
+// import { checkAccessAndProvideUserID } from './middlewares/auth/route_verifiers/check_access_and_provide_user_id';
+// import swaggerUI from 'swagger-ui-express'
+// import YAML from 'js-yaml'
+// const swaggerDocument = YAML.load(fs.readFileSync('./docs/auth_api.yaml', 'utf8'));
 
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(webpackConfig);
@@ -24,17 +29,33 @@ if (process.env.NODE_ENV === 'development') {
   );
   app.use(webpackHotMiddleware(compiler));
 }
-//Configs and imports
+
 connect();
+
+const corsOptions = {
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  exposedHeaders: ['Access-Token', 'Refresh-Token'],
+
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+cors(corsOptions);
 
 // Swagger API documentation
 app.get('/swagger.json', (req, res) => {
   res.json(swagger);
 });
 
-// Request logger
+app.get('/swagger', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/swagger/index.html'));
+});
+
+// app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use(requestLogger);
-app.use('/auth', authRoutes)
+// app.use('/auth', authRoutes);
+// app.use(checkAccessAndProvideUserID);
+// app.use('/user-email', emailRoutes);
 // Router
 
 app.get('/getAll', (req, res) => {
@@ -47,10 +68,12 @@ app.get('/getAll', (req, res) => {
   });
 });
 
+// app.use('/api', routes);
 app.use('/api', routes);
 
 // Landing page
 app.get('*', (req, res) => {
+  // res.send('hello world')
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
@@ -62,7 +85,7 @@ app.use(errorHandler.genericErrorHandler);
 app.use(errorHandler.notFound);
 app.use(errorHandler.methodNotAllowed);
 
-app.listen(app.get('port'), app.get('host'), () => {
+app.listen(4000, app.get('host'), () => {
   console.log(`Server running at http://${app.get('host')}:${app.get('port')}`);
 });
 

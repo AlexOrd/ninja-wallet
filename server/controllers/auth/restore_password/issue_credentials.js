@@ -29,7 +29,7 @@ exports.issueCredentials = async (req, res, next) => {
     );
     if (errSendEmail) return next(errSendEmail);
 
-    return res.status(200).send({ confirmToken });
+    return res.status(200).send({ confirmToken, success: true });
   } catch (error) {
     unexpectedError(error, next);
   }

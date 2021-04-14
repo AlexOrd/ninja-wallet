@@ -5,7 +5,6 @@ const { findUserById } = require('../../utils/auth/aux_functions/selectors');
 
 exports.changeEmail = async (req, res, next) => {
   try {
-    console.log('req.body', req.body)
     const { userID } = req;
     const { err: errFindingUser, user } = await findUserById(userID);
     if (errFindingUser) return next(errFindingUser);

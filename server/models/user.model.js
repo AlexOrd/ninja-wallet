@@ -11,8 +11,8 @@ const deviceSchema = new mongoose.Schema({
 })
 
 const schema = new Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
+  firstName: String,
+  lastName: String,
   email: {
     type: String,
     required: true
