@@ -6,7 +6,6 @@ import * as errorHandler from './middlewares/errorHandler';
 import joiErrorHandler from './middlewares/joiErrorHandler';
 import requestLogger from './middlewares/requestLogger';
 import cors from 'cors';
-import {corsOptions} from './config/cors';
 import { connect } from './config/database';
 import { User } from './models/user.model';
 
@@ -31,8 +30,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 connect();
-
-cors(corsOptions);
 
 // Swagger API documentation
 app.get('/swagger.json', (req, res) => {
@@ -78,8 +75,12 @@ app.use(errorHandler.genericErrorHandler);
 app.use(errorHandler.notFound);
 app.use(errorHandler.methodNotAllowed);
 
-app.listen(3000, app.get('host'), () => {
+app.listen(app.get('port'), app.get('host'), () => {
   console.log(`Server running at http://${app.get('host')}:${app.get('port')}`);
 });
+
+// app.listen(3001, app.get('host'), () => {
+//   console.log(`Server running at http://${app.get('host')}:${app.get('port')}`);
+// });
 
 export default app;
