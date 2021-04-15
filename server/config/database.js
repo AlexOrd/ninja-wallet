@@ -4,9 +4,7 @@ import mongoose from 'mongoose';
 dotenv.config();
 
 export function connect() {
-  const URL = process.env.MONGO_URL
-  // var URL = `mongodb+srv://${process.env.MONGODB_CREDENTIALS}@${process.env.MONGODB_URI}/${process.env.MONGODB_DB_NAME}?retryWrites=true&w=majority`;
-
+  const URL = process.env.MONGODB_URI;
   mongoose.set('useCreateIndex', true);
 
   // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
@@ -18,7 +16,9 @@ export function connect() {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
+    dbName: 'project_test' // !FOR DEV MODE
   });
+
 
   const db = mongoose.connection;
 
