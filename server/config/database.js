@@ -1,4 +1,8 @@
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+
+dotenv.config();
+
 export function connect() {
   const URL = process.env.MONGODB_URI;
   mongoose.set('useCreateIndex', true);

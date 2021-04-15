@@ -4,25 +4,35 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  transactionId: {
+    type: Schema.Types.ObjectId,
+  },
+  transactionIds: {
+    type: [Schema.Types.ObjectId],
+    ref: "Transaction"
   },
   cardNumber: {
     type: String,
-    required: true,
+    required: true
   },
   currency: {
     type: String,
-    required: true,
+    required: true
   },
   cardName: {
     type: String,
-    required: true,
+    required: true
   },
   balance: {
     type: Number,
-    default: 0,
-  },
-});
+    default: 0
+  }
+}, { timestamps: true, collection: 'card' });
 
-export default mongoose.model('Card', schema);
+const Card = mongoose.model('Card', schema);
+
+export { Card };
