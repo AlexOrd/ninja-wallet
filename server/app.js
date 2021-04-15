@@ -15,6 +15,8 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack/webpack.config.dev';
+import {checkAccessAndProvideUserID} from './middlewares/auth/route_verifiers';
+import authRoutes from './routes/auth.route'
 import Transaction from './models/transaction.model';
 
 if (process.env.NODE_ENV === 'development') {
@@ -24,7 +26,7 @@ if (process.env.NODE_ENV === 'development') {
   );
   app.use(webpackHotMiddleware(compiler));
 }
-//Configs and imports
+
 connect();
 
 // Swagger API documentation
@@ -32,9 +34,12 @@ app.get('/swagger.json', (req, res) => {
   res.json(swagger);
 });
 
-// Request logger
-app.use(requestLogger);
+app.get('/swagger', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/swagger/index.html'));
+});
 
+// app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
+app.use(requestLogger);
 // Router
 app.get('/getAll', async (req, response) => {
   const res = await User.find({}).populate('avatarId').exec();
@@ -46,10 +51,16 @@ app.get('/getAll', async (req, response) => {
   response.json({ res, res2 });
 });
 
-app.use('/api', routes);
+app.use('/auth', authRoutes)
+app.use(checkAccessAndProvideUserID);
+// app.use('/user-auth', userEmailRoutes)
+app.use('/app', routes);
+
+// app.use('/api', routes);
 
 // Landing page
 app.get('*', (req, res) => {
+  // res.send('hello world')
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
@@ -64,5 +75,9 @@ app.use(errorHandler.methodNotAllowed);
 app.listen(app.get('port'), app.get('host'), () => {
   console.log(`Server running at http://${app.get('host')}:${app.get('port')}`);
 });
+
+// app.listen(3001, app.get('host'), () => {
+//   console.log(`Server running at http://${app.get('host')}:${app.get('port')}`);
+// });
 
 export default app;
