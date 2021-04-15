@@ -51,9 +51,9 @@ app.get('/getAll', async (req, response) => {
   response.json({ res, res2 });
 });
 
-app.use('/auth', authRoutes)
-app.use(checkAccessAndProvideUserID);
+// app.use('/auth', authRoutes)
 // app.use('/user-auth', userEmailRoutes)
+// app.use(checkAccessAndProvideUserID);
 app.use('/app', routes);
 
 // app.use('/api', routes);
