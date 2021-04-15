@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import './category.model';
+import './user.model';
+import './card.model';
 
 const Schema = mongoose.Schema;
 
@@ -15,19 +18,19 @@ const schema = new Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: true,
     },
     cardId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Card',
-      required: true
+      required: true, 
     },
     sum: {
       type: Number,
-      required: true
+      required: true,
     },
     merchantName: {
-      type: String
+      type: String,
     },
   },
   { timestamps: true, collection: 'transactions' }
