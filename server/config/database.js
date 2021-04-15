@@ -11,7 +11,7 @@ export function connect() {
   // by default, you need to set it to false.
   mongoose.set('useFindAndModify', false);
 
-  //Connection establishment
+  // Connection establishment
   mongoose.connect(URL, {
     useNewUrlParser: true,
     useCreateIndex: true,

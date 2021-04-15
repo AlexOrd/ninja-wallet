@@ -7,17 +7,13 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema(
   {
-    _id: {
-      type: Schema.ObjectId,
+    transactionType: {
+      type: String,
       required: true,
     },
-    transactionType: {
-        type: String, 
-        required: true
-    },
     transactionCategory: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Category',
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -27,7 +23,7 @@ const schema = new Schema(
     cardId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Card',
-      required: true   
+      required: true, 
     },
     sum: {
       type: Number,
@@ -40,6 +36,7 @@ const schema = new Schema(
   { timestamps: true, collection: 'transactions' }
 );
 
-const Transaction = mongoose.model('Transaction', schema);
+const Transaction = mongoose.model('Transactions', schema);
 
-module.exports = Transaction;
+export { Transaction };
+
