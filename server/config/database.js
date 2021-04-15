@@ -1,6 +1,8 @@
-require('dotenv').config();
-
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+
+dotenv.config();
+
 export function connect() {
   const URL = process.env.MONGO_URL
   // var URL = `mongodb+srv://${process.env.MONGODB_CREDENTIALS}@${process.env.MONGODB_URI}/${process.env.MONGODB_DB_NAME}?retryWrites=true&w=majority`;
