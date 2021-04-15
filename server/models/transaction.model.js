@@ -11,9 +11,9 @@ const schema = new Schema(
       type: Schema.ObjectId,
       required: true,
     },
-    transactionName: {
-      type: String,
-      required: true,
+    transactionType: {
+        type: String, 
+        required: true
     },
     transactionCategory: {
       type: mongoose.Schema.Types.ObjectId,
@@ -27,7 +27,7 @@ const schema = new Schema(
     cardId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Card',
-      required: true,
+      required: true   
     },
     sum: {
       type: Number,
