@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MySQL, Express, React/Redux Boilerplate Application",
   "scripts": {
+    "seed": "babel-node server/seeds/seed.js",
     "start": "babel-node server/app.js",
     "dev": "nodemon --exec npm run start",
     "clean": "rimraf node_modules && rimraf dist && npm install",
