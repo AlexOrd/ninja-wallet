@@ -54,8 +54,7 @@ export const signUp = async (req, res, next) => {
     );
 
     if (errSendEmail) {
-      console.error(errSendEmail);
-      return res.status(200).send({ isEmailError: true });
+      return res.status(200).send({ success: true, isEmailError: true });
     }
 
     return res.status(200).send({ success: true, isEmailError: false });

@@ -1,3 +1,5 @@
+import {authErrors} from '../../auth/errors'; 
+
 import nodemailer from 'nodemailer';
 const smtpConfig = {
   host: 'smtp.gmail.com',
@@ -22,14 +24,14 @@ const mailer = async (to, subject, text) => {
   return await transporter.sendMail(options);
 };
 
-exports.sendEmail = async (email, subject, data) => {
+export const sendEmail = async (email, subject, data) => {
   let result = { err: null };
 
   try {
     await mailer(email, subject, data);
   } catch (error) {
-    console.error(error);
-    return (result.err = MAIL_PROVIDER_ERROR);
+    result.err = authErrors.MAIL_PROVIDER_ERROR
+    return result;
   }
 
   return result;

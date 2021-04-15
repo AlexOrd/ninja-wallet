@@ -9,8 +9,6 @@ import cors from 'cors';
 import {corsOptions} from './config/cors';
 import { connect } from './config/database';
 import { User } from './models/user.model';
-// import authRoutes from './routes/auth.route';
-// import emailRoutes from './routes/email.route';
 
 // enable webpack hot module replacement in development mode
 import webpack from 'webpack';
@@ -18,7 +16,8 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack/webpack.config.dev';
 import {checkAccessAndProvideUserID} from './middlewares/auth/route_verifiers';
-import authRouter from './routes/auth.route'
+import authRoutes from './routes/auth.route'
+import userEmailRoutes from './routes/email.route'
 // import swaggerUI from 'swagger-ui-express'
 // import YAML from 'js-yaml'
 // const swaggerDocument = YAML.load(fs.readFileSync('./docs/auth_api.yaml', 'utf8'));
@@ -46,8 +45,6 @@ app.get('/swagger', (req, res) => {
 
 // app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use(requestLogger);
-// app.use('/auth', authRoutes);
-// app.use('/user-email', emailRoutes);
 // Router
 
 app.get('/getAll', (req, res) => {
@@ -60,9 +57,9 @@ app.get('/getAll', (req, res) => {
   });
 });
 
-// app.use('/api', routes);
-app.use('/auth', authRouter)
+app.use('/auth', authRoutes)
 app.use(checkAccessAndProvideUserID);
+// app.use('/user-auth', userEmailRoutes)
 app.use('/app', routes);
 
 // app.use('/api', routes);

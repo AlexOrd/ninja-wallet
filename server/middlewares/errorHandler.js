@@ -41,9 +41,10 @@ export function methodNotAllowed(req, res) {
  */
 export function genericErrorHandler(err, req, res, next) {
     const isErrorHandled = err instanceof ResponseError;
+    console.log(err)
     if (isErrorHandled) {
       const { code, status, message } = err;
-  
+      
       return res.status(status).json({
         error: code,
         statusCode: status,

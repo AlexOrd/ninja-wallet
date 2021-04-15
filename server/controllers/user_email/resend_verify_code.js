@@ -20,7 +20,9 @@ export const resendVerifyEmailCode = async (req, res, next) => {
       'Verification',
       mailMessage,
     );
-    if (errSendEmail) return next(errSendEmail);
+    if (errSendEmail) {
+      return next(errSendEmail);
+    }
 
     return res.status(200).send({success: true});
   } catch (error) {
