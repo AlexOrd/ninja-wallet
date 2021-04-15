@@ -7,7 +7,7 @@ const schema = new Schema({
         type: Schema.ObjectId,
         required: true
     },
-    transactionName: {
+    transactionType: {
         type: String, 
         required: true
     },
@@ -20,9 +20,9 @@ const schema = new Schema({
       ref: 'User',
       required: true 
     },
-    accountId: {
+    cardId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Account',
+      ref: 'Card',
       required: true   
     },
     sum: {
