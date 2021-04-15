@@ -77,8 +77,6 @@ const validationSchemas = {
   }),
 };
 
-
-
 const detectErrorType = (joiError) => {
   const getErrType = (err) => err && err.details[0].type;
   const getErrMessage = (err) => err && err.details[0].message;
