@@ -24,26 +24,32 @@ export const createCard = async (req, res) => {
 }
 
 export const editCard = async (req, res) => {
-  const cardExist = await isCardExist(req.params.id)
-  const card = await Card.findOne({ _id: req.params.id })
+  const cardExist = await isCardExist(req.params.id);
+  const card = await Card.findById(req.params.id);
 
   if(!checkCardOwner(card, req.userID)) {
-    return res.status(400).send({success: false, message: 'User error'})
+    return res.status(400).send({success: false, message: 'User error'});
   }
 
   if(!cardExist.success) {
-    return res.status(400).send(cardExist.message)
+    return res.status(400).send(cardExist.message);
   }
 
   try {
-    const updatedCard = await Card.updateOne({ _id: req.params.id }, card);
-    res.status(200).send({
+    card.cardName = req.body.cardName || card.cardName;
+    card.currency = req.body.currency || card.cardName;
+    card.balance = req.body.balance || card.balance;
+    card.transactionIds = [...card.transactionIds, req.body.transactionId] || card.transactionIds;
+ 
+    await card.save();
+    
+    return res.status(200).send({
       message: 'Card was updated',
-      updatedCard,
+      card,
       success: true
     });
   } catch (err) {
-    res.status(304).send({ err, success: false });
+    return res.status(304).send({ err, success: false });
   }
 }
 
