@@ -1,9 +1,9 @@
 import { unexpectedError } from '../../../utils/auth/errors';
-import { validate } from '../../../utils/validation/validate';
+import { validator } from '../../auth/route_validators/joiValidator';
 
 export const validateNewEmail = (req, res, next) => {
   try {
-    const { err } = validate('email', 'auth')(req.body);
+    const { err } = validator('email')(req.body);
     if (err) return next(err);
 
     return next();

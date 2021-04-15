@@ -1,12 +1,12 @@
 export class ResponseError extends Error {
-  constructor(code = 'GENERIC', status = 500, ...params) {
+  constructor(name = 'GENERIC', status = 500, ...params) {
     super(...params);
 
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, ResponseError);
     }
 
-    this.code = code;
+    this.name = name;
     this.status = status;
     this.success = false;
   }

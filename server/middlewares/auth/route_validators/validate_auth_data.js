@@ -1,10 +1,10 @@
 import { unexpectedError } from '../../../utils/auth/errors';
-import { validate } from '../../../utils/validation/validate';
+import { validator } from './joiValidator';
 
 export const validateAuthData = (req, res, next) => {
   try {
-    const { err } = validate('authData', 'auth')(req.body);
-    console.log('err', err)
+    const { err, joiError } = validator('authData')(req.body);
+    // console.log('joiError', joiError)
     if (err) return next(err);
 
     return next();

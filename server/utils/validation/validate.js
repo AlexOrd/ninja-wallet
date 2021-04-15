@@ -1,7 +1,7 @@
 import { composedSchemas } from './composed_schemas';
 import { createRespErr } from '../error_handling/create_resp_err';
 
-export const validate = (schemaName, subObject) => (data) => {
+export const validate = subObject => schemaName => data => {
   const {error} = composedSchemas[subObject][schemaName].validate(data);
   if (error) return detectErrorType(error);
 
@@ -22,6 +22,11 @@ function detectErrorType(joiError) {
     return { err: createRespErr('EXCESS_FIELD', 400, errDescription), joiError };
   }
 
-  const errDescription = `passed data is invalid, ${errMessage}`;
+  if (errType === 'any.only') {
+    const errDescription = `passed value is unavailable, ${errMessage}`;
+    return { err: createRespErr('UNAVAILABLE_VALUE', 400, errDescription), joiError };
+  }
+
+  const errDescription = `passed data is INVALID, ${errMessage}`;
   return { err: createRespErr('INVALID_DATA', 400, errDescription), joiError };
 }

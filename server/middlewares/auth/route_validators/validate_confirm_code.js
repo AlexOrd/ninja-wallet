@@ -1,9 +1,10 @@
 import { unexpectedError } from '../../../utils/auth/errors';
-import { validate } from '../../../utils/validation/validate';
+import { validator } from './joiValidator';
 
 export const validateConfirmCode = (req, res, next) => {
   try {
-    const { err } = validate('verifyingRestPassConfirmCode', 'auth')(req.body);
+    const { err } = validator('verifyingRestPassConfirmCode')(req.body);
+
     if (err) return next(err);
 
     return next();

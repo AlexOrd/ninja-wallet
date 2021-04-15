@@ -5,7 +5,7 @@ export const authErrors = {
     EXPIRED_RESTORE_PASSWORD_SESSION: createRespErr('EXPIRED_RESTORE_PASSWORD_SESSION', 403, 'session for restore password ended'),
     MISSING_TOKEN: createRespErr('MISSING_TOKEN', 400, 'not passed access or refresh token'),
     INVALID_TOKEN: createRespErr('INVALID_TOKEN', 403, 'invalid access token or refresh token'),
-    LOGIN_ALREADY_USE: createRespErr('LOGIN_ALREADY_USE', 406, 'this login has already use'),
+    LOGIN_ALREADY_USE: createRespErr('LOGIN_ALREADY_USE', 406, 'this login has already used'),
     INCORRECT_AUTH_DATA: createRespErr('INCORRECT_AUTH_DATA', 403, 'incorrect login or password'),
     INCORRECT_OLD_PASSWORD: createRespErr('INCORRECT_OLD_PASSWORD', 403, 'incorrect old password'),
     MAIL_PROVIDER_ERROR: createRespErr('MAIL_PROVIDER_ERROR', 500, 'problem with mail provider'),
