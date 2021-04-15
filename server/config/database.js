@@ -1,8 +1,10 @@
-require('dotenv').config();
-
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+
+dotenv.config();
+
 export function connect() {
-  const URL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_NAME}.nkpko.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+  const URL = process.env.MONGODB_URI;
   mongoose.set('useCreateIndex', true);
 
   // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
@@ -14,7 +16,9 @@ export function connect() {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
+    dbName: 'project_test' // !FOR DEV MODE
   });
+
 
   const db = mongoose.connection;
 

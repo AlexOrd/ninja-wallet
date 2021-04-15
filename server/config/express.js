@@ -12,12 +12,20 @@ const app = express();
 
 require('dotenv').config();
 
-app.set('port',  process.env.APP_PORT || 3000);
-app.set('host',  process.env.APP_HOST || 'localhost');
+app.set('port', process.env.APP_PORT || 3000);
+app.set('host', process.env.APP_HOST || 'localhost');
 
 app.use(express.static(constant.distDir));
 
-app.use(cors());
+const corsOptions = {
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "exposedHeaders": ["Access-Token", "Refresh-Token"],
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
+  }
+
+app.use(cors(corsOptions));
 app.use(helmet());
 app.use(compression());
 app.use(methodOverride());
