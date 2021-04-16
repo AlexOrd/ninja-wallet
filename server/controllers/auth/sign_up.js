@@ -13,7 +13,7 @@ import { getDeviceInfo } from '../../utils/auth/aux_functions/get_device_info';
 
 export const signUp = async (req, res, next) => {
   try {
-    const { email, password, deviceType } = req.body;
+    const { email, password } = req.body;
 
     const isUsedEmail = await User.findOne({ email: email });
     if (isUsedEmail) return next(authErrors.LOGIN_ALREADY_USE);

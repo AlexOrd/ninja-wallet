@@ -13,7 +13,7 @@ const { INCORRECT_AUTH_DATA } = authErrors;
 
 export const signIn = async (req, res, next) => {
   try {
-    const { email, password, deviceType } = req.body;
+    const { email, password } = req.body;
 
     const user = await User.findOne({ email: email });
     if (!user) return next(INCORRECT_AUTH_DATA);

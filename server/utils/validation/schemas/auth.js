@@ -24,9 +24,8 @@ export const auth = {
     .keys({
       email: Joi.string().email({ tlds: { allow: false } }).required(),
       password: Joi.string().min(6).max(25).required(),
-      deviceType: Joi.string().valid('pc', 'mob').required(),
     })
-    .and('email', 'password', 'deviceType'),
+    .and('email', 'password'),
 
   changingPassword: Joi.object()
     .keys({
@@ -51,7 +50,6 @@ export const auth = {
       confirmToken: Joi.string().required(),
       newPassword: Joi.string().min(6).max(25).required(),
       confirmPassword: Joi.string().valid(Joi.ref('newPassword')).required(),
-      deviceType: Joi.string().valid('pc', 'mob').required(),
     })
-    .and('confirmToken', 'newPassword', 'confirmPassword', 'deviceType'),
+    .and('confirmToken', 'newPassword', 'confirmPassword'),
 };

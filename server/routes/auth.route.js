@@ -50,6 +50,7 @@ router
     '/restore-password/create-password',
     validateNewPassCreating,
     verifyCredentials,
+    deviceDetector,
     createNewPassword
   )
   .patch('/restore-password/resend-code', verifyCredentials, reissueCredentials);
