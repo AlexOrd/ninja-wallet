@@ -18,6 +18,10 @@ import webpackConfig from '../webpack/webpack.config.dev';
 import {checkAccessAndProvideUserID} from './middlewares/auth/route_verifiers';
 import authRoutes from './routes/auth.route'
 import Transaction from './models/transaction.model';
+import { deviceDetector } from './middlewares/auth/device_detector';
+import { getDeviceInfo } from './utils/auth/aux_functions/get_device_info';
+
+
 
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(webpackConfig);
@@ -51,9 +55,10 @@ app.get('/getAll', async (req, response) => {
   response.json({ res, res2 });
 });
 
-// app.use('/auth', authRoutes)
-// app.use('/user-auth', userEmailRoutes)
-// app.use(checkAccessAndProvideUserID);
+app.get('/test', deviceDetector, (req, res) => {
+  console.log('INFO', getDeviceInfo(req))
+  res.send('hello world')
+})
 app.use('/app', routes);
 
 // app.use('/api', routes);
@@ -76,7 +81,7 @@ app.listen(app.get('port'), app.get('host'), () => {
   console.log(`Server running at http://${app.get('host')}:${app.get('port')}`);
 });
 
-// app.listen(3001, app.get('host'), () => {
+// app.listen(3000, app.get('host'), () => {
 //   console.log(`Server running at http://${app.get('host')}:${app.get('port')}`);
 // });
 

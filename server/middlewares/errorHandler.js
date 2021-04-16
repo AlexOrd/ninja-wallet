@@ -59,6 +59,7 @@ export function genericErrorHandler(err, req, res, next) {
       description: message,
     });
   } else {
+    console.log(err)
     return res.status(500).send({
       error: 'INTERNAL_SERVER_ERROR',
       statusCode: 500,

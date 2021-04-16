@@ -9,6 +9,7 @@ import { sendEmail } from '../../utils/auth/aux_functions/for_mail';
 import { unexpectedError, authErrors } from '../../utils/auth/errors';
 import { tokensNames } from '../../utils/auth/constants';
 import { createJWToken } from '../../utils/auth/aux_functions/for_tokens';
+import { getDeviceInfo } from '../../utils/auth/aux_functions/get_device_info';
 
 export const signUp = async (req, res, next) => {
   try {
@@ -19,7 +20,6 @@ export const signUp = async (req, res, next) => {
 
     const confirmCode = generateRandomString();
     const codeForEmailVerification = generateRandomNumbers();
-
     const user = new User({
       email,
       auth: {
@@ -27,8 +27,8 @@ export const signUp = async (req, res, next) => {
         openedOnDevices: [
           {
             confirmCode: encryptData(confirmCode),
-            deviceType,
             lastLogin: new Date(),
+            ...getDeviceInfo(req)
           },
         ],
         codeForEmailVerification: {
@@ -50,7 +50,7 @@ export const signUp = async (req, res, next) => {
     const { err: errSendEmail } = await sendEmail(
       'vitaliidrapaliuk@gmail.com',
       'Verification',
-      emailText,
+      emailText
     );
 
     if (errSendEmail) {

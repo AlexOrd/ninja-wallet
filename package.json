@@ -43,6 +43,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^5.0.0-alpha.7",
+    "express-useragent": "^1.0.15",
     "helmet": "^3.23.3",
     "history": "^4.10.1",
     "http-status-codes": "^1.4.0",

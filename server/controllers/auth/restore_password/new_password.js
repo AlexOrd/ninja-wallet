@@ -3,6 +3,7 @@ import { unexpectedError } from '../../../utils/auth/errors';
 import { tokensNames } from '../../../utils/auth/constants';
 import { createJWToken } from '../../../utils/auth/aux_functions/for_tokens';
 import { findUserById } from '../../../utils/auth/aux_functions/selectors';
+import { getDeviceInfo } from '../../../utils/auth/aux_functions/get_device_info';
 const { ACCESS, REFRESH } = tokensNames;
 
 export const createNewPassword = async (req, res, next) => {
@@ -16,7 +17,7 @@ export const createNewPassword = async (req, res, next) => {
     user.auth.openedOnDevices.push({
       confirmCode: encryptData(refreshTokenConfirmCode),
       lastLogin: new Date(),
-      deviceType: req.body.deviceType,
+      ...getDeviceInfo(req)
     });
     user.auth.codeForPasswordChanging = '';
     user.save();

@@ -11,7 +11,9 @@ const router = express.Router();
 
 router.use('/auth', authRoutes);
 
-// router.use('*', checkAccessAndProvideUserID);
+router.use(checkAccessAndProvideUserID);
+
+router.use('/user-email', emailRoutes);
 
 router.use('/users', userRoutes);
 
@@ -21,7 +23,6 @@ router.use('/transactions', transactionRoutes);
 
 router.use('/card', cardRoutes);
 
-router.use('/user-email', emailRoutes);
 
 router.use('/users', userRoutes);
 

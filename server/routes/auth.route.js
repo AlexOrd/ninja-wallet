@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+import { deviceDetector } from '../middlewares/auth/device_detector';
 import {
   checkAccessAndProvideUserID,
   verifyCredentials,
@@ -29,9 +30,11 @@ import {
   validateNewPassCreating,
 } from '../middlewares/auth/route_validators';
 
+
+
 router
-  .post('/sign-up', validateAuthData, signUp)
-  .post('/sign-in', validateAuthData, signIn)
+  .post('/sign-up',  validateAuthData, deviceDetector, signUp)
+  .post('/sign-in', validateAuthData, deviceDetector, signIn)
 
   .delete('/sign-out', checkAccessAndProvideUserID, signOut)
   .delete('/sign-out/every-device', checkAccessAndProvideUserID, signOutEveryDevice)
