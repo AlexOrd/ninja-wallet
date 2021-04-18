@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import Joi from '@hapi/joi';
-=======
 const Joi = require('@hapi/joi');
->>>>>>> main
 Joi.objectId = require('joi-objectid')(Joi);
 
 import JoiObjectId from 'joi-objectid';
