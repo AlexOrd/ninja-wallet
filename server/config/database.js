@@ -1,22 +1,24 @@
-require('dotenv').config();
-
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+
+dotenv.config();
+
 export function connect() {
   const URL = process.env.MONGODB_URI;
-  // var URL = `mongodb+srv://${process.env.MONGODB_CREDENTIALS}@${process.env.MONGODB_URI}/${process.env.MONGODB_DB_NAME}?retryWrites=true&w=majority`;
-
   mongoose.set('useCreateIndex', true);
 
   // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
   // by default, you need to set it to false.
   mongoose.set('useFindAndModify', false);
 
-  //Connection establishment
+  // Connection establishment
   mongoose.connect(URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
+    dbName: 'project_test' // !FOR DEV MODE
   });
+
 
   const db = mongoose.connection;
 
