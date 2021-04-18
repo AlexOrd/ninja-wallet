@@ -1,9 +1,9 @@
 import { unexpectedError } from '../../../utils/auth/errors';
 import { validator } from './joiValidator';
 
-export const validateDeviceID = (req, res, next) => {
+export const validateSignOut = (req, res, next) => {
   try {
-    const { err } = validator('id')(req.query);
+    const { err } = validator('signOut')(req.query);
     if (err) return next(err);
 
     return next();

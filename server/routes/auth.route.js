@@ -38,7 +38,7 @@ router
 
   .delete('/sign-out', checkAccessAndProvideUserID, signOut)
   .delete('/sign-out/every-device', checkAccessAndProvideUserID, signOutEveryDevice)
-  .delete('/sign-out/some-device', validateDeviceID, checkAccessAndProvideUserID, signOutSomeDevice)
+  .delete('/sign-out/device', validateDeviceID, checkAccessAndProvideUserID, signOutSomeDevice)
 
   .get('/devices-with-opened-app', checkAccessAndProvideUserID, giveDevicesWithOpenedApp)
   .get('/check-authorization', checkAccessAndProvideUserID, checkAuthorization)

@@ -22,7 +22,9 @@ export const auth = {
 
   authData: Joi.object()
     .keys({
-      email: Joi.string().email({ tlds: { allow: false } }).required(),
+      email: Joi.string()
+        .email({ tlds: { allow: false } })
+        .required(),
       password: Joi.string().min(6).max(25).required(),
     })
     .and('email', 'password'),

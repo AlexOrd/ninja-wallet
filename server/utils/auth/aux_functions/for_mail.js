@@ -1,38 +1,26 @@
-import {authErrors} from '../../auth/errors'; 
+import sgMail from '@sendgrid/mail';
 
-import nodemailer from 'nodemailer';
-const smtpConfig = {
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true, // use SSL
-  auth: {
-    user: 'valiakusil1945@gmail.com',
-    pass: '19452507Viktor',
-  },
-};
-
-const transporter = nodemailer.createTransport(smtpConfig);
-const mailer = async (to, subject, text) => {
-  const options = {
-    from: 'valiakusil1945@gmail.com',
-    // to: 'vitaliidrapaliuk@gmail.com',
-    to,
-    subject,
-    text,
-  };
-
-  return await transporter.sendMail(options);
-};
+const API_KEY = process.env.SEND_GRID_API_KEY;
+const DEV_KEY = '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';
+sgMail.setApiKey(API_KEY || DEV_KEY);
 
 export const sendEmail = async (email, subject, data) => {
   let result = { err: null };
+  console.log('email', email);
+  const msg = {
+    to: 'vitaliidrapaliuk@gmail.com',
+    // to: email,
+    from: 'valiakusil1945@gmail.com',
+    subject: subject,
+    text: data,
+  };
 
   try {
-    await mailer(email, subject, data);
+    await sgMail.send(msg);
   } catch (error) {
-    result.err = authErrors.MAIL_PROVIDER_ERROR
+    console.log(error);
     return result;
   }
-
+  console.log('SENT');
   return result;
 };
