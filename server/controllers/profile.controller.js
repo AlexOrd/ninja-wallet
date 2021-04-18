@@ -1,8 +1,18 @@
 import User from '../models/user.model';
+import { profileExist } from '../utils/profileAndPhoto-validations';
 
 export async function getProfile(req, res) {
+  const { id } = req.params;
+
+  const check = await profileExist(id);
+  if(!check) {
+    return res.status(400).json({
+      success: false,
+      message: 'Profile does not exist',
+    });
+  }
+
   try {
-    const { id } = req.params;
     const profile = await User.findById(id).populate('avatarId').exec();
     res.status(200).json({
       success: true,
@@ -19,9 +29,18 @@ export async function getProfile(req, res) {
 } 
 
 export async function updateProfile(req, res) {
+  const { firstName, lastName, email } = req.body;
+  const { id } = req.params;
+
+  const check = await profileExist(id);
+  if(!check) {
+    return res.status(400).json({
+      success: false,
+      message: 'Profile does not exist',
+    });
+  }
+
   try {
-    const { firstName, lastName, email } = req.body;
-    const { id } = req.params;
     const updated = await User.findByIdAndUpdate(id, { firstName, lastName, email }, {new: true});
     res.status(200).json({
       success: true,
@@ -38,8 +57,17 @@ export async function updateProfile(req, res) {
 }
 
 export async function deleteProfile(req, res) {
+  const { id } = req.params;
+
+  const check = await profileExist(id);
+  if(!check) {
+    return res.status(400).json({
+      success: false,
+      message: 'Profile does not exist',
+    });
+  }
+
   try {
-    const { id } = req.params;
     const deleted = await User.findByIdAndDelete(id);
     res.status(204).json({
       success: true,
