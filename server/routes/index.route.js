@@ -2,16 +2,16 @@ import express from 'express';
 import authRoutes from './auth.route';
 import userRoutes from './user.route';
 import profileRoutes from './profile.route';
+import userPhotoRoutes from './userPhoto.route';
 
 const router = express.Router();
 
-// mount auth routes at /auth
 router.use('/auth', authRoutes);
 
-// mount user routes at /users
 router.use('/users', userRoutes);
 
-// mount user routes at /users
 router.use('/profile', profileRoutes);
+
+router.use('/userphoto', userPhotoRoutes);
 
 export default router;

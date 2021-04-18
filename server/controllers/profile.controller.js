@@ -3,7 +3,7 @@ import User from '../models/user.model';
 export async function getProfile(req, res) {
   try {
     const { id } = req.params;
-    const profile = await User.findById({ id }).populate('userPhoto');
+    const profile = await User.findById(id).populate('avatarId').exec();
     res.status(200).json({
       success: true,
       data: {
@@ -22,7 +22,7 @@ export async function updateProfile(req, res) {
   try {
     const { firstName, lastName, email } = req.body;
     const { id } = req.params;
-    const updated = await User.findByIdAndUpdate({_id: id}, { firstName, lastName, email }, {new: true});
+    const updated = await User.findByIdAndUpdate(id, { firstName, lastName, email }, {new: true});
     res.status(200).json({
       success: true,
       data: {
@@ -40,7 +40,7 @@ export async function updateProfile(req, res) {
 export async function deleteProfile(req, res) {
   try {
     const { id } = req.params;
-    const deleted = await User.findByIdAndDelete({ id });
+    const deleted = await User.findByIdAndDelete(id);
     res.status(204).json({
       success: true,
       data: {
