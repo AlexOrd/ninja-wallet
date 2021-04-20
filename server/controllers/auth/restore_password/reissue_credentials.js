@@ -21,7 +21,7 @@ export const reissueCredentials = async (req, res, next) => {
 
     const emailText = `It is your verification code: ${confirmCode}`;
     const { err: errSendEmail } = await sendEmail(
-      'vitaliidrapaliuk@gmail.com',
+      user.email,
       'Restore password',
       emailText,
     );

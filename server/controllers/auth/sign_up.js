@@ -48,7 +48,7 @@ export const signUp = async (req, res, next) => {
 
     const emailText = `It is your verification code: ${codeForEmailVerification}`;
     const { err: errSendEmail } = await sendEmail(
-      'vitaliidrapaliuk@gmail.com',
+      email,
       'Verification',
       emailText
     );

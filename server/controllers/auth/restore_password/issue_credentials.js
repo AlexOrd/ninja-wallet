@@ -23,7 +23,7 @@ export const issueCredentials = async (req, res, next) => {
 
     const emailText = `It is your confirmation code: ${confirmCode}`;
     const { err: errSendEmail } = await sendEmail(
-      'vitaliidrapaliuk@gmail.com',
+      req.body.email,
       'Restore password',
       emailText,
     );

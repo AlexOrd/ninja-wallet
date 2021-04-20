@@ -23,7 +23,7 @@ export const changeEmail = async (req, res, next) => {
 
     const mailMessage = `Code for verification: ${newCodeForEmailVerification}`;
     const { err: errSendEmail } = await sendEmail(
-      'vitaliidrapaliuk@gmail.com',
+      req.body.email,
       'Verification',
       mailMessage
     );
