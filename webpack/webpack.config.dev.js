@@ -24,6 +24,7 @@ const config = {
         publicPath: '/dist/'
     },
     plugins: [
+        new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(), // enable HMR globally
         new webpack.NoEmitOnErrorsPlugin(),  // do not emit compiled assets that include errors
         new Dotenv()
