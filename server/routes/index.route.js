@@ -11,19 +11,14 @@ const router = express.Router();
 
 router.use('/auth', authRoutes);
 
-router.use(checkAccessAndProvideUserID);
+router.use('/user-email', checkAccessAndProvideUserID, emailRoutes);
 
-router.use('/user-email', emailRoutes);
+router.use('/users', checkAccessAndProvideUserID, userRoutes);
 
-router.use('/users', userRoutes);
+router.use('/categories', checkAccessAndProvideUserID, categoriesRoutes);
 
-router.use('/categories', categoriesRoutes);
+router.use('/transactions', checkAccessAndProvideUserID, transactionRoutes);
 
-router.use('/transactions', transactionRoutes);
-
-router.use('/card', cardRoutes);
-
-
-router.use('/users', userRoutes);
+router.use('/card', checkAccessAndProvideUserID, cardRoutes);
 
 export default router;
