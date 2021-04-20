@@ -7,7 +7,15 @@ const deviceSchema = new mongoose.Schema({
   confirmCode: String,
   deviceType: {
     type: String,
-    default: 'pc',
+    default: 'mobile',
+  },
+  browser: {
+    type: String,
+    default: 'chrome'
+  },
+  platform: {
+    type: String,
+    default: 'microsoft Windows'
   },
   lastLogin: Date,
 });

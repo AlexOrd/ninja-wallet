@@ -3,7 +3,7 @@ import { validator } from './joiValidator';
 
 export const validateDeviceID = (req, res, next) => {
   try {
-    const { err } = validator('id')(req.body);
+    const { err } = validator('id')(req.query);
     if (err) return next(err);
 
     return next();

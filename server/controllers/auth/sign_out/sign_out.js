@@ -15,6 +15,6 @@ export const signOut = async (req, res, next) => {
 
     return res.status(200).send({ success: true });
   } catch (error) {
-    unexpectedError(error);
+    unexpectedError(error, next);
   }
 };

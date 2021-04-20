@@ -8,11 +8,12 @@ import {
   generateRandomNumbers,
 } from '../../utils/auth/aux_functions/common';
 import { tokensNames } from '../../utils/auth/constants';
+import { getDeviceInfo } from '../../utils/auth/aux_functions/get_device_info';
 const { INCORRECT_AUTH_DATA } = authErrors;
 
 export const signIn = async (req, res, next) => {
   try {
-    const { email, password, deviceType } = req.body;
+    const { email, password } = req.body;
 
     const user = await User.findOne({ email: email });
     if (!user) return next(INCORRECT_AUTH_DATA);
@@ -23,8 +24,8 @@ export const signIn = async (req, res, next) => {
     const confirmCode = generateRandomNumbers();
     user.auth.openedOnDevices.push({
       confirmCode: encryptData(confirmCode),
-      deviceType,
       lastLogin: new Date(),
+      ...getDeviceInfo(req)
     });
 
     const lastAddedDeviceIdx = user.auth.openedOnDevices.length - 1;

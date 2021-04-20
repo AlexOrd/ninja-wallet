@@ -1,9 +1,9 @@
 import { unexpectedError } from '../../../utils/auth/errors';
 import { validator } from './joiValidator';
 
-export const validateAuthData = (req, res, next) => {
+export const validateSignOut = (req, res, next) => {
   try {
-    const { err, joiError } = validator('authData')(req.body);
+    const { err } = validator('signOut')(req.query);
     if (err) return next(err);
 
     return next();
