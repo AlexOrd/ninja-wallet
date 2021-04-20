@@ -58,7 +58,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use(requestLogger);
 
-app.use('/', routes);
+app.use('/api', routes);
 
 // Landing page
 app.get('*', (req, res) => {
