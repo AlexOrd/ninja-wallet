@@ -55,13 +55,7 @@ app.get('/getAll', async (req, response) => {
   response.json({ res, res2 });
 });
 
-app.get('/test', deviceDetector, (req, res) => {
-  console.log('INFO', getDeviceInfo(req))
-  res.send('hello world')
-})
 app.use('/app', routes);
-
-// app.use('/api', routes);
 
 // Landing page
 app.get('*', (req, res) => {
@@ -80,9 +74,5 @@ app.use(errorHandler.methodNotAllowed);
 app.listen(app.get('port'), app.get('host'), () => {
   console.log(`Server running at http://${app.get('host')}:${app.get('port')}`);
 });
-
-// app.listen(3000, app.get('host'), () => {
-//   console.log(`Server running at http://${app.get('host')}:${app.get('port')}`);
-// });
 
 export default app;

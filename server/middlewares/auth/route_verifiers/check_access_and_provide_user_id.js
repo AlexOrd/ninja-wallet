@@ -10,9 +10,7 @@ const { verifyingAndDecodeJWT } = authVerifiers;
 const { ACCESS } = tokensNames;
 
 export const checkAccessAndProvideUserID = async (req, res, next) => {
-  console.log('checkAccessAndProvideUserID', checkAccessAndProvideUserID)
   try {
-    console.log('this one')
     const { err: parsingTokensErr, parsedTokens } = getTokensFromReq(req);
     if (parsingTokensErr) return next(parsingTokensErr);
 
