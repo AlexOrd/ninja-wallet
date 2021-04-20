@@ -30,6 +30,12 @@ const schema = new Schema({
   balance: {
     type: Number,
     default: 0
+  },
+  expiry: {
+    type: String
+  },
+  cvc: {
+    type: Number
   }
 }, { timestamps: true, collection: 'card' });
 

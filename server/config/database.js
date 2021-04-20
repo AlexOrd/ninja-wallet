@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 dotenv.config();
 
 export function connect() {
-  const URL = process.env.MONGODB_URI;
+  const URL = process.env.MONGO_URL;
   mongoose.set('useCreateIndex', true);
 
   // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
