@@ -7,6 +7,7 @@ import PrivateRoute from './PrivateRoute';
 import RestrictRoute from './RestrictRoute';
 import MainLayout from '../components/common/layout/MainLayout';
 import NotFound from '../components/error/NotFound';
+import Transactions from '../containers/Transactions';
 
 const AsyncLoginForm = loadable(() => import('../containers/auth/LoginContainer'));
 const AsyncSignUpForm = loadable(() => import('../containers/auth/SignUpContainer'));
@@ -21,6 +22,7 @@ const Router = () => (
       <PrivateRoute exact path="/dashboard" layout={MainLayout} component={AsyncDashboard} />
 
       <Route component={NotFound} />
+      <Route component={Transactions} />
     </Switch>
   </Fragment>
 );
