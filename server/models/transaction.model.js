@@ -1,39 +1,42 @@
 import mongoose from 'mongoose';
+import './category.model';
+import './user.model';
+import './card.model';
 
 const Schema = mongoose.Schema;
 
-const schema = new Schema({
-    _id: {
-        type: Schema.ObjectId,
-        required: true
-    },
-    transactionName: {
-        type: String, 
-        required: true
+const schema = new Schema(
+  {
+    transactionType: {
+      type: String,
+      required: true,
     },
     transactionCategory: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category'  
+        ref: 'Category'
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true 
+      required: true,
     },
-    accountId: {
+    cardId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Account',
-      required: true   
+      ref: 'Card',
+      required: true, 
     },
     sum: {
       type: Number,
-      required: true
+      required: true,
     },
     merchantName: {
-      type: String
-    }
-}, {timestamps: true, collection: 'transactions'});
+      type: String,
+    },
+  },
+  { timestamps: true, collection: 'transactions' }
+);
 
-const Transaction = mongoose.model('Transaction', schema);
+const Transaction = mongoose.model('Transactions', schema);
 
 export { Transaction };
+

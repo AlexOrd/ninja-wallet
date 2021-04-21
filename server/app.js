@@ -1,13 +1,15 @@
 import path from 'path';
 import app from './config/express';
 import routes from './routes/index.route';
-import swagger from './config/swagger';
 import * as errorHandler from './middlewares/errorHandler';
 import joiErrorHandler from './middlewares/joiErrorHandler';
 import requestLogger from './middlewares/requestLogger';
+import chokidar from 'chokidar';
+require('dotenv').config();
 
-import { connect } from './config/database';
-import { User } from './models/user.model';
+import { connect as connectToDB } from './config/database';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './config/swagger';
 
 // enable webpack hot module replacement in development mode
 import webpack from 'webpack';
@@ -15,40 +17,52 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack/webpack.config.dev';
 
+import { checkAccessAndProvideUserID } from './middlewares/auth/route_verifiers';
+import authRoutes from './routes/auth.route';
+import Transaction from './models/transaction.model';
+import { deviceDetector } from './middlewares/auth/device_detector';
+import { getDeviceInfo } from './utils/auth/aux_functions/get_device_info';
+
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(webpackConfig);
   app.use(
     webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath })
   );
   app.use(webpackHotMiddleware(compiler));
-}
-//Configs and imports
-connect();
 
-// Swagger API documentation
-app.get('/swagger.json', (req, res) => {
-  res.json(swagger);
-});
+  const watcher = chokidar.watch('./server');
 
-// Request logger
-app.use(requestLogger);
-
-// Router
-
-app.get('/getAll', (req, res) => {
-  User.find({}, function (err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(result);
-    }
+  watcher.on('ready', function () {
+    watcher.on('all', function () {
+      console.log('Clearing /server/ module cache from server');
+      Object.keys(require.cache).forEach(function (id) {
+        if (/[\/\\]server[\/\\]/.test(id)) delete require.cache[id];
+      });
+    });
   });
-});
+
+  // Do "hot-reloading" of react stuff on the server
+  // Throw away the cached client modules and let them be re-required next time
+  compiler.plugin('done', function () {
+    console.log('Clearing /client/ module cache from server');
+    Object.keys(require.cache).forEach(function (id) {
+      if (/[\/\\]client[\/\\]/.test(id)) delete require.cache[id];
+    });
+  });
+}
+
+connectToDB();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
+app.use(requestLogger);
 
 app.use('/api', routes);
 
 // Landing page
 app.get('*', (req, res) => {
+  // res.send('hello world')
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 

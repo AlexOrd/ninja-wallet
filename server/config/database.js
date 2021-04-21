@@ -1,32 +1,35 @@
-require('dotenv').config();
-
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+
+dotenv.config();
+
 export function connect() {
-  const URL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_NAME}.nkpko.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
-  mongoose.set('useCreateIndex', true);
+    const URL = process.env.MONGODB_URI;
+    mongoose.set('useCreateIndex', true);
 
-  // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
-  // by default, you need to set it to false.
-  mongoose.set('useFindAndModify', false);
+    // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
+    // by default, you need to set it to false.
+    mongoose.set('useFindAndModify', false);
 
-  //Connection establishment
-  mongoose.connect(URL, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-  });
+    // Connection establishment
+    mongoose.connect(URL, {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true,
+    });
 
-  const db = mongoose.connection;
 
-  db.on('error', (err) => {
-    console.error('Error occured in db connection:', err);
-  });
+    const db = mongoose.connection;
 
-  db.on('open', () => {
-    console.log('DB Connection established successfully');
-  });
+    db.on('error', (err) => {
+        console.error('Error occured in db connection:', err);
+    });
 
-  db.on('disconnected', () => {
-    console.log('DB Connection closed');
-  });
+    db.on('open', () => {
+        console.log('DB Connection established successfully');
+    });
+
+    db.on('disconnected', () => {
+        console.log('DB Connection closed');
+    });
 }

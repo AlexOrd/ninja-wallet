@@ -1,43 +1,54 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
+import './userPhoto.model';
+
 const Schema = mongoose.Schema;
 
 const deviceSchema = new mongoose.Schema({
   confirmCode: String,
   deviceType: {
-      type: String,
-      default: 'pc'
+    type: String,
+    default: 'mobile',
   },
-  lastLogin: Date
-})
+  browser: {
+    type: String,
+    default: 'chrome'
+  },
+  platform: {
+    type: String,
+    default: 'microsoft Windows'
+  },
+  lastLogin: Date,
+});
 
 const schema = new Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
+  firstName: String,
+  lastName: String,
   email: {
     type: String,
-    required: true
+    required: true,
   },
-
   isVerifiedEmail: {
-      type: Boolean,
-      default: false
+    type: Boolean,
+    default: false,
   },
-  
+  avatarId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'userPhoto',
+  },
   auth: {
     password: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     openedOnDevices: [deviceSchema],
     codeForPasswordChanging: String,
     codeForEmailVerification: {
-        value: String,
-        emitted: Date
+      value: String,
+      emitted: Date,
     },
-},
+  },
 });
 
 
 const User = mongoose.model('User', schema);
-module.exports = User
-// export { User };
+export default User

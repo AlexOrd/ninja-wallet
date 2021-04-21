@@ -1,16 +1,24 @@
 import express from 'express';
-import authRoutes from './auth.route';
 import userRoutes from './user.route';
+import authRoutes from './auth.route';
+import emailRoutes from './email.route';
+import transactionRoutes from './transaction.route';
 import categoriesRoutes from './categories.route';
+import cardRoutes from './card.route';
+import { checkAccessAndProvideUserID } from '../middlewares/auth/route_verifiers';
 
 const router = express.Router();
 
-// mount auth routes at /auth
 router.use('/auth', authRoutes);
 
-// mount user routes at /users
-router.use('/users', userRoutes);
+router.use('/user-email', checkAccessAndProvideUserID, emailRoutes);
 
-router.use('/categories', categoriesRoutes);
+router.use('/users', checkAccessAndProvideUserID, userRoutes);
+
+router.use('/categories', checkAccessAndProvideUserID, categoriesRoutes);
+
+router.use('/transactions', checkAccessAndProvideUserID, transactionRoutes);
+
+router.use('/card', checkAccessAndProvideUserID, cardRoutes);
 
 export default router;

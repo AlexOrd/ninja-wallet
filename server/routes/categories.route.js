@@ -6,12 +6,13 @@ import * as categoriesCtrl from '../controllers/categories.controller';
 
 const router = express.Router();
 
-router.route('/get-categories').get(categoriesCtrl.getUserCategories);
+router.route('/')
+    .get(categoriesCtrl.getUserCategories)
+    .post(categoriesCtrl.createCategory)
 
-router.route('/create').post(validate(schema.category), categoriesCtrl.createCategory);
 
-router.route('/edit/:id').put(validate(schema.category), categoriesCtrl.editCategory);
-
-router.route('/delete/:id').delete(categoriesCtrl.deleteCategory);
+router.route('/:id')
+    .put(categoriesCtrl.editCategory)
+    .delete(categoriesCtrl.deleteCategory);
 
 export default router;

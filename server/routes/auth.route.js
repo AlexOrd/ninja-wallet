@@ -1,84 +1,58 @@
-import express from 'express';
-import * as authCtrl from '../controllers/auth.controller';
-
+const express = require('express');
 const router = express.Router();
+import { deviceDetector } from '../middlewares/auth/device_detector';
+import {
+  checkAccessAndProvideUserID,
+  verifyCredentials,
+} from '../middlewares/auth/route_verifiers';
 
-/**
- * @swagger
- * tags:
- *   - name: authentication
- *     description: User authentication
- */
+import {
+  signUp,
+  signIn,
+  signOut,
+  signOutSomeDevice,
+  signOutEveryDevice,
+  issueCredentials,
+  verifyConfirmCode,
+  reissueCredentials,
+  createNewPassword,
+  changePassword,
+  checkAuthorization,
+  giveDevicesWithOpenedApp,
+} from '../controllers/auth';
 
-/**
- * @swagger
- * definitions:
- *   Login:
- *     type: object
- *     properties:
- *       email:
- *         type: string
- *         example: test@gmail.com
- *       password:
- *         type: string
- *         example: "1234"
- *   Token:
- *    type: object
- *    properties:
- *      email:
- *        type: string
- *        example: test@gmail.com
- *      token:
- *        type: string
- *        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE1MDk5ODg2NDZ9.1zTKAzXmuyQDHw4uJXa324fFS1yZwlriFSppvK6nOQY
- *   Error:
- *      type: object
- *      properties:
- *         message:
- *            type: string
- *         error:
- *            type: boolean
- *            default: true
- *
- */
+import {
+  validateAuthData,
+  validateDeviceID,
+  validateChangingPassword,
+  validateCredentialsIssue,
+  validateConfirmCode,
+  validateNewPassCreating,
+} from '../middlewares/auth/route_validators';
 
-/**
- * @swagger
- * /auth/login:
- *   post:
- *     tags:
- *       - authentication
- *     summary: Authenticate a user and receive a JWT Token
- *     description:
- *     operationId: login
- *     consumes:
- *       - application/json
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: body
- *         in: body
- *         required: true
- *         schema:
- *           $ref: '#/definitions/Login'
- *     responses:
- *       200:
- *         description: OK
- *         schema:
- *            $ref: '#/definitions/Token'
- *       400:
- *         description: Invalid username/password
- *         schema:
- *            $ref: '#/definitions/Error'
- *       404:
- *         description: User not found
- *         schema:
- *            $ref: '#/definitions/Error'
- */
 
-router.route('/login')
-    .post((req, res) => {
-        authCtrl.login(req, res);
-    });
+
+router
+  .post('/sign-up',  validateAuthData, deviceDetector, signUp)
+  .post('/sign-in', validateAuthData, deviceDetector, signIn)
+
+  .delete('/sign-out', checkAccessAndProvideUserID, signOut)
+  .delete('/sign-out/every-device', checkAccessAndProvideUserID, signOutEveryDevice)
+  .delete('/sign-out/device', validateDeviceID, checkAccessAndProvideUserID, signOutSomeDevice)
+
+  .get('/devices-with-opened-app', checkAccessAndProvideUserID, giveDevicesWithOpenedApp)
+  .get('/check-authorization', checkAccessAndProvideUserID, checkAuthorization)
+  .patch('/change-password', validateChangingPassword, checkAccessAndProvideUserID, changePassword)
+
+  .post('/restore-password/get-credentials', validateCredentialsIssue, issueCredentials)
+  .post('/restore-password/verify-code', validateConfirmCode, verifyCredentials, verifyConfirmCode)
+  .patch(
+    '/restore-password/create-password',
+    validateNewPassCreating,
+    verifyCredentials,
+    deviceDetector,
+    createNewPassword
+  )
+  .patch('/restore-password/resend-code', verifyCredentials, reissueCredentials);
 
 export default router;

@@ -1,4 +1,4 @@
-import { Category } from '../models/category.model';
+import Category from '../models/category.model';
 
 export const validateCategory = async (category, userId) => {
   if (!category.name.trim()) {

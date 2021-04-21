@@ -12,6 +12,4 @@ const schema = new Schema(
   { timestamps: true, collection: 'categories' }
 );
 
-const Category = mongoose.model('Category', schema);
-
-export { Category };
+export default mongoose.model('Category', schema);
