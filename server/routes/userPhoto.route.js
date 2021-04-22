@@ -5,7 +5,7 @@ import schema from '../utils/validator';
 
 const router = express.Router();
 
-router.route('/:id')
+router.route('/')
   .post(validate(schema.userPhoto), (req, res, next) => userPhotoCtrl.createPhoto(req, res, next))
   .put(validate(schema.userPhoto), (req, res, next) => userPhotoCtrl.updatePhoto(req, res, next));
 
