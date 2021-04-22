@@ -1,12 +1,6 @@
 export { signUp } from './sign_up';
 export { signIn } from './sign_in';
-export { signOut } from './sign_out/sign_out';
-export { signOutSomeDevice } from './sign_out/sign_out_some_device';
-export { signOutEveryDevice } from './sign_out/sign_out_every_device';
-export { issueCredentials } from './restore_password/issue_credentials';
-export { verifyConfirmCode } from './restore_password/verify_confirm_code';
-export { reissueCredentials } from './restore_password/reissue_credentials';
-export { createNewPassword } from './restore_password/new_password';
+export { signOut } from './sign_out';
 export { changePassword } from './change_password';
-export { checkAuthorization } from './check_authorization';
 export { giveDevicesWithOpenedApp } from './give_devices_with_opened_app';
+export * from './restore_password';
