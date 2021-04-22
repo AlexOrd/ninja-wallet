@@ -12,4 +12,6 @@ const schema = new Schema(
   { collection: 'userPhoto' }
 );
 
-export default mongoose.model('userPhoto', schema);
+const userPhoto = mongoose.model('userPhoto', schema);
+module.exports = userPhoto;
+// export { userPhoto };

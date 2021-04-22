@@ -1,26 +1,30 @@
 import express from 'express';
 import userRoutes from './user.route';
+import profileRoutes from './profile.route';
+import userPhotoRoutes from './userPhoto.route';
+import authRoutes from './auth.route';
+import emailRoutes from './email.route';
 import transactionRoutes from './transaction.route';
 import categoriesRoutes from './categories.route';
 import cardRoutes from './card.route';
-import authRoutes from './auth.route';
-import emailRoutes from './email.route';
-
+import { checkAccessAndProvideUserID } from '../middlewares/auth/route_verifiers';
 
 const router = express.Router();
 
 router.use('/auth', authRoutes);
 
-router.use('/users', userRoutes);
+router.use('/user-email', checkAccessAndProvideUserID, emailRoutes);
 
-router.use('/categories', categoriesRoutes);
+router.use('/users', checkAccessAndProvideUserID, userRoutes);
 
-router.use('/transactions', transactionRoutes);
+router.use('/categories', checkAccessAndProvideUserID, categoriesRoutes);
 
-router.use('/card', cardRoutes);
+router.use('/transactions', checkAccessAndProvideUserID, transactionRoutes);
 
-router.use('/user-email', emailRoutes);
+router.use('/card', checkAccessAndProvideUserID, cardRoutes);
 
+router.use('/profile', checkAccessAndProvideUserID, profileRoutes);
 
+router.use('/userphoto', checkAccessAndProvideUserID, userPhotoRoutes);
 
 export default router;

@@ -46,16 +46,7 @@ export function methodNotAllowed(req, res) {
  * @param  {Function} next
  */
 
-console.log(HttpStatus.getStatusText(HttpStatus.FORBIDDEN))
 export function genericErrorHandler(err, req, res, next) {
-  // logger.error(err);
-  // res.status(err.status || HttpStatus.INTERNAL_SERVER_ERROR).json({
-  //   error: {
-  //     code: err.code || HttpStatus.INTERNAL_SERVER_ERROR,
-  //     message: err.message || HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR), //Server Error | Forbidden
-  //   },
-  // });
-
   logger.error(err);
   const isErrorHandled = err instanceof ResponseError;
   if (isErrorHandled) {
@@ -67,6 +58,14 @@ export function genericErrorHandler(err, req, res, next) {
       description: message,
     });
   } else {
+    if(err.name === 'SyntaxError') {
+      return res.status(400).send({
+        error: 'INVALID_REQUEST_SYNTAX',
+        statusCode: 400,
+        description: `${err.name}, ${err.message}`,
+      });
+    }
+
     return res.status(500).send({
       error: 'INTERNAL_SERVER_ERROR',
       statusCode: 500,

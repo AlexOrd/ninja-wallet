@@ -14,7 +14,7 @@ function detectErrorType(joiError) {
 
   if (errType === 'any.required' || errType === 'object.and') {
     const errDescription = `passed object DOESN'T contain required field(s), ${errMessage}`;
-    return { err: new createRespErr('MISSING_REQUIRED_FIELD', 400, errDescription), joiError };
+    return { err: createRespErr('MISSING_REQUIRED_FIELD', 400, errDescription), joiError };
   }
 
   if (errType === 'object.unknown') {
