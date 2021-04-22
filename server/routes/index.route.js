@@ -1,5 +1,7 @@
 import express from 'express';
 import userRoutes from './user.route';
+import profileRoutes from './profile.route';
+import userPhotoRoutes from './userPhoto.route';
 import authRoutes from './auth.route';
 import emailRoutes from './email.route';
 import transactionRoutes from './transaction.route';
@@ -20,5 +22,9 @@ router.use('/categories', checkAccessAndProvideUserID, categoriesRoutes);
 router.use('/transactions', checkAccessAndProvideUserID, transactionRoutes);
 
 router.use('/card', checkAccessAndProvideUserID, cardRoutes);
+
+router.use('/profile', checkAccessAndProvideUserID, profileRoutes);
+
+router.use('/userphoto', checkAccessAndProvideUserID, userPhotoRoutes);
 
 export default router;
