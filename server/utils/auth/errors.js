@@ -14,6 +14,7 @@ export const authErrors = {
     EXPIRED_CONFIRMATION_CODE: createRespErr('EXPIRED_CONFIRMATION_CODE', 403, 'the code for verification was expired'),
     INVALID_DATA: createRespErr('INVALID_DATA', 403, 'passed data is invalid for this request'),
     ACCESS_DENIED: createRespErr('ACCESS_DENIED', 403, 'access denied'),
+    USER_BY_EMAIL_NOT_FOUND: createRespErr('USER_BY_EMAIL_NOT_FOUND', 403, 'user didn`t find by passed email')
 }
 
 export const unexpectedError = (error, next) => {
