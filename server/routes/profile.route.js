@@ -6,14 +6,14 @@ import schema from '../utils/validator';
 const router = express.Router();
 
 router.route('/:id')
-  .get((req, res) => {
-    profileCtrl.getProfile(req, res);
+  .get((req, res, next) => {
+    profileCtrl.getProfile(req, res, next);
   })
-  .put(validate(schema.profile), (req, res) => {
-    profileCtrl.updateProfile(req, res);
+  .put(validate(schema.profile), (req, res, next) => {
+    profileCtrl.updateProfile(req, res, next);
   })
-  .delete((req, res) => {
-    profileCtrl.deleteProfile(req, res);
+  .delete((req, res, next) => {
+    profileCtrl.deleteProfile(req, res, next);
   });
 
 export default router;

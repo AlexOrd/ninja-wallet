@@ -1,9 +1,10 @@
 import UserPhoto from '../models/userPhoto.model';
 import User from '../models/user.model';
 import { profileExist, userPhotoExist } from '../utils/profileAndPhoto-validations';
+import { unexpectedError } from '../utils/error_handling/unexpected_error';
 
-export async function createPhoto(req, res) {
-  const { id } = req.params;
+export async function createPhoto(req, res, next) {
+  const id = req.userID;
   const { fileString } = req.body;
 
   const check = await profileExist(id);
@@ -27,14 +28,11 @@ export async function createPhoto(req, res) {
       },
     });
   } catch(err) {
-    res.status(500).json({
-      success: false,
-      message: err,
-    });
+    unexpectedError(err, next);
   }
 }
 
-export async function updatePhoto(req, res) {
+export async function updatePhoto(req, res, next) {
   const { id } = req.params;
 
   const check = await userPhotoExist(id);
@@ -55,9 +53,6 @@ export async function updatePhoto(req, res) {
       },
     });
   } catch(err) {
-    res.status(500).json({
-      success: false,
-      message: err,
-    });
+    unexpectedError(err, next);
   }
 }

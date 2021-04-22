@@ -1,8 +1,9 @@
 import User from '../models/user.model';
 import { profileExist } from '../utils/profileAndPhoto-validations';
+import { unexpectedError } from '../utils/error_handling/unexpected_error';
 
-export async function getProfile(req, res) {
-  const { id } = req.params;
+export async function getProfile(req, res, next) {
+  const id = req.userID;
 
   const check = await profileExist(id);
   if(!check) {
@@ -21,16 +22,13 @@ export async function getProfile(req, res) {
       },
     });
   } catch(err) {
-    res.status(404).json({
-      success: false,
-      message: err,
-    });
+    unexpectedError(err, next);
   }
 } 
 
-export async function updateProfile(req, res) {
+export async function updateProfile(req, res, next) {
   const { firstName, lastName, email } = req.body;
-  const { id } = req.params;
+  const id = req.userID;
 
   const check = await profileExist(id);
   if(!check) {
@@ -49,15 +47,12 @@ export async function updateProfile(req, res) {
       },
     });
   } catch(err) {
-    res.status(500).json({
-      success: false,
-      message: err,
-    });
+    unexpectedError(err, next);
   }
 }
 
-export async function deleteProfile(req, res) {
-  const { id } = req.params;
+export async function deleteProfile(req, res, next) {
+  const id = req.userID;
 
   const check = await profileExist(id);
   if(!check) {
@@ -76,9 +71,6 @@ export async function deleteProfile(req, res) {
       },
     });
   } catch(err) {
-    res.status(500).json({
-      success: false,
-      message: err,
-    });
+    unexpectedError(err, next);
   }
 }
