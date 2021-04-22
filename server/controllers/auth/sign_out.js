@@ -1,7 +1,7 @@
 import { unexpectedError } from '../../utils/auth/errors';
 import { findUserById, getDeviceByID } from '../../utils/auth/aux_functions/selectors';
 
-export const signOut = (req, res, next) => {
+export const signOut = async (req, res, next) => {
     try {
         const { err: errFindingUser, user } = await findUserById(req.userID);
         if (errFindingUser) return next(errFindingUser);

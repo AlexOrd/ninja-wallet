@@ -35,13 +35,9 @@ import {
 router
   .post('/sign-up',  validateAuthData, deviceDetector, signUp)
   .post('/sign-in', validateAuthData, deviceDetector, signIn)
-
   .delete('/sign-out', checkAccessAndProvideUserID, signOut)
-  // .delete('/sign-out/every-device', checkAccessAndProvideUserID, signOutEveryDevice)
-  // .delete('/sign-out/device', validateDeviceID, checkAccessAndProvideUserID, signOutSomeDevice)
 
   .get('/devices-with-opened-app', checkAccessAndProvideUserID, giveDevicesWithOpenedApp)
-  .get('/check-authorization', checkAccessAndProvideUserID, checkAuthorization)
   .patch('/change-password', validateChangingPassword, checkAccessAndProvideUserID, changePassword)
 
   .post('/restore-password/get-credentials', validateCredentialsIssue, issueCredentials)

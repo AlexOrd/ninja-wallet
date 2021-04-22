@@ -11,7 +11,6 @@ import { createJWToken } from '../../utils/auth/aux_functions/for_tokens';
 import { findUserById } from '../../utils/auth/aux_functions/selectors';
 import { getDeviceInfo } from '../../utils/auth/aux_functions/get_device_info';
 import { authVerifiers } from '../../utils/auth/aux_functions/verifiers';
-const { USER_NOT_FOUND } = authErrors;
 const { ACCESS, REFRESH } = tokensNames;
 const { USER_NOT_FOUND, USER_BY_EMAIL_NOT_FOUND } = authErrors;
 
