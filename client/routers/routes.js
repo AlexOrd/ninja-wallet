@@ -7,7 +7,7 @@ import PrivateRoute from './PrivateRoute';
 import RestrictRoute from './RestrictRoute';
 import MainLayout from '../components/common/layout/MainLayout';
 import NotFound from '../components/error/NotFound';
-import TransactionList from '../containers/TransactionList';
+import TransactionList from '../containers/Transactions/TransanctionList';
 
 const AsyncLoginForm = loadable(() => import('../containers/auth/LoginContainer'));
 const AsyncSignUpForm = loadable(() => import('../containers/auth/SignUpContainer'));
