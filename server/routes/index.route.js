@@ -13,23 +13,18 @@ const router = express.Router();
 
 router.use('/auth', authRoutes);
 
-router.use(checkAccessAndProvideUserID);
+router.use('/user-email', checkAccessAndProvideUserID, emailRoutes);
 
-router.use('/user-email', emailRoutes);
+router.use('/users', checkAccessAndProvideUserID, userRoutes);
 
-router.use('/users', userRoutes);
+router.use('/categories', checkAccessAndProvideUserID, categoriesRoutes);
 
-router.use('/categories', categoriesRoutes);
+router.use('/transactions', checkAccessAndProvideUserID, transactionRoutes);
 
-router.use('/transactions', transactionRoutes);
+router.use('/card', checkAccessAndProvideUserID, cardRoutes);
 
-router.use('/card', cardRoutes);
+router.use('/profile', checkAccessAndProvideUserID, profileRoutes);
 
-
-router.use('/profile', profileRoutes);
-
-router.use('/userphoto', userPhotoRoutes);
-
-
+router.use('/userphoto', checkAccessAndProvideUserID, userPhotoRoutes);
 
 export default router;
