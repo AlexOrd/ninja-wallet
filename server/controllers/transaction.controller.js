@@ -1,13 +1,12 @@
 const { Transaction } = require('../models/transaction.model');
 import { doesCardIdExist, doesTransactionIdExist } from '../utils/transactions-validations';
-/
+
 exports.getAllTransactions = async (req, res) => {
   try {
     const transactions = await Transaction.find();
     res.status(200).json({
       success: true,
       results: transactions.length,
-
       transactions,
     });
   } catch (err) {
@@ -23,7 +22,6 @@ exports.getTransactionsByCardId = async (req, res) => {
     res.status(200).json({
       success: true,
       results: transactions.length,
-
       transactions,
     });
   } catch (err) {
@@ -79,7 +77,6 @@ exports.getTransaction = async (req, res) => {
     // check if transaction exists, it can be null
     res.status(200).json({
       success: true,
-
       transaction,
     });
   } catch (err) {

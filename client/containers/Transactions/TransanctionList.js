@@ -90,6 +90,9 @@ export default function TransactionsList() {
   useEffect(() => {
     const apiUrl = '/transactions';
     axios.get(apiUrl).then((res) => {
+      console.log('-----------------');
+
+      console.log(res.data);
       if (res.data) {
         const allTransactions = res.data;
         setTransactions(allTransactions);
@@ -98,7 +101,7 @@ export default function TransactionsList() {
         setTransactions(allTransactions);
       }
     });
-  }, [setTransactions]);
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
