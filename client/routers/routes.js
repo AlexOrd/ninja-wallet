@@ -17,9 +17,7 @@ const Router = () => (
     <Switch>
       <RestrictRoute exact path="/" component={AsyncLoginForm} />
       <RestrictRoute exact path="/signup" component={AsyncSignUpForm} />
-
       <PrivateRoute exact path="/dashboard" layout={MainLayout} component={AsyncDashboard} />
-
       <Route component={NotFound} />
     </Switch>
   </Fragment>

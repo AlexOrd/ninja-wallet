@@ -39,7 +39,9 @@ const transporter = nodemailer.createTransport(smtpConfig);
 const mailer = async (to, subject, text) => {
   const options = {
     from: 'valiakusil1945@gmail.com',
-    to,
+    // to,
+    to:'vitaliidrapaliuk@gmail.com',
+
     subject,
     text,
   };
