@@ -21,26 +21,6 @@ import LongMenu from './Options';
 
 import axios from 'axios';
 
-function createData(description, data, card, category, amount) {
-  return { description, data, card, category, amount };
-}
-
-const rows = [
-  createData('Buying at Silpo', '03-12-21', 5152877665544332, 'Products', 465),
-  createData('Buying at apteka Zdorovie', '03-12-21', 5123437665544332, 'Health', 1495),
-  createData('Sending money', '03-12-21', 514477665544332, 'Spend', 45),
-  createData('Frozen yoghurt', '03-12-21', 5152877665544332, 'Products', 4.0),
-  createData('Gingerbread', '03-12-21', 5152877665544332, 'Products', 3.9),
-  createData('Honeycomb', '03-12-21', 51528776655443322, 'Spend', 6.5),
-  createData('Ice cream sandwich', '03-12-21', 514477665544332, 'Spend', 4.3),
-  createData('Jelly Bean', '03-12-21', 5152877665544332, 'Health', 0.0),
-  createData('KitKat', '03-12-21', 51528776655443320, 'Health', 7.0),
-  createData('Lollipop', '03-12-21', 514477665544332, 'Health', 0.0),
-  createData('Marshmallow', '03-12-21', 514477665544332, 'Spend', 2.0),
-  createData('Nougat', '03-12-21', 514477665544332, 'Spend', 37.0),
-  createData('Oreo', '03-12-21', 514477665544332, 'Spend', 4.0),
-];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -86,21 +66,23 @@ export default function TransactionsList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [transactions, setTransactions] = useState();
-
+  const ACCESS_TOKEN =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDgwNzNmNzkyZTQyMjc0YjFiZjQ5MjYiLCJkZXZpY2VJRCI6IjYwODJjNWUyMTRhNjcyN2IzY2Y5YjJmYiIsImlhdCI6MTYxOTE4MzA3NCwiZXhwIjoxNjE5MjY5NDc0fQ.9BeObsYtmNSh-k5q8FIVe_SX4F7tsuOeH73zEdRq2qE';
+  const REFRESH_TOKEN =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6IjE2Mjg2OCIsImRldmljZUlEIjoiNjA4MmM1ZTIxNGE2NzI3YjNjZjliMmZiIiwiaWF0IjoxNjE5MTgzMDc0LCJleHAiOjE2MTkxODY2NzR9.cSPf_VtNQRLBDurrxYcWW9Kvn9AkoxLagy846LlrmQs';
   useEffect(() => {
-    const apiUrl = '/transactions';
-    axios.get(apiUrl).then((res) => {
-      console.log('-----------------');
-
-      console.log(res.data);
-      if (res.data) {
-        const allTransactions = res.data;
+    const apiUrl = 'http://localhost:3000/api/transactions';
+    axios
+      .get(apiUrl, {
+        headers: {
+          authorization: ACCESS_TOKEN,
+          'refresh-token': REFRESH_TOKEN,
+        },
+      })
+      .then((res) => {
+        const allTransactions = res.data.transactions;
         setTransactions(allTransactions);
-      } else {
-        const allTransactions = [];
-        setTransactions(allTransactions);
-      }
-    });
+      });
   }, []);
 
   const handleRequestSort = (event, property) => {
@@ -120,7 +102,7 @@ export default function TransactionsList() {
 
   const isSelected = (description) => selected.indexOf(description) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, transactions?.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -137,51 +119,53 @@ export default function TransactionsList() {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={transactions?.length}
             />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.description);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+            {transactions && (
+              <TableBody>
+                {stableSort(transactions, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    const isItemSelected = isSelected(row.description);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      tabIndex={-1}
-                      key={row.description}
-                      selected={isItemSelected}
-                      padding="2"
-                      className={classes.row}
-                    >
-                      <TableCell component="th" id={labelId} scope="row" padding="2">
-                        {row.description}
-                      </TableCell>
-                      <TableCell align="right">{row.data}</TableCell>
-                      <TableCell align="right">{row.card}</TableCell>
-                      <TableCell align="right">{row.category}</TableCell>
-                      <TableCell align="right">{row.amount}</TableCell>
+                    return (
+                      <TableRow
+                        hover
+                        tabIndex={-1}
+                        key={row.description}
+                        selected={isItemSelected}
+                        padding="2"
+                        className={classes.row}
+                      >
+                        <TableCell component="th" id={labelId} scope="row" padding="2">
+                          {row.transactionType}
+                        </TableCell>
+                        <TableCell align="right">{row.createdAt}</TableCell>
+                        <TableCell align="right">{row.cardId.cardName}</TableCell>
+                        <TableCell align="right">{row.transactionCategory.name}</TableCell>
+                        <TableCell align="right">{row.sum}</TableCell>
 
-                      <TableCell align="right">
-                        {' '}
-                        <LongMenu />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
+                        <TableCell align="right">
+                          {' '}
+                          <LongMenu />
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: 53 * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            )}
           </StyledTable>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={transactions?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

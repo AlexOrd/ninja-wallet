@@ -3,7 +3,7 @@ import { doesCardIdExist, doesTransactionIdExist } from '../utils/transactions-v
 
 exports.getAllTransactions = async (req, res) => {
   try {
-    const transactions = await Transaction.find();
+    const transactions = await Transaction.find().populate('cardId transactionCategory');
     res.status(200).json({
       success: true,
       results: transactions.length,
@@ -73,7 +73,7 @@ exports.createTransaction = async (req, res) => {
 };
 exports.getTransaction = async (req, res) => {
   try {
-    const transaction = await Transaction.findById(req.params.id);
+    const transaction = await Transaction.findById(req.params.id).populate('cardId');
     // check if transaction exists, it can be null
     res.status(200).json({
       success: true,

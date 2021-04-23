@@ -23,7 +23,7 @@ const Router = () => (
       <PrivateRoute exact path="/dashboard" layout={MainLayout} component={AsyncDashboard} />
 
       <Route exact path="/transactions" component={TransactionList} />
-      <Route path="/transactions/create" component={CreateTransaction} />
+      <Route path="/transactions/:type/:id?" component={CreateTransaction} />
     </Switch>
   </Fragment>
 );
