@@ -1,10 +1,12 @@
 import HttpStatus from 'http-status-codes';
 import Category from '../models/category.model';
+import { Transaction } from '../models/transaction.model';
 import {
   isCategoryExists,
   isUserCategoryOwner,
   validateCategory,
 } from '../utils/categories-validations';
+import moment from 'moment'
 
 export const createCategory = async (req, res) => {
   const isCategoryValidCheck = await validateCategory(req.body, req.userID);
@@ -64,6 +66,48 @@ export const getUserCategories = async (req, res) => {
   }
 };
 
+export const getUserCategoriesWithTotalTransactionsSum = async (req, res) => {
+  try {
+    const categories = await Category.find({ userId: req.userID });
+    
+    const startFilterDate = moment(new Date(req.body.from), "DD/MM/YYYY")
+    const endFilterDate = moment(new Date(req.body.to), "DD/MM/YYYY")
+    
+    const categoriesWithSum = await Promise.all(
+      categories.map(async (category) => {
+        const categoryTransactions = await (
+          await Transaction.find({ transactionCategory: category._id })
+        ).filter((transaction) => {
+          if (req.body.from) {
+            return req.body.to 
+              ? moment(transaction.createdAt, "DD/MM/YYYY").isBetween(startFilterDate, endFilterDate) 
+              : moment(transaction.createdAt, "DD/MM/YYYY").isAfter(startFilterDate) 
+          }
+          return true
+        });
+
+        return {
+          ...category._doc,
+          transactionsCount: categoryTransactions.length,
+          expensesSum: categoryTransactions.reduce((totalSum, transaction) => {
+            return totalSum + transaction.sum;
+          }, 0),
+        };
+      })
+    );
+
+    res.status(HttpStatus.OK).json({
+      success: true,
+      data: { categories: categoriesWithSum },
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+      success: false,
+    });
+  }
+};
+
 export const editCategory = async (req, res) => {
   const categoryFromReq = req.body;
 
@@ -77,7 +121,6 @@ export const editCategory = async (req, res) => {
   const category = await Category.findOne({ _id: req.params.id });
 
   const isUserOwner = isUserCategoryOwner(category, req.userID);
-
   if (!isUserOwner.response) {
     return res.status(HttpStatus.NOT_ACCEPTABLE).json({
       success: false,
@@ -86,9 +129,9 @@ export const editCategory = async (req, res) => {
   }
 
   try {
-    category.name = categoryFromReq.name || category.name;
-    category.description = categoryFromReq.description || category.description;
-    category.color = categoryFromReq.color || category.color;
+    category.name = categoryFromReq.name;
+    category.description = categoryFromReq.description;
+    category.color = categoryFromReq.color;
 
     const editedCategory = await category.save();
 
