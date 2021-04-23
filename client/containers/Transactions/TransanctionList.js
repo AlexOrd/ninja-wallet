@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -18,6 +18,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import LongMenu from './Options';
+
+import axios from 'axios';
+
 function createData(description, data, card, category, amount) {
   return { description, data, card, category, amount };
 }
@@ -82,6 +85,20 @@ export default function TransactionsList() {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [transactions, setTransactions] = useState();
+
+  useEffect(() => {
+    const apiUrl = '/transactions';
+    axios.get(apiUrl).then((res) => {
+      if (res.data) {
+        const allTransactions = res.data;
+        setTransactions(allTransactions);
+      } else {
+        const allTransactions = [];
+        setTransactions(allTransactions);
+      }
+    });
+  }, [setTransactions]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';

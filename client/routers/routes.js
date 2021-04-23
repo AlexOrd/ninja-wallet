@@ -8,6 +8,7 @@ import RestrictRoute from './RestrictRoute';
 import MainLayout from '../components/common/layout/MainLayout';
 import NotFound from '../components/error/NotFound';
 import TransactionList from '../containers/Transactions/TransanctionList';
+import CreateTransaction from '../containers/Transactions/CreateTransaction';
 
 const AsyncLoginForm = loadable(() => import('../containers/auth/LoginContainer'));
 const AsyncSignUpForm = loadable(() => import('../containers/auth/SignUpContainer'));
@@ -21,7 +22,8 @@ const Router = () => (
 
       <PrivateRoute exact path="/dashboard" layout={MainLayout} component={AsyncDashboard} />
 
-      <Route path="/transactions" component={TransactionList} />
+      <Route exact path="/transactions" component={TransactionList} />
+      <Route path="/transactions/create" component={CreateTransaction} />
     </Switch>
   </Fragment>
 );

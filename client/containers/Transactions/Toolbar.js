@@ -1,45 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { lighten, makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
-const useToolbarStyles = makeStyles((theme) => ({
-  root: {
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(2),
-  },
-  highlight:
-    theme.palette.type === 'light'
-      ? {
-          color: theme.palette.primary.dark,
-          backgroundColor: lighten(theme.palette.primary.dark, 0.85),
-        }
-      : {
-          color: theme.palette.primary.light,
-          backgroundColor: theme.palette.primary.dark,
-        },
-  title: {
-    flex: '1 1 100%',
-    color: theme.palette.primary.dark,
-    fontWeight: 'bold',
-  },
-}));
+import AddIcon from '@material-ui/icons/Add';
+import Tooltip from '@material-ui/core/Tooltip';
+import { useStyles } from './Transactions.style';
+import Fab from '@material-ui/core/Fab';
+import { Link } from 'react-router-dom';
+import CreateTransaction from './CreateTransaction';
 
 const EnhancedTableToolbar = (props) => {
-  const classes = useToolbarStyles();
+  const classes = useStyles();
   const { numSelected } = props;
 
   return (
     <Toolbar
-      className={clsx(classes.root, {
+      className={clsx(classes.toolbarRoot, {
         [classes.highlight]: numSelected > 0,
       })}
     >
-      <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+      <Typography className={classes.toolbarTitle} variant="h6" id="tableTitle" component="div">
         Transactions
       </Typography>
+
+      <Link to="/transactions/create">
+        <Tooltip title="Add" aria-label="add">
+          <Fab color="primary" className={classes.fab}>
+            <AddIcon />
+          </Fab>
+        </Tooltip>
+      </Link>
     </Toolbar>
   );
 };
