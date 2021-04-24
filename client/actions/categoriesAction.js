@@ -22,8 +22,10 @@ export const clearNewCategoryData = () => ({
 export const fetchCategories = () => async (dispatch) => {
   try {
     const res = await API.categoriesAPI.getAllCategories();
-
-    dispatch(setCategories(res.data.categories));
+    const sortedCategoriesByDate = res.data.categories.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+    dispatch(setCategories(sortedCategoriesByDate));
   } catch (err) {}
 };
 

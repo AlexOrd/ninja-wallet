@@ -2,7 +2,9 @@ import { axiosInstance } from '../config/axios';
 
 export const categoriesAPI = {
   getAllCategories: async () => {
-    const res = await axiosInstance.get('/api/categories/');
+    const res = await axiosInstance.post(
+      '/api/categories/get-categories-with-total-transactions-sum-by-date'
+    );
     return res.data;
   },
   editCategory: async (categoryId, newCategoryData) => {

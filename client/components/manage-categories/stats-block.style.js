@@ -1,3 +1,6 @@
+import { makeStyles } from '@material-ui/core';
+import { grayColor } from '../../shared/custom-material-theme/jss/material-dashboard-react';
+
 const useStyles = makeStyles((theme) => ({
   cardTitle: {
     color: grayColor[2],
@@ -43,3 +46,5 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
+export default useStyles;

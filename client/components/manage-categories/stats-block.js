@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-// import Card from '../../custom-material-theme/Card/Card';
-// import CardHeader from '../../custom-material-theme/Card/CardHeader';
-// import CardIcon from '../../custom-material-theme/Card/CardIcon';
-// import { grayColor } from '../../custom-material-theme/jss/material-dashboard-react';
-// import CardFooter from '../../custom-material-theme/Card/CardFooter';
+import Card from '../../shared/custom-material-theme/Card/Card';
+import CardHeader from '../../shared/custom-material-theme/Card/CardHeader';
+import CardIcon from '../../shared/custom-material-theme/Card/CardIcon';
+import { grayColor } from '../../shared/custom-material-theme/jss/material-dashboard-react';
+import CardFooter from '../../shared/custom-material-theme/Card/CardFooter';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import { useStyles } from '../../containers/manage-categories/manage-categories-container.style';
+import useStyles from './stats-block.style';
 
 const StatsBlock = ({ categories }) => {
   const [newestCategory, setNewestCategory] = useState();
@@ -38,24 +38,16 @@ const StatsBlock = ({ categories }) => {
 
   return (
     <Grid container direction="column">
-      {/* {
-        newestCategory && (
-          <NewestCategory
-            classes={classes}
-            newestCategory={newestCategory}
-          />
-        )
-      }
-      {
-        mostSpendMoneyCategory && (
-          <MostSpentMoneyCategory classes={classes} mostSpendMoneyCategory={mostSpendMoneyCategory} />
-        )
-      }
-      {
-        mostTransactionsCountCategory && (
-          <MostTransactionsCount classes={classes} mostTransactionsCountCategory={mostTransactionsCountCategory} />
-        )
-      } */}
+      {newestCategory && <NewestCategory classes={classes} newestCategory={newestCategory} />}
+      {mostSpendMoneyCategory && (
+        <MostSpentMoneyCategory classes={classes} mostSpendMoneyCategory={mostSpendMoneyCategory} />
+      )}
+      {mostTransactionsCountCategory && (
+        <MostTransactionsCount
+          classes={classes}
+          mostTransactionsCountCategory={mostTransactionsCountCategory}
+        />
+      )}
     </Grid>
   );
 };
@@ -69,7 +61,7 @@ const NewestCategory = ({ classes, newestCategory }) => {
             <NewReleasesIcon />
           </CardIcon>
           <p className={classes.cardCategory}>Newest category:</p>
-          <h3 className={classes.cardTitle}>{newestCategory?.name}</h3>
+          <h3 className={classes.cardTitle}>{newestCategory.name}</h3>
         </CardHeader>
       </Card>
     </Grid>
@@ -85,7 +77,7 @@ const MostSpentMoneyCategory = ({ classes, mostSpendMoneyCategory }) => {
             <AttachMoneyIcon />
           </CardIcon>
           <p className={classes.cardCategory}>Most spent money in category:</p>
-          <h3 className={classes.cardTitle}>{mostSpendMoneyCategory?.name}</h3>
+          <h3 className={classes.cardTitle}>{mostSpendMoneyCategory.name}</h3>
         </CardHeader>
         <CardFooter stats>
           <div className={classes.stats}>
@@ -106,7 +98,7 @@ const MostTransactionsCount = ({ classes, mostTransactionsCountCategory }) => {
             <TrendingUpIcon />
           </CardIcon>
           <p className={classes.cardCategory}>Most transactions count in category:</p>
-          <h3 className={classes.cardTitle}>{mostTransactionsCountCategory?.name}</h3>
+          <h3 className={classes.cardTitle}>{mostTransactionsCountCategory.name}</h3>
         </CardHeader>
         <CardFooter stats>
           <div className={classes.stats}>
