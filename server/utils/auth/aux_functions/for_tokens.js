@@ -17,7 +17,9 @@ export const getTokensInfo = (tokenName) => {
 
     [RESTORE]: {
       key: process.env.RESTORE_PASSWORD_KEY || tokensDevKeys.RESTORE,
-      options: { expiresIn: `${1000 * 60 * 10}` },
+      // options: { expiresIn: `${1000 * 60 * 10}` },
+      options: { expiresIn: `${10}` },
+
     },
   };
 

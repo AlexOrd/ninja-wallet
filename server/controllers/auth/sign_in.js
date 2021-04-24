@@ -9,6 +9,7 @@ import {
 } from '../../utils/auth/aux_functions/common';
 import { tokensNames } from '../../utils/auth/constants';
 import { getDeviceInfo } from '../../utils/auth/aux_functions/get_device_info';
+import { telegramBot } from '../../config/telegram_bot';
 const { INCORRECT_AUTH_DATA } = authErrors;
 
 export const signIn = async (req, res, next) => {
@@ -25,7 +26,7 @@ export const signIn = async (req, res, next) => {
     user.auth.openedOnDevices.push({
       confirmCode: encryptData(confirmCode),
       lastLogin: new Date(),
-      ...getDeviceInfo(req)
+      ...getDeviceInfo(req),
     });
 
     const lastAddedDeviceIdx = user.auth.openedOnDevices.length - 1;
@@ -34,6 +35,16 @@ export const signIn = async (req, res, next) => {
     const refreshToken = createJWToken({ confirmCode, deviceID }, tokensNames.REFRESH);
     const accessToken = createJWToken({ userID: user._id, deviceID }, tokensNames.ACCESS);
     user.save();
+
+    if ('user.auth.notifyAboutSignIn') {
+      try {
+        telegramBot.sendMessage(348781339, 'login from some device');
+
+        // telegramBot.sendMessage(user.bots.telegram.chatId, 'login from some device');
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
     setAuthHeaders(accessToken, refreshToken, res);
 

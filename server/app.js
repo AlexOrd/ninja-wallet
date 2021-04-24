@@ -16,6 +16,7 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack/webpack.config.dev';
+import telegramBot from './config/telegram_bot';
 
 import { checkAccessAndProvideUserID } from './middlewares/auth/route_verifiers';
 import authRoutes from './routes/auth.route';

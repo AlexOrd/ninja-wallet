@@ -5,3 +5,4 @@ export { validateCredentialsIssue } from './validate_credential_issue';
 export { validateDeviceID } from './validate_device_id';
 export { validateNewPassCreating } from './validate_new_password_creating';
 export { validateSignOut } from './validate_sign_out';
+export { validateSecuritySettings } from './validate_security_settings';
