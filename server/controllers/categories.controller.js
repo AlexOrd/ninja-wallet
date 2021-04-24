@@ -35,18 +35,6 @@ export const createCategory = async (req, res) => {
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
     });
-
-    try {
-      const createCategory = await newCategory.save();
-      res.status(HttpStatus.CREATED).json({
-        success: true,
-        data: { category: createCategory._doc },
-      });
-    } catch (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-        success: false,
-      });
-    }
   }
 };
 

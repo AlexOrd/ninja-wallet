@@ -8,6 +8,7 @@ import RestrictRoute from './RestrictRoute';
 import MainLayout from '../components/common/layout/MainLayout';
 import NotFound from '../components/error/NotFound';
 import { ROUTES } from '../shared/routes-list';
+import ManageCategories from '../containers/manage-categories/manage-categories-container';
 
 const AsyncLoginForm = loadable(() => import('../containers/auth/LoginContainer'));
 const AsyncSignUpForm = loadable(() => import('../containers/auth/SignUpContainer'));
@@ -19,7 +20,7 @@ const Router = () => (
       <RestrictRoute exact path="/" component={AsyncLoginForm} />
       <RestrictRoute exact path="/signup" component={AsyncSignUpForm} />
 
-      <RestrictRoute exact path={ROUTES.categories} component={() => 'categories'} />
+      <Route exact path={ROUTES.categories} component={ManageCategories} />
 
       <PrivateRoute exact path="/dashboard" layout={MainLayout} component={AsyncDashboard} />
 

@@ -12,6 +12,7 @@ var config = {
     context: path.resolve(CURRENT_WORKING_DIR, 'client'),
     entry: {
         app: [
+            'babel-polyfill',
             './main.js'
         ]
     },
