@@ -15,9 +15,11 @@ import {
   ListItemIcon,
   ListItemText,
   ListItemSecondaryAction,
+  Typography,
 } from '@material-ui/core';
 import Wallpaper from '@material-ui/icons/Wallpaper';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import { Skeleton } from '@material-ui/lab';
 
 const styles = () => ({
   container: {
@@ -43,29 +45,65 @@ const styles = () => ({
   card: {
     padding: 0,
   },
+  header: {
+    fontSize: 16,
+  },
+  alertMsg: {
+    color: '#721c24',
+    display: 'inline-block',
+    width: '100%',
+    textAlign: 'center',
+  },
 });
 
-const TransactionsList = ({ data, classes }) => {
+const TransactionsList = ({ data, classes, cards }) => {
+  if (!cards || !cards.length) {
+    return null;
+  }
   return (
     <div className={classes.container}>
       <Card style={{ width: '50%' }}>
-        <CardHeader title="Recent transactions" />
+        <CardHeader classes={{ title: classes.header }} title={`Latest transactions`} />
         <Divider />
         <CardContent classes={{ root: classes.card }}>
           <List>
-            {data.map((item, i) => (
-              <ListItem divider={i < data.length - 1} key={item._id}>
-                <ListItemIcon>
-                  <Avatar>
-                    <Wallpaper />
-                  </Avatar>
-                </ListItemIcon>
-                <ListItemText primary={item.transactionType} secondary={item.merchantName} />
-                <ListItemSecondaryAction>
-                  <span className={classes.redSum}>-{item.sum}</span>
-                </ListItemSecondaryAction>
-              </ListItem>
-            ))}
+            {data &&
+              !!data.length &&
+              data.map((item, i) => (
+                <ListItem divider={i < data.length - 1} key={item._id}>
+                  <ListItemIcon>
+                    <Avatar>
+                      <Wallpaper />
+                    </Avatar>
+                  </ListItemIcon>
+                  <ListItemText primary={item.transactionType} secondary={item.merchantName} />
+                  <ListItemSecondaryAction>
+                    <span className={classes.redSum}>-{item.sum}</span>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
+
+            {data && !data.length && (
+              <>
+                <ListItem>
+                  <Skeleton variant="circle" width={40} height={40} style={{ marginRight: 15 }} />
+                  <Skeleton variant="rect" height={40} width={'100%'} />
+                </ListItem>
+                <Typography classes={{ root: classes.alertMsg }}>
+                  You do not have any transactions on this card
+                </Typography>
+              </>
+            )}
+
+            {!data &&
+              Array(5)
+                .fill(0)
+                .map((_, idx) => (
+                  <ListItem key={idx}>
+                    <Skeleton variant="circle" width={40} height={40} style={{ marginRight: 15 }} />
+                    <Skeleton variant="rect" height={40} width={'100%'} />
+                  </ListItem>
+                ))}
           </List>
         </CardContent>
         <Divider />

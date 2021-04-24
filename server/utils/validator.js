@@ -1,9 +1,7 @@
-const Joi = require('@hapi/joi');
-Joi.objectId = require('joi-objectid')(Joi);
-
+import Joi from "@hapi/joi"
 import JoiObjectId from 'joi-objectid';
-const ObjectId = JoiObjectId(Joi);
 
+const ObjectId = JoiObjectId(Joi);
 Joi.objectId = ObjectId;
 
 export default {
@@ -38,11 +36,24 @@ export default {
     password: Joi.string().min(6).required(),
   }),
 
-  login: Joi.object({
-    username: Joi.string().required(),
-    password: Joi.string().required(),
+  category: Joi.object({
+    userId: Joi.objectId().required(),
+    name: Joi.string()
+      .min(1)
+      .message('name must contain at least 1 letter')
+      .max(30)
+      .message('name can\'t be longer than 30 letters')
+      .required(),
+    description: Joi.string()
+      .min(1)
+      .message('description must contain at least 1 letter')
+      .max(100)
+      .message('description can\'t be longer than 100 letters'),
+    color: Joi.string()
+      .regex(/^#[A-Fa-f0-9]{5}/)
+      .message('color shoul be provided as a hex (fro example #000000)'), // hex
   }),
-
+  
   card: Joi.object({
     userId: Joi.objectId().required(),
     transactionIds: Joi.array().items(Joi.objectId()),
@@ -57,5 +68,13 @@ export default {
       .message('description can not be longer than 30 letters')
       .required(),
     balance: Joi.number().default(0).positive().required(),
+  }),
+  profile: Joi.object({
+    firstName: Joi.string().alphanum().min(3).max(30).required(),
+    lastName: Joi.string().alphanum().min(3).max(30).required(),
+    email: Joi.string().email().required(),
+  }),
+  userPhoto: Joi.object({
+    fileString: Joi.string().dataUri().required(),
   }),
 };

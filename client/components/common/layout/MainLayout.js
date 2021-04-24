@@ -4,8 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 
 // Import custom components
 import Header from '../header/Header';
-import MiniDrawer from '../drawer/MiniDrawer';
-import Footer from '../footer/Footer';
 
 const styles = (theme) => ({
   root: {
@@ -24,8 +22,10 @@ const styles = (theme) => ({
     width: '100%',
     flexGrow: 1,
     padding: 50,
+    paddingRight: 10,
     height: 'calc(100% - 56px)',
     marginTop: 56,
+    boxSizing: 'border-box',
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px)',
       marginTop: 64,

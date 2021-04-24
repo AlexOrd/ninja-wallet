@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import SliderWithCards from './Slider/Slider.jsx';
+import SliderWithCards from './Slider/Slider';
 import TransactionsList from './TransactionsList';
-import axios from 'axios';
-
-const cards = [
+import { axiosInstance } from '../../config/axios';
+import ExchangeRateBlock from './ExchangeRateBlock/ExchangeRateBlock';
+import FooterWithSummaryCards from './FooterWithSummaryCards/FooterWithSummaryCards';
+const a = [
   {
     transactionIds: [],
     balance: 1500,
     _id: '608065b50c2c4036c8408ffc',
     userId: '608065b50c2c4036c8408ff7',
-    cardNumber: '4149499128544440',
-    currency: 'usd',
+    cardNumber: '4149252324897496',
+    currency: 'dollar',
     cardName: 'second card',
     createdAt: '2021-04-21T17:49:44.305Z',
     updatedAt: '2021-04-21T17:49:44.305Z',
@@ -23,7 +24,7 @@ const cards = [
     _id: '608065b50c2c4036c8408ffb',
     userId: '608065b50c2c4036c8408ff6',
     cardNumber: '4149252324897496',
-    currency: 'usd',
+    currency: 'dollar',
     cardName: 'first card',
     createdAt: '2021-04-21T17:49:44.305Z',
     updatedAt: '2021-04-21T17:49:44.305Z',
@@ -35,32 +36,8 @@ const cards = [
     _id: '608065b50c2c4036c8408ffd',
     userId: '608065b50c2c4036c8408ff7',
     cardNumber: '4149252324897496',
-    currency: 'usd',
+    currency: 'dollar',
     cardName: 'second card',
-    createdAt: '2021-04-21T17:49:44.306Z',
-    updatedAt: '2021-04-21T17:49:44.306Z',
-    __v: 0,
-  },
-  {
-    transactionIds: [],
-    balance: 2222,
-    _id: '608065b50c2c4036c8408ffb17u78u76',
-    userId: '608065b50c2c4036c8408ff6',
-    cardNumber: '4149252324897496',
-    currency: 'usd',
-    cardName: 'first card114',
-    createdAt: '2021-04-21T17:49:44.305Z',
-    updatedAt: '2021-04-21T17:49:44.305Z',
-    __v: 0,
-  },
-  {
-    transactionIds: [],
-    balance: 1500,
-    _id: '608065b50c2c4036c8408ffd265564',
-    userId: '608065b50c2c4036c8408ff7',
-    cardNumber: '4149252324897496',
-    currency: 'usd',
-    cardName: 'second card32432432234',
     createdAt: '2021-04-21T17:49:44.306Z',
     updatedAt: '2021-04-21T17:49:44.306Z',
     __v: 0,
@@ -68,64 +45,48 @@ const cards = [
 ];
 
 const Dashboard = () => {
-  const [transactions, setTransactions] = useState([
-    {
-      _id: '608065b50c2c4036c8408ffe',
-      transactionType: 'Transfer',
-      transactionCategory: '608065b50c2c4036c8408ffa',
-      userId: '608065b50c2c4036c8408ff7',
-      cardId: '608065b50c2c4036c8408ffd',
-      merchantName: 'Silpo',
-      sum: 1000,
-      createdAt: '2021-04-21T17:49:44.306Z',
-      updatedAt: '2021-04-21T17:49:44.306Z',
-      __v: 0,
-    },
-    {
-      _id: '608065b50c2c4036c8408fff',
-      transactionType: 'Second',
-      transactionCategory: '608065b50c2c4036c8408ff9',
-      userId: '608065b50c2c4036c8408ff7',
-      cardId: '608065b50c2c4036c8408ffc',
-      merchantName: 'Zdorovie',
-      sum: 2000,
-      createdAt: '2021-04-21T17:49:44.306Z',
-      updatedAt: '2021-04-21T17:49:44.306Z',
-      __v: 0,
-    },
-  ]);
-  const [centeredCardId, setCenteredCardId] = useState();
+  const [transactions, setTransactions] = useState(null);
+  const [centeredCardIdx, setCenteredCardIdx] = useState(0);
+  const [cards, setCards] = useState(null);
 
-  /* useEffect(() => {
-        axios.get('http://localhost:3002/api/card').then(cards => {
-            setCenteredCardId(cards[0]?._id)
-        })
-    }, []) */
+  useEffect(() => {
+    axiosInstance.get('/api/card').then(({ data }) => {
+      setCards(a); //(data.cards)
+    });
+  }, []);
 
   useEffect(() => {
     let isCancalledReq = false;
+    const centeredCardId = cards?.[centeredCardIdx]?._id;
     if (centeredCardId) {
-      /*  axios.get('http://localhost:3002/api/transactions/cardId/' + centeredCardId).then(transactions => {
-                 if (!isCancalledReq) {
-                     setTransactions(transactions)
-                 }
-             }).catch(e => console.log(e)) */
+      axiosInstance
+        .get('/api/transactions/cardId/' + centeredCardId)
+        .then(({ data: { data } }) => {
+          if (!isCancalledReq) {
+            setTransactions(data.transactions);
+          }
+        })
+        .catch((e) => console.log(e));
     }
     return () => {
       isCancalledReq = true;
+      setTransactions(null);
     };
-  }, [centeredCardId]);
+  }, [centeredCardIdx, cards]);
 
   return (
-    <Grid container spacing={4}>
-      <Grid item xs={8}>
-        <SliderWithCards cards={cards} setCenteredCardId={setCenteredCardId} />
-        <TransactionsList data={transactions} />
+    <div>
+      <Grid container spacing={5}>
+        <Grid item xs={8}>
+          <SliderWithCards cards={cards} setCenteredCardIdx={setCenteredCardIdx} />
+          <TransactionsList data={transactions} cards={cards} />
+        </Grid>
+        <Grid item xs={4}>
+          <ExchangeRateBlock />
+        </Grid>
       </Grid>
-      <Grid item xs>
-        Categories?
-      </Grid>
-    </Grid>
+      <FooterWithSummaryCards />
+    </div>
   );
 };
 
