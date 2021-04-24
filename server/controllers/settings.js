@@ -48,10 +48,10 @@ export const giveDevicesWithOpenedApp = async (req, res, next) => {
 
 export const getVerificationCodeForBot = async (req, res, next) => {
   try {
+    console.log('inside right place')
     const { err: findingUserErr, user } = await findUserById(req.userID);
     if (findingUserErr) return next(findingUserErr);
-
-    if (user.bots.telegram.telegram.chatID) {
+    if (user.bots.telegram.chatID) {
       return next(authErrors.BOT_HAS_ALREADY_VERIFIED);
     }
 
@@ -59,8 +59,9 @@ export const getVerificationCodeForBot = async (req, res, next) => {
     user.bots.telegram.confirmCode = confirmCode;
     user.save();
 
-    const codeForInsertToBot = `/test ${confirmCode}`;
-    res.status(200).send({ codeForInsertToBot, confirmCode, botName });
+    console.log('confirmCode', confirmCode)
+
+    res.status(200).send({ confirmCode });
   } catch (error) {
     unexpectedError(error, next);
   }

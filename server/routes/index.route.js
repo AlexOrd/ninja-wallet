@@ -17,8 +17,6 @@ router.use('/auth', authRoutes);
 
 router.use('/user-email', checkAccessAndProvideUserID, emailRoutes);
 
-router.use('/settings', checkAccessAndProvideUserID, settingsRoutes);
-
 router.use('/users', checkAccessAndProvideUserID, userRoutes);
 
 router.use('/categories', checkAccessAndProvideUserID, categoriesRoutes);
@@ -30,5 +28,7 @@ router.use('/card', checkAccessAndProvideUserID, cardRoutes);
 router.use('/profile', checkAccessAndProvideUserID, profileRoutes);
 
 router.use('/userphoto', checkAccessAndProvideUserID, userPhotoRoutes);
+
+router.use('/settings', checkAccessAndProvideUserID, settingsRoutes);
 
 export default router;
