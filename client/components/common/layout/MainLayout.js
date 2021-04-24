@@ -23,7 +23,7 @@ const styles = (theme) => ({
   content: {
     width: '100%',
     flexGrow: 1,
-    padding: 24,
+    padding: 50,
     height: 'calc(100% - 56px)',
     marginTop: 56,
     [theme.breakpoints.up('sm')]: {
@@ -42,11 +42,9 @@ const MainLayout = (props) => {
   return (
     <div className={classes.root}>
       <div className={classes.appFrame}>
-        <Header navDrawerOpen={open} handleToggleDrawer={handleToggle} />
-        <MiniDrawer navDrawerOpen={open} />
+        <Header />
         <main className={classes.content}>{children}</main>
       </div>
-      <Footer />
     </div>
   );
 };

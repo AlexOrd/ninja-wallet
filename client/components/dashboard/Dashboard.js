@@ -1,47 +1,131 @@
-import React from 'react';
-import { cyan, pink, purple, orange } from '@material-ui/core/colors';
+import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { AddShoppingCart, ThumbUp, Assessment, Face } from '@material-ui/icons';
+import SliderWithCards from './Slider/Slider.jsx';
+import TransactionsList from './TransactionsList';
+import axios from 'axios';
 
-import SummaryBox from './SummaryBox';
-import Product from './Product';
-
-const products = [
-  { id: 1, title: 'Samsung TV', text: 'Samsung 32 1080p 60Hz LED Smart HDTV.' },
-  { id: 2, title: 'Playstation 4', text: 'PlayStation 3 500 GB System' },
-  { id: 3, title: 'Apple iPhone 6', text: 'Apple iPhone 6 Plus 16GB Factory Unlocked GSM 4G ' },
-  { id: 4, title: 'Apple MacBook', text: 'Apple MacBook Pro MD101LL/A 13.3-Inch Laptop' },
+const cards = [
+  {
+    transactionIds: [],
+    balance: 1500,
+    _id: '608065b50c2c4036c8408ffc',
+    userId: '608065b50c2c4036c8408ff7',
+    cardNumber: '4149499128544440',
+    currency: 'usd',
+    cardName: 'second card',
+    createdAt: '2021-04-21T17:49:44.305Z',
+    updatedAt: '2021-04-21T17:49:44.305Z',
+    __v: 0,
+  },
+  {
+    transactionIds: [],
+    balance: 2222,
+    _id: '608065b50c2c4036c8408ffb',
+    userId: '608065b50c2c4036c8408ff6',
+    cardNumber: '4149252324897496',
+    currency: 'usd',
+    cardName: 'first card',
+    createdAt: '2021-04-21T17:49:44.305Z',
+    updatedAt: '2021-04-21T17:49:44.305Z',
+    __v: 0,
+  },
+  {
+    transactionIds: [],
+    balance: 1500,
+    _id: '608065b50c2c4036c8408ffd',
+    userId: '608065b50c2c4036c8408ff7',
+    cardNumber: '4149252324897496',
+    currency: 'usd',
+    cardName: 'second card',
+    createdAt: '2021-04-21T17:49:44.306Z',
+    updatedAt: '2021-04-21T17:49:44.306Z',
+    __v: 0,
+  },
+  {
+    transactionIds: [],
+    balance: 2222,
+    _id: '608065b50c2c4036c8408ffb17u78u76',
+    userId: '608065b50c2c4036c8408ff6',
+    cardNumber: '4149252324897496',
+    currency: 'usd',
+    cardName: 'first card114',
+    createdAt: '2021-04-21T17:49:44.305Z',
+    updatedAt: '2021-04-21T17:49:44.305Z',
+    __v: 0,
+  },
+  {
+    transactionIds: [],
+    balance: 1500,
+    _id: '608065b50c2c4036c8408ffd265564',
+    userId: '608065b50c2c4036c8408ff7',
+    cardNumber: '4149252324897496',
+    currency: 'usd',
+    cardName: 'second card32432432234',
+    createdAt: '2021-04-21T17:49:44.306Z',
+    updatedAt: '2021-04-21T17:49:44.306Z',
+    __v: 0,
+  },
 ];
 
 const Dashboard = () => {
+  const [transactions, setTransactions] = useState([
+    {
+      _id: '608065b50c2c4036c8408ffe',
+      transactionType: 'Transfer',
+      transactionCategory: '608065b50c2c4036c8408ffa',
+      userId: '608065b50c2c4036c8408ff7',
+      cardId: '608065b50c2c4036c8408ffd',
+      merchantName: 'Silpo',
+      sum: 1000,
+      createdAt: '2021-04-21T17:49:44.306Z',
+      updatedAt: '2021-04-21T17:49:44.306Z',
+      __v: 0,
+    },
+    {
+      _id: '608065b50c2c4036c8408fff',
+      transactionType: 'Second',
+      transactionCategory: '608065b50c2c4036c8408ff9',
+      userId: '608065b50c2c4036c8408ff7',
+      cardId: '608065b50c2c4036c8408ffc',
+      merchantName: 'Zdorovie',
+      sum: 2000,
+      createdAt: '2021-04-21T17:49:44.306Z',
+      updatedAt: '2021-04-21T17:49:44.306Z',
+      __v: 0,
+    },
+  ]);
+  const [centeredCardId, setCenteredCardId] = useState();
+
+  /* useEffect(() => {
+        axios.get('http://localhost:3002/api/card').then(cards => {
+            setCenteredCardId(cards[0]?._id)
+        })
+    }, []) */
+
+  useEffect(() => {
+    let isCancalledReq = false;
+    if (centeredCardId) {
+      /*  axios.get('http://localhost:3002/api/transactions/cardId/' + centeredCardId).then(transactions => {
+                 if (!isCancalledReq) {
+                     setTransactions(transactions)
+                 }
+             }).catch(e => console.log(e)) */
+    }
+    return () => {
+      isCancalledReq = true;
+    };
+  }, [centeredCardId]);
+
   return (
-    <div>
-      <h2 style={{ paddingBottom: '15px' }}>Dashboard</h2>
-
-      <Grid container spacing={4} style={{ marginBottom: '15px' }}>
-        <Grid item lg={3} sm={6} xl={3} xs={12}>
-          <SummaryBox Icon={AddShoppingCart} color={pink[600]} title="Total Profit" value="1500k" />
-        </Grid>
-
-        <Grid item lg={3} sm={6} xl={3} xs={12}>
-          <SummaryBox Icon={ThumbUp} color={cyan[600]} title="Likes" value="4231" />
-        </Grid>
-
-        <Grid item lg={3} sm={6} xl={3} xs={12}>
-          <SummaryBox Icon={Assessment} color={purple[600]} title="Sales" value="460" />
-        </Grid>
-
-        <Grid item lg={3} sm={6} xl={3} xs={12}>
-          <SummaryBox Icon={Face} color={orange[600]} title="New Members" value="248" />
-        </Grid>
+    <Grid container spacing={4}>
+      <Grid item xs={8}>
+        <SliderWithCards cards={cards} setCenteredCardId={setCenteredCardId} />
+        <TransactionsList data={transactions} />
       </Grid>
-
-      <Grid container spacing={24} style={{ marginBottom: '15px' }}>
-        <Grid item xs>
-          <Product data={products} />
-        </Grid>
+      <Grid item xs>
+        Categories?
       </Grid>
-    </div>
+    </Grid>
   );
 };
 
