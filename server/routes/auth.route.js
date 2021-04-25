@@ -36,8 +36,6 @@ router
   .post('/sign-up',  validateAuthData, deviceDetector, signUp)
   .post('/sign-in', validateAuthData, deviceDetector, signIn)
   .delete('/sign-out', checkAccessAndProvideUserID, signOut)
-
-  .get('/devices-with-opened-app', checkAccessAndProvideUserID, giveDevicesWithOpenedApp)
   .patch('/change-password', validateChangingPassword, checkAccessAndProvideUserID, changePassword)
 
   .post('/restore-password/get-credentials', validateCredentialsIssue, issueCredentials)

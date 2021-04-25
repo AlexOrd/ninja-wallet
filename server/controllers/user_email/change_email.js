@@ -11,6 +11,8 @@ export const changeEmail = async (req, res, next) => {
     const isUsedEmail = await User.findOne({ email: req.body.email });
     if (isUsedEmail) return next(authErrors.LOGIN_ALREADY_USE);
 
+    console.log('!!!!!')
+
     const { err: errFindingUser, user } = await findUserById(userID);
     if (errFindingUser) return next(errFindingUser);
 

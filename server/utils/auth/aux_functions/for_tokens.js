@@ -7,19 +7,17 @@ export const getTokensInfo = (tokenName) => {
   const settings = {
     [ACCESS]: {
       key: process.env.ACCESS_TOKEN_KEY || tokensDevKeys.ACCESS,
-      options: { expiresIn: '1d' },
+      options: { expiresIn: `${1000 * 60 * 5}` },
     },
 
     [REFRESH]: {
       key: process.env.REFRESH_TOKEN_KEY || tokensDevKeys.REFRESH,
-      options: { expiresIn: `${1000 * 60 * 60}` },
+      options: { expiresIn: '3d' },
     },
 
     [RESTORE]: {
       key: process.env.RESTORE_PASSWORD_KEY || tokensDevKeys.RESTORE,
-      // options: { expiresIn: `${1000 * 60 * 10}` },
-      options: { expiresIn: `${10}` },
-
+      options: { expiresIn: `${1000 * 60 * 10}` },
     },
   };
 

@@ -70,8 +70,8 @@ app.get('*', (req, res) => {
 app.use(joiErrorHandler);
 
 // Error Handler Middleware
-app.use(errorHandler.genericErrorHandler);
 app.use(errorHandler.notFound);
+app.use(errorHandler.genericErrorHandler);
 app.use(errorHandler.methodNotAllowed);
 
 app.listen(app.get('port'), app.get('host'), () => {

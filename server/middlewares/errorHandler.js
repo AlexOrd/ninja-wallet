@@ -19,6 +19,7 @@ export function notFound(req, res, next) {
   //   },
   // });
   // return sendFile(path.join(__dirname, '../docs/404.html'));
+   console.log('asdadasdasdasdvbsdfhivbadfhvbl')
    next(createRespErr('NOT_FOUND', 404, 'request resource not found'));
 }
 

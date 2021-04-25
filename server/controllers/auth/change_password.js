@@ -8,6 +8,9 @@ export const changePassword = async (req, res, next) => {
     const { err: errFindingUser, user } = await findUserById(req.userID);
     if (errFindingUser) return next(errFindingUser);
 
+    const isEqualPassword = req.body.oldPassword === req.body.newPassword
+    if(isEqualPassword) return next(authErrors.PASSWORDS_ARE_EQUAL)
+
     const { err: errVerifyingPassword } = await authVerifiers.password(user, req.body.oldPassword);
     if (errVerifyingPassword) return next(authErrors.INCORRECT_OLD_PASSWORD);
 

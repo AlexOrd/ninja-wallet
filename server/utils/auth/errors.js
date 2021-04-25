@@ -15,7 +15,8 @@ export const authErrors = {
     INVALID_DATA: createRespErr('INVALID_DATA', 403, 'passed data is invalid for this request'),
     ACCESS_DENIED: createRespErr('ACCESS_DENIED', 403, 'access denied'),
     USER_BY_EMAIL_NOT_FOUND: createRespErr('USER_BY_EMAIL_NOT_FOUND', 403, 'user didn`t find by passed email'),
-    BOT_HAS_ALREADY_VERIFIED: createRespErr('BOT_HAS_ALREADY_VERIFIED', 403, 'you tried verify your bot repeatedly')
+    BOT_HAS_ALREADY_VERIFIED: createRespErr('BOT_HAS_ALREADY_VERIFIED', 403, 'you tried verify your bot repeatedly'),
+    PASSWORDS_ARE_EQUAL: createRespErr('PASSWORDS_ARE_EQUAL', 403, 'new password is equal with old password')
 }
 
 export const unexpectedError = (error, next) => {

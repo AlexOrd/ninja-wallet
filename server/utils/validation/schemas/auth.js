@@ -11,7 +11,7 @@ export const auth = {
 
   customizeSecuritySettings: Joi.object()
     .keys({
-      option: Joi.string().valid('a', 'b', 'c').required(),
+      option: Joi.string().valid('notifyAboutSignIn', 'doubleAuthenticate').required(),
       value: Joi.boolean().required(),
     })
     .and('option', 'value'),
