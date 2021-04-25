@@ -58,7 +58,10 @@ exports.createTransaction = async (req, res) => {
     });
   }
   try {
-    const newTransaction = await Transaction.create(req.body);
+    console.log(req.userID)
+      const transactionFromRequest = {...req.body, userId: req.userID}
+      console.log(transactionFromRequest)
+    const newTransaction = await Transaction.create(transactionFromRequest);
     res.status(201).json({
       success: true,
 

@@ -7,7 +7,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Filter from './Filter';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
-function EnhancedTableHead(props) {
+function TransactionTableHead(props) {
   const { classes, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -60,7 +60,7 @@ function EnhancedTableHead(props) {
             sortDirection={orderBy === headCell.id ? order : false}
           >
             {headCell.label === 'Card' || headCell.label === 'Category' ? (
-              <Filter id={headCell.id} label={headCell.label} />
+              <Filter id={headCell.id} label={headCell.label} type={headCell.label} />
             ) : (
               <TableSortLabel
                 active={orderBy === headCell.id}
@@ -82,14 +82,13 @@ function EnhancedTableHead(props) {
     </TableHead>
   );
 }
-
-EnhancedTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
-export default EnhancedTableHead;
+// TransactionTableHead.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   numSelected: PropTypes.number,
+//   onRequestSort: PropTypes.func.isRequired,
+//   onSelectAllClick: PropTypes.func,
+//   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+//   orderBy: PropTypes.string.isRequired,
+//   rowCount: PropTypes.number.isRequired,
+// };
+export default TransactionTableHead;

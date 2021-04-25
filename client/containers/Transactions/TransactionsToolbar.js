@@ -8,9 +8,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { useStyles } from './Transactions.style';
 import Fab from '@material-ui/core/Fab';
 import { Link } from 'react-router-dom';
-import CreateTransaction from './CreateTransaction';
 
-const EnhancedTableToolbar = (props) => {
+const TransactionsToolbar = (props) => {
   const classes = useStyles();
   const { numSelected } = props;
 
@@ -35,8 +34,8 @@ const EnhancedTableToolbar = (props) => {
   );
 };
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
+TransactionsToolbar.propTypes = {
+  numSelected: PropTypes.number,
 };
 
-export default EnhancedTableToolbar;
+export default TransactionsToolbar;

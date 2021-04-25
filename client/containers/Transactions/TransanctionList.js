@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -10,15 +10,15 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import EnhancedTableHead from './TableHead';
-import EnhancedTableToolbar from './Toolbar';
+import TransactionTableHead from './TransactionTableHead';
+import TransactionsToolbar from './TransactionsToolbar';
 import { withStyles } from '@material-ui/core/styles';
 import { useStyles } from './Transactions.style';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import LongMenu from './Options';
-
+import moment from 'moment';
 import axios from 'axios';
 
 function descendingComparator(a, b, orderBy) {
@@ -65,11 +65,11 @@ export default function TransactionsList() {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [transactions, setTransactions] = useState();
+  const [transactions, setTransactions] = React.useState();
   const ACCESS_TOKEN =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDgwNzNmNzkyZTQyMjc0YjFiZjQ5MjYiLCJkZXZpY2VJRCI6IjYwODJjNWUyMTRhNjcyN2IzY2Y5YjJmYiIsImlhdCI6MTYxOTE4MzA3NCwiZXhwIjoxNjE5MjY5NDc0fQ.9BeObsYtmNSh-k5q8FIVe_SX4F7tsuOeH73zEdRq2qE';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1MTc1OTk3NmVhODgzOTQzNTNlNGUiLCJkZXZpY2VJRCI6IjYwODUxNzU5OTc2ZWE4ODM5NDM1M2U0ZiIsImlhdCI6MTYxOTMzNTAwMSwiZXhwIjoxNjE5NDIxNDAxfQ.iiUJP8GaYJVbg0ReDk1TDnvvsfVF-uZPlLDUZiuAyOg';
   const REFRESH_TOKEN =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6IjE2Mjg2OCIsImRldmljZUlEIjoiNjA4MmM1ZTIxNGE2NzI3YjNjZjliMmZiIiwiaWF0IjoxNjE5MTgzMDc0LCJleHAiOjE2MTkxODY2NzR9.cSPf_VtNQRLBDurrxYcWW9Kvn9AkoxLagy846LlrmQs';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6IjhjZmYyNWY3LTRiYmEtNDFlMC1iNmE5LWYxZjNiYzM1MjcyYyIsImRldmljZUlEIjoiNjA4NTE3NTk5NzZlYTg4Mzk0MzUzZTRmIiwiaWF0IjoxNjE5MzM1MDAxLCJleHAiOjE2MTkzMzg2MDF9.rc3SdPEpNqZCNYFNF1OMuBKpfopqx0cSfsSc0MfI0dA';
   useEffect(() => {
     const apiUrl = 'http://localhost:3000/api/transactions';
     axios
@@ -107,14 +107,14 @@ export default function TransactionsList() {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar />
+        <TransactionsToolbar />
         <TableContainer>
           <StyledTable
             className={classes.table}
             aria-labelledby="tableTitle"
             aria-label="enhanced table"
           >
-            <EnhancedTableHead
+            <TransactionTableHead
               classes={classes}
               order={order}
               orderBy={orderBy}
@@ -141,9 +141,9 @@ export default function TransactionsList() {
                         <TableCell component="th" id={labelId} scope="row" padding="2">
                           {row.transactionType}
                         </TableCell>
-                        <TableCell align="right">{row.createdAt}</TableCell>
+                        <TableCell align="right">{moment(row.createdAt).format('L')}</TableCell>
                         <TableCell align="right">{row.cardId.cardName}</TableCell>
-                        <TableCell align="right">{row.transactionCategory.name}</TableCell>
+                        <TableCell align="right">{row.transactionCategory?.name}</TableCell>
                         <TableCell align="right">{row.sum}</TableCell>
 
                         <TableCell align="right">
