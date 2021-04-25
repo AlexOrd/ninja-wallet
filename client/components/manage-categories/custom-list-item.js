@@ -28,7 +28,7 @@ const CustomListItem = ({
   const submitCategoryEdit = () => {
     editCategory(category._id, {
       name: categoryName,
-      color: color.hex,
+      color: color,
     });
   };
 
@@ -42,7 +42,7 @@ const CustomListItem = ({
   };
 
   const handleSave = () => {
-    createCategory({ name: categoryName, color: color.hex });
+    createCategory({ name: categoryName, color: color });
   };
 
   const handleFormSubmit = (e) => {
@@ -103,7 +103,7 @@ const ListItemActionsNewCategory = ({ classes, setColor, category }) => {
         <Grid item>
           <input
             className={classes.categoryColorInput}
-            initialvalue={category.color || '#5e72e4'}
+            value={category.color}
             onChange={(e) => setColor(e.target.value)}
             type="color"
           />
@@ -128,11 +128,11 @@ const ListItemActionsExistedCategory = ({
   return (
     <ListItemSecondaryAction>
       <Grid container alignItems="center">
-        <Grid item>
+        <Grid container alignItems="center" item xs={true}>
           {isEditMode ? (
             <input
               className={classes.categoryColorInput}
-              initialvalue={category.color || '#5e72e4'}
+              value={category.color}
               onChange={(e) => setColor(e.target.value)}
               type="color"
             />

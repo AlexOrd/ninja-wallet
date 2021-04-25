@@ -9,10 +9,14 @@ const initialState = {
   newCategoryData: null,
 };
 
+const sortCategoriesBySpendedSum = (categories) => {
+  return [...categories.sort((a, b) => b.expensesSum - a.expensesSum)];
+};
+
 const categoriesReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CATEGORIES: {
-      return { ...state, categories: action.data.categories };
+      return { ...state, categories: sortCategoriesBySpendedSum(action.data.categories) };
     }
     case SET_NEW_CATEGORY_DATA: {
       return { ...state, newCategoryData: action.data.newCategoryData };

@@ -7,9 +7,9 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   categoryColorInput: {
-    width: '1em !important',
-    height: '1em !important',
-    padding: '0 !important',
+    width: '1.5em',
+    height: '1.5em !important',
+    border: 'unset',
   },
   categoryColorPreview: {
     width: '1em',

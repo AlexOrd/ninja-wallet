@@ -36,7 +36,8 @@ var config = {
                     presets: ['@babel/preset-env', '@babel/preset-react'],
                     plugins: ['@babel/plugin-proposal-function-bind', '@babel/plugin-proposal-class-properties'],
                 },
-            }
+            },
+            { test: /\.css$/, use: ['style-loader', 'css-loader'] },
         ]
     },
     resolve: {

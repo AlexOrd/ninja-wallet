@@ -29,6 +29,18 @@ export const fetchCategories = () => async (dispatch) => {
   } catch (err) {}
 };
 
+export const fetchCategoriesFilteredByDate = (from, to) => async (dispatch) => {
+  try {
+    const res = await API.categoriesAPI.getCategoriesByDate(from, to);
+
+    const sortedCategoriesByDate = res.data.categories.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
+    dispatch(setCategories(sortedCategoriesByDate));
+  } catch (err) {}
+};
+
 export const editCategoryThunk = (categoryId, newCategoryData) => async (dispatch) => {
   try {
     const res = await API.categoriesAPI.editCategory(categoryId, newCategoryData);

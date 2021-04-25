@@ -7,6 +7,16 @@ export const categoriesAPI = {
     );
     return res.data;
   },
+  getCategoriesByDate: async (from, to) => {
+    const res = await axiosInstance.post(
+      '/api/categories/get-categories-with-total-transactions-sum-by-date',
+      {
+        from,
+        to,
+      }
+    );
+    return res.data;
+  },
   editCategory: async (categoryId, newCategoryData) => {
     const res = await axiosInstance.put(`api/categories/${categoryId}/`, newCategoryData);
     return res.data;
