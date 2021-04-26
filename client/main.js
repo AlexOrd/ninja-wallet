@@ -11,14 +11,7 @@ import App from './containers/app/AppContainer';
 
 const mountNode = document.getElementById('root');
 
-const theme = createMuiTheme({
-  typography: {
-    useNextVariants: true,
-  },
-  palette: {
-    primary: blueGrey,
-  },
-});
+const theme = createMuiTheme({});
 
 // Used to log in if token is valid
 store.dispatch(verifyToken());
