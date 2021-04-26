@@ -16,13 +16,8 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack/webpack.config.dev';
-import telegramBot from './config/telegram_bot';
-
-import { checkAccessAndProvideUserID } from './middlewares/auth/route_verifiers';
-import authRoutes from './routes/auth.route';
+import telegramBot from './bots/telegram_bot';
 import Transaction from './models/transaction.model';
-import { deviceDetector } from './middlewares/auth/device_detector';
-import { getDeviceInfo } from './utils/auth/aux_functions/get_device_info';
 
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(webpackConfig);

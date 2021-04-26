@@ -58,25 +58,26 @@ export const signIn = async (req, res, next) => {
     const accessToken = createJWToken({ userID: user._id, deviceID }, tokensNames.ACCESS);
     user.save();
 
-    // user.bots.telegram.chatId
-
     if (user.auth.notifyAboutSignIn) {
       try {
-        telegramBot.sendMessage(348781339, 'login from some device');
+        telegramBot.sendMessage(348781339, 'notify');
       } catch (error) {}
     }
 
     if (user.auth.doubleAuthenticate) {
-      const callBackQueryListener = ({ data }) => {
-        if (data === 'confirm') {
+      const callBackQueryListener = (resp) => {
+        if (resp.data === 'confirm') {
           telegramBot.removeListener('callback_query', callBackQueryListener);
+          telegramBot.deleteMessage(348781339, resp.message.message_id);
+
           return res.status(200).send({ success: true });
         }
 
-        if (data === 'deny') {
+        if (resp.data === 'deny') {
           console.log('inside deny if');
           telegramBot.removeListener('callback_query', callBackQueryListener);
-          return next(createRespErr('SOME ERROR', 403, 'SADASDASSA'));
+          telegramBot.deleteMessage(348781339, resp.message.message_id);
+          return next(authErrors.DOUBLE_AUTHENTICATED_DENIED);
         }
         telegramBot.removeListener('callback_query', callBackQueryListener);
       };

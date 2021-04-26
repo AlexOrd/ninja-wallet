@@ -11,8 +11,6 @@ export const changeEmail = async (req, res, next) => {
     const isUsedEmail = await User.findOne({ email: req.body.email });
     if (isUsedEmail) return next(authErrors.LOGIN_ALREADY_USE);
 
-    console.log('!!!!!')
-
     const { err: errFindingUser, user } = await findUserById(userID);
     if (errFindingUser) return next(errFindingUser);
 
@@ -31,7 +29,7 @@ export const changeEmail = async (req, res, next) => {
     );
     if (errSendEmail) return next(errSendEmail);
 
-    return res.status(200).send({ success: true });
+    return res.status(200).send({ success: true, newEmail: req.body.email });
   } catch (error) {
     unexpectedError(error, next);
   }

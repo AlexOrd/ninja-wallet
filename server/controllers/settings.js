@@ -1,13 +1,36 @@
 import { findUserById } from '../utils/auth/aux_functions/selectors';
-import { encryptData, generateRandomNumbers } from '../utils/auth/aux_functions/common';
+import { encryptData, generateRandomString } from '../utils/auth/aux_functions/common';
 import { authErrors, unexpectedError } from '../utils/auth/errors';
+import { authVerifiers } from '../utils/auth/aux_functions/verifiers';
+
+
+export const changePassword = async (req, res, next) => {
+  try {
+    const { err: errFindingUser, user } = await findUserById(req.userID);
+    if (errFindingUser) return next(errFindingUser);
+
+    const isEqualPassword = req.body.oldPassword === req.body.newPassword
+    if(isEqualPassword) return next(authErrors.PASSWORDS_ARE_EQUAL)
+
+    const { err: errVerifyingPassword } = await authVerifiers.password(user, req.body.oldPassword);
+    if (errVerifyingPassword) return next(authErrors.INCORRECT_OLD_PASSWORD);
+
+    user.auth.password = encryptData(req.body.newPassword);
+    user.save();
+    return res.status(200).end();
+  } catch (error) {
+    unexpectedError(error, next);
+  }
+};
+
+
+
 
 export const customSecuritySettings = async (req, res, next) => {
   try {
     const { err: findingUserErr, user } = await findUserById(req.userID);
     if (findingUserErr) return next(findingUserErr);
     const { option, value } = req.body;
-    console.log(req.body);
     user.auth[option] = value;
     user.save();
 
@@ -21,11 +44,10 @@ export const getAccountSettings = async (req, res, next) => {
   try {
     const { err: findingUserErr, user } = await findUserById(req.userID);
     if (findingUserErr) return next(findingUserErr);
-    console.log('user', user._doc);
     const isVerifiedBot = Boolean(user.bots.telegram.chatID);
     const responseObject = {
       userEmail: user.email,
-      isVerifiedEmail: user.auth.isVerifiedEmail,
+      isVerifiedEmail: user.isVerifiedEmail,
       notifyAboutSignIn: user.auth.notifyAboutSignIn,
       doubleAuthenticate: user.auth.doubleAuthenticate,
       deviceList: user.auth.openedOnDevices,
@@ -49,14 +71,13 @@ export const giveDevicesWithOpenedApp = async (req, res, next) => {
 
 export const getVerificationCodeForBot = async (req, res, next) => {
   try {
-    console.log('inside right place');
     const { err: findingUserErr, user } = await findUserById(req.userID);
     if (findingUserErr) return next(findingUserErr);
     if (user.bots.telegram.chatID) {
       return next(authErrors.BOT_HAS_ALREADY_VERIFIED);
     }
 
-    const confirmCode = generateRandomNumbers();
+    const confirmCode = generateRandomString();
     user.bots.telegram.confirmCode = confirmCode;
     user.save();
 
