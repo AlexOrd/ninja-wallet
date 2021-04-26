@@ -5,7 +5,7 @@ import { createJWToken } from '../../utils/auth/aux_functions/for_tokens';
 import {
   setAuthHeaders,
   encryptData,
-  generateRandomNumbers,
+  generateRandomString,
 } from '../../utils/auth/aux_functions/common';
 import { tokensNames } from '../../utils/auth/constants';
 import { getDeviceInfo } from '../../utils/auth/aux_functions/get_device_info';
@@ -42,9 +42,10 @@ export const signIn = async (req, res, next) => {
     const { err: passwordVerifyError } = await authVerifiers.password(user, password);
     if (passwordVerifyError) return next(passwordVerifyError);
 
-    const confirmCode = generateRandomNumbers();
+    const confirmCode = generateRandomString();
     user.auth.openedOnDevices.push({
       confirmCode: encryptData(confirmCode),
+      
       lastLogin: new Date(),
       ...getDeviceInfo(req),
     });
@@ -72,7 +73,6 @@ export const signIn = async (req, res, next) => {
         }
 
         if (resp.data === 'deny') {
-          console.log('inside deny if');
           telegramBot.removeListener('callback_query', callBackQueryListener);
           telegramBot.deleteMessage(348781339, resp.message.message_id);
           return next(authErrors.DOUBLE_AUTHENTICATED_DENIED);

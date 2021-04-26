@@ -8,8 +8,8 @@ export const changePassword = async (req, res, next) => {
     const { err: errFindingUser, user } = await findUserById(req.userID);
     if (errFindingUser) return next(errFindingUser);
 
-    const isEqualPassword = req.body.oldPassword === req.body.newPassword
-    if(isEqualPassword) return next(authErrors.PASSWORDS_ARE_EQUAL)
+    const isEqualPassword = req.body.oldPassword === req.body.newPassword;
+    if (isEqualPassword) return next(authErrors.PASSWORDS_ARE_EQUAL);
 
     const { err: errVerifyingPassword } = await authVerifiers.password(user, req.body.oldPassword);
     if (errVerifyingPassword) return next(authErrors.INCORRECT_OLD_PASSWORD);
@@ -21,8 +21,6 @@ export const changePassword = async (req, res, next) => {
     unexpectedError(error, next);
   }
 };
-
-
 
 export const customSecuritySettings = async (req, res, next) => {
   try {
@@ -37,8 +35,6 @@ export const customSecuritySettings = async (req, res, next) => {
     unexpectedError(error, next);
   }
 };
-
-
 
 export const getAccountSettings = async (req, res, next) => {
   try {
@@ -61,7 +57,6 @@ export const getAccountSettings = async (req, res, next) => {
   }
 };
 
-
 export const giveDevicesWithOpenedApp = async (req, res, next) => {
   const { err: findingUserErr, user } = await findUserById(req.userID);
   if (findingUserErr) return next(findingUserErr);
@@ -69,8 +64,6 @@ export const giveDevicesWithOpenedApp = async (req, res, next) => {
   const devicesList = user.auth.openedOnDevices;
   res.status(200).send({ devicesList, currentDeviceID: req.deviceID });
 };
-
-
 
 export const getVerificationCodeForBot = async (req, res, next) => {
   try {
@@ -89,8 +82,6 @@ export const getVerificationCodeForBot = async (req, res, next) => {
     unexpectedError(error, next);
   }
 };
-
-
 
 export const disconnectTelegramBot = async (req, res, next) => {
   try {

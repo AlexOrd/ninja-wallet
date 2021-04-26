@@ -7,7 +7,7 @@ export const getTokensInfo = (tokenName) => {
   const settings = {
     [ACCESS]: {
       key: process.env.ACCESS_TOKEN_KEY || tokensDevKeys.ACCESS,
-      options: { expiresIn: `${1000 * 60 * 5}` },
+      options: { expiresIn: `${1000 * 60 * 10}` },
     },
 
     [REFRESH]: {
