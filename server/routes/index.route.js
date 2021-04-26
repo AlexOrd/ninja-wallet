@@ -28,6 +28,6 @@ router.use('/profile', checkAccessAndProvideUserID, profileRoutes);
 
 router.use('/userphoto', checkAccessAndProvideUserID, userPhotoRoutes);
 
-router.use('/monobank', monobankRoutes);
+router.use('/monobank', checkAccessAndProvideUserID, monobankRoutes);
 
 export default router;
