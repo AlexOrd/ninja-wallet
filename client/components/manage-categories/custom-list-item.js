@@ -4,6 +4,8 @@ import {
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
+  Typography,
+  Popover,
   TextField,
 } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
@@ -11,6 +13,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import { green } from '@material-ui/core/colors';
+import Button from '@material-ui/core/Button';
+import { DeleteButton } from './delete-button';
+import { EditButton } from './edit-button';
 
 const CustomListItem = ({
   category,
@@ -33,6 +38,11 @@ const CustomListItem = ({
     });
   };
 
+  const disableEditChanges = () => {
+    setCategoryName(category.name);
+    setEditMode(false);
+  };
+
   const handleClickOnEditIcon = () => {
     if (isEditMode) {
       submitCategoryEdit();
@@ -51,8 +61,6 @@ const CustomListItem = ({
 
     if (type === 'create') {
       handleSave();
-    } else {
-      handleClickOnEditIcon();
     }
   };
 
@@ -86,11 +94,13 @@ const CustomListItem = ({
           />
         ) : (
           <ListItemActionsExistedCategory
+            handleClickOnEditIcon={handleClickOnEditIcon}
             isEditMode={isEditMode}
             classes={classes}
             setColor={setColor}
             category={category}
             deleteCategory={deleteCategory}
+            disableEditMode={disableEditChanges}
           />
         )}
       </form>
@@ -131,6 +141,8 @@ const ListItemActionsExistedCategory = ({
   setColor,
   category,
   deleteCategory,
+  handleClickOnEditIcon,
+  disableEditMode,
 }) => {
   return (
     <ListItemSecondaryAction>
@@ -151,14 +163,14 @@ const ListItemActionsExistedCategory = ({
           )}
         </Grid>
         <Grid item>
-          <IconButton type="submit" edge="end" aria-label="edit">
-            <EditIcon />
-          </IconButton>
+          <EditButton
+            disableEditMode={disableEditMode}
+            handleClickOnEditIcon={handleClickOnEditIcon}
+            isEditMode={isEditMode}
+          />
         </Grid>
         <Grid item>
-          <IconButton onClick={deleteCategory} edge="end" aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
+          <DeleteButton deleteCategory={deleteCategory} />
         </Grid>
       </Grid>
     </ListItemSecondaryAction>
