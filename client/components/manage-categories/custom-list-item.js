@@ -20,6 +20,7 @@ const CustomListItem = ({
   createCategory,
   type,
   deleteCategory,
+  deleteNewCategory,
 }) => {
   const [color, setColor] = useState(category.color || '#5e72e4');
   const [isEditMode, setEditMode] = useState(type === 'create' ? true : false);
@@ -81,6 +82,7 @@ const CustomListItem = ({
             handleSave={handleSave}
             setColor={setColor}
             category={category}
+            deleteNewCategory={deleteNewCategory}
           />
         ) : (
           <ListItemActionsExistedCategory
@@ -96,7 +98,7 @@ const CustomListItem = ({
   );
 };
 
-const ListItemActionsNewCategory = ({ classes, setColor, category }) => {
+const ListItemActionsNewCategory = ({ classes, setColor, category, deleteNewCategory }) => {
   return (
     <ListItemSecondaryAction>
       <Grid container alignItems="center">
@@ -111,6 +113,11 @@ const ListItemActionsNewCategory = ({ classes, setColor, category }) => {
         <Grid item>
           <IconButton type="submit" edge="end" aria-label="edit">
             <SaveIcon style={{ color: green[500] }} />
+          </IconButton>
+        </Grid>
+        <Grid item>
+          <IconButton onClick={deleteNewCategory} edge="end" aria-label="delete">
+            <DeleteIcon />
           </IconButton>
         </Grid>
       </Grid>

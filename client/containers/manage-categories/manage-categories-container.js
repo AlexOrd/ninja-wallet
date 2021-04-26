@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, List, Paper } from '@material-ui/core';
+import { Grid, List, Paper, LinkasMUILink, Typography, Button } from '@material-ui/core';
 import axios from 'axios';
 import { useStyles } from './manage-categories-container.style';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CustomListItem from '../../components/manage-categories/custom-list-item';
 import StatsBlock from '../../components/manage-categories/stats-block';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
   editCategoryThunk,
   fetchCategories,
@@ -34,13 +35,28 @@ const ManageCategories = (props) => {
 
   return (
     <Grid container className={classes.manageCategoryWrapper}>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <StatsBlock categories={categories} />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <Paper>
+          <Grid container justify="flex-end">
+            <Grid item className={classes.viewAnalyticsLinkWrapper} xs="auto">
+              <Button
+                size="small"
+                variant="outlined"
+                color="primary"
+                component={Link}
+                to="/categories-stats"
+              >
+                view categories analytics
+              </Button>
+            </Grid>
+          </Grid>
+
+          <CreateNewCategory classes={classes} />
+
           <List>
-            <CreateNewCategory classes={classes} />
             {categories.map((category) => (
               <CustomListItem
                 key={category._id}
@@ -75,6 +91,10 @@ const CreateNewCategory = ({ classes }) => {
     dispatch(handleNewCategoryChange(newCategoryInitialData));
   };
 
+  const deleteNewCategory = () => {
+    dispatch(handleNewCategoryChange(null));
+  };
+
   const createCategory = () => {
     dispatch(createCategoryThunk(newCategoryData));
   };
@@ -95,6 +115,7 @@ const CreateNewCategory = ({ classes }) => {
           createCategory={createCategory}
           classes={classes}
           category={newCategoryData}
+          deleteNewCategory={deleteNewCategory}
         />
       )}
     </>

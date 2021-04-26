@@ -19,4 +19,7 @@ export const useStyles = makeStyles((theme) => ({
   manageCategoryWrapper: {
     padding: theme.spacing(1),
   },
+  viewAnalyticsLinkWrapper: {
+    padding: theme.spacing(1),
+  },
 }));
