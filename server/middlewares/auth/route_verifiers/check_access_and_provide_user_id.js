@@ -29,6 +29,7 @@ export const checkAccessAndProvideUserID = async (req, res, next) => {
 
     const isExpiredAccessToken = errVerifyAccessToken && errVerifyAccessToken === EXPIRED_TOKEN;
     if (isExpiredAccessToken) {
+      console.log('EXPIRED_TOKEN')
       const { err: errUpdatingTokens, newTokens, deviceID } = await updateTokens(
         tokenPayload.userID,
         refreshToken,

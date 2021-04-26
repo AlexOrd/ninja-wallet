@@ -16,12 +16,8 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack/webpack.config.dev';
-
-import { checkAccessAndProvideUserID } from './middlewares/auth/route_verifiers';
-import authRoutes from './routes/auth.route';
+import telegramBot from './bots/telegram_bot';
 import Transaction from './models/transaction.model';
-import { deviceDetector } from './middlewares/auth/device_detector';
-import { getDeviceInfo } from './utils/auth/aux_functions/get_device_info';
 
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(webpackConfig);
@@ -62,7 +58,6 @@ app.use('/api', routes);
 
 // Landing page
 app.get('*', (req, res) => {
-  // res.send('hello world')
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
@@ -70,8 +65,8 @@ app.get('*', (req, res) => {
 app.use(joiErrorHandler);
 
 // Error Handler Middleware
-app.use(errorHandler.genericErrorHandler);
 app.use(errorHandler.notFound);
+app.use(errorHandler.genericErrorHandler);
 app.use(errorHandler.methodNotAllowed);
 
 app.listen(app.get('port'), app.get('host'), () => {
