@@ -1,102 +1,112 @@
 import mongoose from 'mongoose';
 import { Card } from '../models/card.model';
+import { Transaction } from '../models/transaction.model'
 import { validateCard, isCardExist, checkCardOwner } from '../utils/card-validations'
 
 export const createCard = async (req, res) => {
-    const checkCreditCard = await validateCard(req.body, req.userID)
+  const checkCreditCard = await validateCard(req.body, req.userID)
 
-    if (!checkCreditCard.success) {
-        return res.status(406).send({ success: false, message: checkCreditCard.message })
-    }
+  if (!checkCreditCard.success) {
+    return res.status(406).send({ success: false, message: checkCreditCard.message })
+  }
 
-    const card = new Card({
-        _id: new mongoose.Types.ObjectId(),
-        userId: req.userID,
-        ...req.body
-    });
+  const card = new Card({
+    _id: new mongoose.Types.ObjectId(),
+    userId: req.userID,
+    ...req.body
+  });
 
-    try {
-        const createdCard = await card.save();
-        res.status(201).send({ card: createdCard , success: true });
-    } catch (err) {
-        res.status(400).send({ err, success: false });
-    }
+  try {
+    const createdCard = await card.save();
+    res.status(201).send({ card: createdCard, success: true });
+  } catch (err) {
+    res.status(400).send({ err, success: false });
+  }
 }
 
 export const editCard = async (req, res) => {
-    const cardExist = await isCardExist(req.params.id);
-    const card = await Card.findById(req.params.id);
-    // сonsole.log(card)
-    if (!checkCardOwner(card, req.userID)) {
-        return res.status(400).send({ success: false, message: 'User error' });
-    }
+  const cardExist = await isCardExist(req.params.id);
+  const card = await Card.findById(req.params.id);
 
-    if (!cardExist.success) {
-        return res.status(400).send(cardExist.message);
-    }
+  if (!checkCardOwner(card, req.userID)) {
+    return res.status(400).send({ success: false, message: 'User error' });
+  }
 
-    try {
-        card.cardName = req.body.cardName || card.cardName;
-        card.currency = req.body.currency || card.cardName;
-        card.balance = req.body.balance || card.balance;
-        card.transactionIds = [...card.transactionIds, req.body.transactionId] || card.transactionIds;
+  if (!cardExist.success) {
+    return res.status(400).send(cardExist.message);
+  }
 
-        await card.save();
+  try {
+    card.cardName = req.body.cardName || card.cardName;
+    card.currency = req.body.currency || card.cardName;
+    card.balance = req.body.balance || card.balance;
+    card.cardNumber = req.body.cardNumber || card.cardNumber
 
-        return res.status(200).send({
-            message: 'Card was updated',
-            card,
-            success: true
-        });
-    } catch (err) {
-        return res.status(304).send({ err, success: false });
-    }
+    await card.save();
+
+    return res.status(200).send({
+      message: 'Card was updated',
+      card,
+      success: true
+    });
+  } catch (err) {
+    return res.status(304).send({ err, success: false });
+  }
 }
 
 export const getCards = async (req, res) => {
-    try {
-        const cards = await Card.find({ userId: req.userID })
-        res.status(200).send({ cards, success: true });
-    } catch (err) {
-        res.status(400).send({ err, success: false });
-    }
+
+
+  try {
+    const cards = await Card.find({ userId: req.userID })
+    const newCardsResponse = await Promise.all(cards.map(async (card) => {
+      const transactionsResponse = await Transaction.find({ cardId: card._id })
+      card.transactions.push(transactionsResponse)
+      console.log(card)
+      return card
+    }))
+
+    res.status(200).send({ cards: newCardsResponse, success: true });
+  } catch (err) {
+    res.status(400).send({ err, success: false });
+  }
 }
 
 export const getCardById = async (req, res) => {
-    const cardExist = await isCardExist(req.params.id)
-    const card = await Card.findOne({ _id: req.params.id })
+  const cardExist = await isCardExist(req.params.id)
+  const card = await Card.findOne({ _id: req.params.id })
 
-    if (!checkCardOwner(card, req.userID)) {
-        return res.status(400).send({ success: false, message: 'User error' })
-    }
+  if (!checkCardOwner(card, req.userID)) {
+    return res.status(400).send({ success: false, message: 'User error' })
+  }
 
-    if (!cardExist.success) {
-        return res.status(400).send(cardExist.message)
-    }
+  if (!cardExist.success) {
+    return res.status(400).send(cardExist.message)
+  }
 
-    try {
-        res.status(200).send({ card, success: true });
-    } catch (err) {
-        res.status(400).send({ err, success: false });
-    }
+  try {
+    res.status(200).send({ card, success: true });
+  } catch (err) {
+    res.status(400).send({ err, success: false });
+  }
 }
 
 export const removeCardById = async (req, res) => {
-    const cardExist = await isCardExist(req.params.id)
-    const card = await Card.findOne({ _id: req.params.id })
+  const cardExist = await isCardExist(req.params.id)
+  const card = await Card.findOne({ _id: req.params.id })
 
-    if (!checkCardOwner(card, req.userID)) {
-        return res.status(400).send({ success: false, message: 'User error' })
-    }
+  if (!checkCardOwner(card, req.userID)) {
+    return res.status(400).send({ success: false, message: 'User error' })
+  }
 
-    if (!cardExist.success) {
-        return res.status(400).send({ success: cardExist.success, message: cardExist.message })
-    }
+  if (!cardExist.success) {
+    return res.status(400).send({ success: cardExist.success, message: cardExist.message })
+  }
 
-    try {
-        await Card.deleteOne({ _id: req.params.id });
-        res.status(200).send({ message: 'Card was deleted', success: true });
-    } catch (err) {
-        res.status(400).send({ err, success: false });
-    }
+  try {
+    await Card.deleteOne({ _id: req.params.id });
+    res.status(200).send({ message: 'Card was deleted', success: true });
+  } catch (err) {
+    res.status(400).send({ err, success: false });
+  }
 }

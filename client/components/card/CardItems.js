@@ -5,7 +5,7 @@ import './style.css';
 import OtherCardInfo from './OtherCardInfo';
 import Grid from '@material-ui/core/Grid';
 import CreateCardForm from './CreateCardForm';
-import Box from '@material-ui/core/Box';
+import { Box, Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -28,41 +28,45 @@ const CardItems = ({
 
   return (
     <Grid className={classes.root} container alignContent="flex-start" alignItems="justify">
-      <Grid item>
-        <Box m={3} className="container">
-          <Cards
-            name={'' || card.cardName}
-            // number={'553435******3232'}
-            number={'' || card.cardNumber}
-            expiry={'' || card.thru}
-            cvc={'' || card.cvc}
-          />
-        </Box>
+      <Grid md={6} container justify="center" item>
+        <Grid item>
+          <Box m={3} className="container">
+            <Cards
+              name={'' || card.cardName}
+              number={'' || card.cardNumber}
+              expiry={'' || card.thru}
+              cvc={'' || card.cvc}
+            />
+          </Box>
+        </Grid>
+        {!isAdded && (
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              alignContent="center"
+              onClick={() => openCardCreator('update')}
+            >
+              Edit card
+            </Button>
+          </Grid>
+        )}
       </Grid>
-      <Grid item>
+      <Grid md={6} item>
         <Box m={3}>
           <OtherCardInfo card={card} />
         </Box>
       </Grid>
-      <Box>
-        <button onClick={() => (openCardCreator(), setUpdateType('update'))}>Edit card</button>
-      </Box>
-      {!isAdded ? (
-        ''
-      ) : (
-        <div>
-          <Grid md={12}>
-            <CreateCardForm
-              createCard={createCard}
-              card={card}
-              setCard={setCard}
-              updateType={updateType}
-              // setCard={value => setCard(value)}
-              // card={card}
-              // onSubmit={onSubmit}
-              // handleSubmit={handleSubmit}
-            />
-          </Grid>
+
+      {isAdded && (
+        <Grid justify="center" alignItems="center" md={12}>
+          {/* <Box alignContent="center" > */}
+          <CreateCardForm
+            createCard={createCard}
+            card={card}
+            setCard={setCard}
+            updateType={updateType}
+          />
           {error !== undefined ? (
             <Grid md={12}>
               {error.data.details.map(({ message }) => (
@@ -74,7 +78,7 @@ const CardItems = ({
           ) : (
             ''
           )}
-        </div>
+        </Grid>
       )}
     </Grid>
   );

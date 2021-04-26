@@ -36,7 +36,8 @@ export default function OtherCardInfo({ card }) {
           Currency: {card.currency}
         </Typography>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Card name: {card.cardName}
+          Number of transactions :{' '}
+          {card.transactions !== undefined ? card.transactions[0].length : 0}
         </Typography>
       </CardContent>
     </Card>

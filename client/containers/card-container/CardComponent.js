@@ -17,28 +17,35 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import CardList from '../../components/card/CardList';
 import CardItems from '../../components/card/CardItems';
+import Transactions from '../../components/card/Transactions';
+import TransactionInfo from '../../components/card/TransactionInfo';
+import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     margin: '0',
     padding: '0',
   },
   gridList: {
     display: 'inline-block',
+    padding: '0',
     maxHeight: '100%',
-    'box-shadow': '0 0 10px rgba(0,0,0,0.2)',
   },
   cardItem: {
     padding: '20px',
   },
   girdContainer: {
-    height: '100%',
+    height: 'auto',
+  },
+  container: {
+    padding: theme.spacing(1),
   },
   addCard: {
-    backgroundColor: 'rgba(0, 170, 217)',
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.getContrastText(theme.palette.primary.light),
   },
-});
+}));
 
 const cardType = {
   cardNumber: '',
@@ -52,6 +59,7 @@ const CardComponent = () => {
   const [card, setCard] = useState(cardType);
   const [isAdded, setAdded] = useState(false);
   const [updateType, setUpdateType] = useState('');
+  const [transaction, setTransaction] = useState({});
   const cards = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -61,6 +69,8 @@ const CardComponent = () => {
   }, []);
 
   const cardsData = cards.card.card.cards === undefined ? [] : cards.card.card.cards;
+
+  const sortedCards = cardsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const createCard = (card, updateType, cardId) => {
     if (updateType === 'create') {
@@ -72,31 +82,19 @@ const CardComponent = () => {
   };
 
   const deleteCard = (cardId) => {
-    // console.log('xxxxxxxxxxxxxx')
-    // console.log(cardId, 'hello')
     dispatch(deleteCardThunk(cardId));
   };
 
-  const toLocalStorage = () => {
-    let auth =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1OTI4ZDcyYTZjMjExYmM2NDAyNWIiLCJkZXZpY2VJRCI6IjYwODU5Mjk2NzJhNmMyMTFiYzY0MDI1ZCIsImlhdCI6MTYxOTM2NjU1MCwiZXhwIjoxNjE5NDUyOTUwfQ.dawG4xWM1eQlJfVLR4FzakhwhooNv4M_0RGiMgufnWs';
-    let refresh =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6IjIyMjc3NCIsImRldmljZUlEIjoiNjA4NTkyOTY3MmE2YzIxMWJjNjQwMjVkIiwiaWF0IjoxNjE5MzY2NTUwLCJleHAiOjE2MTkzNzAxNTB9.rh_1bcb861magj7_32T5XITjjcNNFKVEYErCS0tQSBs';
-    return localStorage.setItem('accessToken', auth), localStorage.setItem('refreshToken', refresh);
-  };
-  toLocalStorage();
-
-  const openCardCreator = () => {
-    if (updateType === 'create') {
+  const openCardCreator = (type) => {
+    if (type === 'create') {
       setAdded(true);
       setCard(cardType);
-      console.log('xxx');
+      setUpdateType('create');
       return;
     }
-    if (updateType === 'update') {
+    if (type === 'update') {
       setAdded(true);
-      // setCard(card)
-      console.log(card);
+      setUpdateType('update');
       return;
     }
   };
@@ -106,44 +104,63 @@ const CardComponent = () => {
     setCard(card);
   };
 
-  console.log(updateType);
+  const toLocalStorage = () => {
+    let auth =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1OTI4ZDcyYTZjMjExYmM2NDAyNWIiLCJkZXZpY2VJRCI6IjYwODZkMzU2YTE1M2RhMTgyZGI2MGJkMSIsImlhdCI6MTYxOTQ0ODY2MiwiZXhwIjoxNjE5NTM1MDYyfQ.fKXTnMS3c9W6fS0aRd4m5JdTMxAjwlR9mT0DnAzUBzs';
+    let refresh =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6IjQxODcyNCIsImRldmljZUlEIjoiNjA4NmQzNTZhMTUzZGExODJkYjYwYmQxIiwiaWF0IjoxNjE5NDQ4NjYyLCJleHAiOjE2MTk0NTIyNjJ9.tc7gVEhAG1DkUYcLBiwloMkhs_x4ffd5XZICHSpB_3Y';
+    return localStorage.setItem('accessToken', auth), localStorage.setItem('refreshToken', refresh);
+  };
+  toLocalStorage();
 
   return (
-    <div>
-      <Container className={classes.container} maxWidth="lg">
-        <Box component="div" className={classes.box}>
-          <Grid className={classes.girdContainer} container item>
-            <Grid className={classes.gridList} md={4} container item>
-              <h3>Your card</h3>
-              <ListItem
-                className={classes.addCard}
-                onClick={() => (openCardCreator(), setUpdateType('create'))}
-                button
-              >
-                <ListItemText primary="+Add card" />
-              </ListItem>
-              <br />
+    <Container className={classes.container} maxWidth="lg">
+      <Box component="div" className={classes.box}>
+        <Grid className={classes.girdContainer} spacing={2} container>
+          <Grid item xs={3}>
+            <Paper style={{ height: '100%' }} variant="outlined">
+              <Container className={classes.gridList}>
+                <h3>Your card</h3>
+                <ListItem
+                  className={classes.addCard}
+                  onClick={() => openCardCreator('create')}
+                  button
+                >
+                  <ListItemText primary="+Add card" />
+                </ListItem>
 
-              <CardList cards={cardsData} switchCard={switchCard} deleteCard={deleteCard} />
-            </Grid>
-            <Grid container md={8} item>
-              <CardItems
-                className={classes.cardItem}
-                card={card}
-                createCard={createCard}
-                openCardCreator={openCardCreator}
-                setUpdateType={setUpdateType}
-                updateType={updateType}
-                // onSubmit={onSubmit}
-                setCard={setCard}
-                isAdded={isAdded}
-                // error={error}
-              />
-            </Grid>
+                <CardList cards={sortedCards} switchCard={switchCard} deleteCard={deleteCard} />
+              </Container>
+            </Paper>
           </Grid>
-        </Box>
-      </Container>
-    </div>
+
+          <Grid container xs={true} md={7} item>
+            <CardItems
+              className={classes.cardItem}
+              card={card}
+              createCard={createCard}
+              openCardCreator={openCardCreator}
+              setUpdateType={setUpdateType}
+              updateType={updateType}
+              setCard={setCard}
+              isAdded={isAdded}
+            />
+          </Grid>
+          <Grid container xs="auto" md={2} item>
+            <Paper style={{ height: '100%' }} variant="outlined">
+              <Transactions card={card} setTransaction={setTransaction} />
+            </Paper>
+          </Grid>
+          <Grid xs={12} container item>
+            {transaction._id && (
+              <Grid container justify="center" item>
+                <TransactionInfo transaction={transaction} />
+              </Grid>
+            )}
+          </Grid>
+        </Grid>
+      </Box>
+    </Container>
   );
 };
 

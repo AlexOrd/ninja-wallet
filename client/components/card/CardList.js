@@ -8,7 +8,7 @@ import { deleteCardThunk } from '../../actions/cardAction';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: 'rgba(247, 255, 249)',
+    // backgroundColor: 'rgba(247, 255, 249)',
     margin: '0px',
     padding: '0px',
   },
@@ -26,14 +26,10 @@ const CardList = ({ cards, switchCard, deleteCard }) => {
       aria-label="secondary mailbox folders"
     >
       {cards.map((card) => (
-        <div>
-          <ListItem key={card._id} alignItems="center" onClick={() => switchCard(card)} button>
-            <ListItemText primary={card.cardName} />
-          </ListItem>
-          <ListItem alignItems="center" button onClick={() => deleteCard(card._id)}>
-            <DeleteIcon />
-          </ListItem>
-        </div>
+        <ListItem key={card._id} alignItems="center" button>
+          <ListItemText onClick={() => switchCard(card)} primary={card.cardName} />
+          <DeleteIcon onClick={() => deleteCard(card._id)} />
+        </ListItem>
       ))}
     </List>
   );
