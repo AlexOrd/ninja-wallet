@@ -16,6 +16,8 @@ import { green } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 import { DeleteButton } from './delete-button';
 import { EditButton } from './edit-button';
+import InputColor from 'react-input-color';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const CustomListItem = ({
   category,
@@ -30,12 +32,18 @@ const CustomListItem = ({
   const [color, setColor] = useState(category.color || '#5e72e4');
   const [isEditMode, setEditMode] = useState(type === 'create' ? true : false);
   const [categoryName, setCategoryName] = useState(category.name);
+  const [isLoading, setLoading] = useState(false);
 
   const submitCategoryEdit = () => {
-    editCategory(category._id, {
-      name: categoryName,
-      color: color,
-    });
+    setLoading(true);
+    editCategory(
+      category._id,
+      {
+        name: categoryName,
+        color: color,
+      },
+      () => setLoading(false)
+    );
   };
 
   const disableEditChanges = () => {
@@ -53,7 +61,8 @@ const CustomListItem = ({
   };
 
   const handleSave = () => {
-    createCategory({ name: categoryName, color: color });
+    setLoading(true);
+    createCategory({ name: categoryName, color: color }, () => setLoading(false));
   };
 
   const handleFormSubmit = (e) => {
@@ -69,6 +78,10 @@ const CustomListItem = ({
       handleNewCategoryChange({ name: categoryName, color: color?.hex ? color.hex : color });
     }
   }, [categoryName, color]);
+
+  if (isLoading) {
+    return <Skeleton height="48px" animation="wave" />;
+  }
 
   return (
     <ListItem selected={isEditMode} className={classes.listItemWrapper}>
@@ -98,6 +111,7 @@ const CustomListItem = ({
             isEditMode={isEditMode}
             classes={classes}
             setColor={setColor}
+            color={color}
             category={category}
             deleteCategory={deleteCategory}
             disableEditMode={disableEditChanges}
@@ -113,12 +127,20 @@ const ListItemActionsNewCategory = ({ classes, setColor, category, deleteNewCate
     <ListItemSecondaryAction>
       <Grid container alignItems="center">
         <Grid item>
-          <input
+          <InputColor
+            initialValue={category.color}
+            color={category?.color?.hex}
+            placement="left"
+            onChange={(color) => {
+              setColor(color);
+            }}
+          />
+          {/* <input
             className={classes.categoryColorInput}
             value={category.color}
             onChange={(e) => setColor(e.target.value)}
             type="color"
-          />
+          /> */}
         </Grid>
         <Grid item>
           <IconButton type="submit" edge="end" aria-label="edit">
@@ -138,6 +160,7 @@ const ListItemActionsNewCategory = ({ classes, setColor, category, deleteNewCate
 const ListItemActionsExistedCategory = ({
   isEditMode,
   classes,
+  color,
   setColor,
   category,
   deleteCategory,
@@ -149,9 +172,15 @@ const ListItemActionsExistedCategory = ({
       <Grid container alignItems="center">
         <Grid container alignItems="center" item xs={true}>
           {isEditMode ? (
+            // <InputColor
+            //   initialValue={category.color}
+            //   color={category?.color?.hex}
+            //   placement="left"
+            //   onChange={(color) => setColor(color)}
+            // />
             <input
               className={classes.categoryColorInput}
-              value={category.color}
+              value={color}
               onChange={(e) => setColor(e.target.value)}
               type="color"
             />

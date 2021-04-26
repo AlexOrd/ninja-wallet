@@ -15,6 +15,7 @@ export const useStyles = makeStyles((theme) => ({
     width: '1em',
     height: '1em',
     borderRadius: '50%',
+    boxShadow: '0 0 5px rgba(0, 0, 0, 0.2)',
   },
   manageCategoryWrapper: {
     padding: theme.spacing(1),

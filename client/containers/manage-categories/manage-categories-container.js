@@ -25,8 +25,8 @@ const ManageCategories = (props) => {
     dispatch(fetchCategories());
   }, []);
 
-  const editCategory = (categoryId, newCategoryData) => {
-    dispatch(editCategoryThunk(categoryId, newCategoryData));
+  const editCategory = (categoryId, newCategoryData, success) => {
+    dispatch(editCategoryThunk(categoryId, newCategoryData, success));
   };
 
   const deleteCategory = (categoryId) => {
@@ -34,11 +34,11 @@ const ManageCategories = (props) => {
   };
 
   return (
-    <Grid container className={classes.manageCategoryWrapper}>
-      <Grid item xs={12} md={6}>
+    <Grid container spacing={2} className={classes.manageCategoryWrapper}>
+      <Grid item xs={12} md={4}>
         <StatsBlock categories={categories} />
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={true}>
         <Paper>
           <Grid container justify="flex-end">
             <Grid item className={classes.viewAnalyticsLinkWrapper} xs="auto">
@@ -95,8 +95,8 @@ const CreateNewCategory = ({ classes }) => {
     dispatch(handleNewCategoryChange(null));
   };
 
-  const createCategory = () => {
-    dispatch(createCategoryThunk(newCategoryData));
+  const createCategory = (success) => {
+    dispatch(createCategoryThunk(newCategoryData, success));
   };
 
   return (

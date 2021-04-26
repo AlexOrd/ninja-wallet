@@ -54,7 +54,7 @@ const StatsBlock = ({ categories }) => {
 
 const NewestCategory = ({ classes, newestCategory }) => {
   return (
-    <Grid item xs={12} sm={12} md={6}>
+    <Grid item xs={12}>
       <Card>
         <CardHeader color="warning" stats icon>
           <CardIcon color="warning">
@@ -70,7 +70,7 @@ const NewestCategory = ({ classes, newestCategory }) => {
 
 const MostSpentMoneyCategory = ({ classes, mostSpendMoneyCategory }) => {
   return (
-    <Grid item xs={12} sm={12} md={6}>
+    <Grid item xs={12}>
       <Card>
         <CardHeader color="warning" stats icon>
           <CardIcon color="success">
@@ -91,7 +91,7 @@ const MostSpentMoneyCategory = ({ classes, mostSpendMoneyCategory }) => {
 
 const MostTransactionsCount = ({ classes, mostTransactionsCountCategory }) => {
   return (
-    <Grid item xs={12} sm={12} md={6}>
+    <Grid item xs={12}>
       <Card>
         <CardHeader color="warning" stats icon>
           <CardIcon color="info">
