@@ -17,7 +17,7 @@ export const createCard = async (req, res) => {
 
     try {
         const createdCard = await card.save();
-        res.status(201).send({ data: { card: createdCard }, success: true });
+        res.status(201).send({ card: createdCard , success: true });
     } catch (err) {
         res.status(400).send({ err, success: false });
     }
@@ -26,7 +26,7 @@ export const createCard = async (req, res) => {
 export const editCard = async (req, res) => {
     const cardExist = await isCardExist(req.params.id);
     const card = await Card.findById(req.params.id);
-
+    // сonsole.log(card)
     if (!checkCardOwner(card, req.userID)) {
         return res.status(400).send({ success: false, message: 'User error' });
     }

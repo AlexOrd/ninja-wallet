@@ -12,3 +12,7 @@ export const ENTITY_FETCH = 'ENTITY_FETCH';
 export const ENTITY_DELETE = 'ENTITY_DELETE';
 export const SELECT_ENTITY_ITEM = 'SELECT_ENTITY_ITEM';
 export const CLEAR_ENTITY_LIST = 'CLEAR_ENTITY_LIST';
+
+export const SET_CARD = 'SET_CARD';
+export const SET_NEW_CARD = 'SET_NEW_CARD';
+export const DELETE_CARD = 'DELETE_CARD';

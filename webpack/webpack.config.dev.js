@@ -13,6 +13,7 @@ const config = {
     context: path.resolve(CURRENT_WORKING_DIR, 'client'),
     entry: {
         app: [
+            'babel-polyfill',
             'webpack-hot-middleware/client', // bundle the client for hot reloading
             './main.js'  // the entry point of app
         ]
@@ -44,6 +45,13 @@ const config = {
                     cacheDirectory: true,
                     plugins: ['react-hot-loader/babel', '@babel/plugin-proposal-function-bind', '@babel/plugin-proposal-class-properties'],
                 },
+            },
+            {
+              test: /\.css$/,
+              use: [
+                'style-loader',
+                'css-loader'
+              ]
             }
         ]
     },
