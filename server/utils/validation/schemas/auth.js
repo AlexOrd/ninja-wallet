@@ -9,6 +9,13 @@ export const auth = {
       .required(),
   }),
 
+  customizeSecuritySettings: Joi.object()
+    .keys({
+      option: Joi.string().valid('notifyAboutSignIn', 'doubleAuthenticate').required(),
+      value: Joi.boolean().required(),
+    })
+    .and('option', 'value'),
+
   confirmCode: Joi.object().keys({
     confirmCode: Joi.string()
       .length(6)
@@ -25,7 +32,7 @@ export const auth = {
       email: Joi.string()
         .email({ tlds: { allow: false } })
         .required(),
-      password: Joi.string().min(6).max(25).required(),
+      password: Joi.string().min(8).max(25).required(),
     })
     .and('email', 'password'),
 

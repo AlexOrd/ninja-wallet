@@ -20,6 +20,7 @@ import {
 import Wallpaper from '@material-ui/icons/Wallpaper';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { Skeleton } from '@material-ui/lab';
+import { Link } from 'react-router-dom';
 
 const styles = () => ({
   container: {
@@ -62,7 +63,7 @@ const TransactionsList = ({ data, classes, cards }) => {
   }
   return (
     <div className={classes.container}>
-      <Card style={{ width: '50%' }}>
+      <Card style={{ width: '100%' }}>
         <CardHeader classes={{ title: classes.header }} title={`Latest transactions`} />
         <Divider />
         <CardContent classes={{ root: classes.card }}>
@@ -108,9 +109,11 @@ const TransactionsList = ({ data, classes, cards }) => {
         </CardContent>
         <Divider />
         <CardActions className={classes.actions}>
-          <Button color="primary" size="small" variant="text">
-            View all <ArrowRightIcon />
-          </Button>
+          <Link>
+            <Button color="primary" size="small" variant="text">
+              View all <ArrowRightIcon />
+            </Button>
+          </Link>
         </CardActions>
       </Card>
     </div>

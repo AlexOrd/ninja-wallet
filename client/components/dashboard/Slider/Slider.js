@@ -10,6 +10,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import './Slider.css';
 import 'react-credit-cards/lib/styles.scss';
 import { Button, makeStyles, Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
   alertMsg: {
@@ -84,9 +85,11 @@ const SliderWithCards = ({ cards, setCenteredCardIdx }) => {
             <Typography classes={{ root: classes.alertMsg }}>
               You do not have any cards yet
             </Typography>
-            <Button variant="contained" color="primary">
-              Create one
-            </Button>
+            <Link to="/cards">
+              <Button variant="contained" color="primary">
+                Create one
+              </Button>
+            </Link>
           </div>
         </div>
       )}

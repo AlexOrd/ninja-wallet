@@ -51,7 +51,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axiosInstance.get('/api/card').then(({ data }) => {
-      setCards(a); //(data.cards)
+      setCards(data.cards);
     });
   }, []);
 
@@ -76,16 +76,16 @@ const Dashboard = () => {
 
   return (
     <div>
+      <FooterWithSummaryCards />
       <Grid container spacing={5}>
-        <Grid item xs={8}>
+        <Grid item xs={7}>
           <SliderWithCards cards={cards} setCenteredCardIdx={setCenteredCardIdx} />
           <TransactionsList data={transactions} cards={cards} />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
           <ExchangeRateBlock />
         </Grid>
       </Grid>
-      <FooterWithSummaryCards />
     </div>
   );
 };

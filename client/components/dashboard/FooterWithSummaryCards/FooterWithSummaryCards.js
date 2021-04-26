@@ -8,7 +8,7 @@ import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
 
 const useStyles = makeStyles(() => ({
   footer: {
-    marginTop: 40,
+    marginBottom: 40,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -22,7 +22,7 @@ const FooterWithSummaryCards = () => {
       setData(data.data);
     });
   }, []);
-  console.log(data);
+
   if (!data) {
     return null;
   }
@@ -35,12 +35,12 @@ const FooterWithSummaryCards = () => {
         title={'Transactions'}
       />
       <SummaryCard
-        icon={<MoneyIcon />}
+        icon={<AttachMoneyIcon />}
         sum={data.transactionsSum}
         difference={data.transactionsSumDifference}
         title={'Transactions sum'}
       />
-      <SummaryCard icon={<AttachMoneyIcon />} sum={data.categoriesCount} title={'Categories'} />
+      <SummaryCard icon={<MoneyIcon />} sum={data.categoriesCount} title={'Categories'} />
     </div>
   );
 };
