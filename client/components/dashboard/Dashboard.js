@@ -1,44 +1,89 @@
-import React from 'react';
-import { cyan, pink, purple, orange } from '@material-ui/core/colors';
+import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { AddShoppingCart, ThumbUp, Assessment, Face } from '@material-ui/icons';
-
-import SummaryBox from './SummaryBox';
-import Product from './Product';
-
-const products = [
-  { id: 1, title: 'Samsung TV', text: 'Samsung 32 1080p 60Hz LED Smart HDTV.' },
-  { id: 2, title: 'Playstation 4', text: 'PlayStation 3 500 GB System' },
-  { id: 3, title: 'Apple iPhone 6', text: 'Apple iPhone 6 Plus 16GB Factory Unlocked GSM 4G ' },
-  { id: 4, title: 'Apple MacBook', text: 'Apple MacBook Pro MD101LL/A 13.3-Inch Laptop' },
+import SliderWithCards from './Slider/Slider';
+import TransactionsList from './TransactionsList';
+import { axiosInstance } from '../../config/axios';
+import ExchangeRateBlock from './ExchangeRateBlock/ExchangeRateBlock';
+import FooterWithSummaryCards from './FooterWithSummaryCards/FooterWithSummaryCards';
+const a = [
+  {
+    transactionIds: [],
+    balance: 1500,
+    _id: '608065b50c2c4036c8408ffc',
+    userId: '608065b50c2c4036c8408ff7',
+    cardNumber: '4149252324897496',
+    currency: 'dollar',
+    cardName: 'second card',
+    createdAt: '2021-04-21T17:49:44.305Z',
+    updatedAt: '2021-04-21T17:49:44.305Z',
+    __v: 0,
+  },
+  {
+    transactionIds: [],
+    balance: 2222,
+    _id: '608065b50c2c4036c8408ffb',
+    userId: '608065b50c2c4036c8408ff6',
+    cardNumber: '4149252324897496',
+    currency: 'dollar',
+    cardName: 'first card',
+    createdAt: '2021-04-21T17:49:44.305Z',
+    updatedAt: '2021-04-21T17:49:44.305Z',
+    __v: 0,
+  },
+  {
+    transactionIds: [],
+    balance: 1500,
+    _id: '608065b50c2c4036c8408ffd',
+    userId: '608065b50c2c4036c8408ff7',
+    cardNumber: '4149252324897496',
+    currency: 'dollar',
+    cardName: 'second card',
+    createdAt: '2021-04-21T17:49:44.306Z',
+    updatedAt: '2021-04-21T17:49:44.306Z',
+    __v: 0,
+  },
 ];
 
 const Dashboard = () => {
+  const [transactions, setTransactions] = useState(null);
+  const [centeredCardIdx, setCenteredCardIdx] = useState(0);
+  const [cards, setCards] = useState(null);
+
+  useEffect(() => {
+    axiosInstance.get('/api/card').then(({ data }) => {
+      setCards(data.cards);
+    });
+  }, []);
+
+  useEffect(() => {
+    let isCancalledReq = false;
+    const centeredCardId = cards?.[centeredCardIdx]?._id;
+    if (centeredCardId) {
+      axiosInstance
+        .get('/api/transactions/cardId/' + centeredCardId)
+        .then(({ data: { data } }) => {
+          if (!isCancalledReq) {
+            setTransactions(data.transactions);
+          }
+        })
+        .catch((e) => console.log(e));
+    }
+    return () => {
+      isCancalledReq = true;
+      setTransactions(null);
+    };
+  }, [centeredCardIdx, cards]);
+
   return (
     <div>
-      <h2 style={{ paddingBottom: '15px' }}>Dashboard</h2>
-
-      <Grid container spacing={4} style={{ marginBottom: '15px' }}>
-        <Grid item lg={3} sm={6} xl={3} xs={12}>
-          <SummaryBox Icon={AddShoppingCart} color={pink[600]} title="Total Profit" value="1500k" />
+      <FooterWithSummaryCards />
+      <Grid container spacing={5}>
+        <Grid item xs={7}>
+          <SliderWithCards cards={cards} setCenteredCardIdx={setCenteredCardIdx} />
+          <TransactionsList data={transactions} cards={cards} />
         </Grid>
-
-        <Grid item lg={3} sm={6} xl={3} xs={12}>
-          <SummaryBox Icon={ThumbUp} color={cyan[600]} title="Likes" value="4231" />
-        </Grid>
-
-        <Grid item lg={3} sm={6} xl={3} xs={12}>
-          <SummaryBox Icon={Assessment} color={purple[600]} title="Sales" value="460" />
-        </Grid>
-
-        <Grid item lg={3} sm={6} xl={3} xs={12}>
-          <SummaryBox Icon={Face} color={orange[600]} title="New Members" value="248" />
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={24} style={{ marginBottom: '15px' }}>
-        <Grid item xs>
-          <Product data={products} />
+        <Grid item xs={5}>
+          <ExchangeRateBlock />
         </Grid>
       </Grid>
     </div>

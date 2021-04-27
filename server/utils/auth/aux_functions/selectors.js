@@ -1,5 +1,5 @@
-import User from "../../../models/user.model";
-import { authErrors } from "../errors";
+import User from '../../../models/user.model';
+import { authErrors } from '../errors';
 
 export const findUserById = async (id) => {
   const user = await User.findById(id);
@@ -16,6 +16,3 @@ export const getDeviceByID = (user, deviceID) => {
 
   return { deviceObject };
 };
-
-
-

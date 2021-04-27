@@ -32,7 +32,9 @@ export const checkAccessAndProvideUserID = async (req, res, next) => {
       const { err: errUpdatingTokens, newTokens, deviceID } = await updateTokens(
         tokenPayload.userID,
         refreshToken,
+        req.deviceID
       );
+
       if (errUpdatingTokens) return next(errUpdatingTokens);
 
       const { newAccessToken, newRefreshToken } = newTokens;

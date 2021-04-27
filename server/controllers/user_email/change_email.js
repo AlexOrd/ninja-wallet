@@ -29,7 +29,7 @@ export const changeEmail = async (req, res, next) => {
     );
     if (errSendEmail) return next(errSendEmail);
 
-    return res.status(200).send({ success: true });
+    return res.status(200).send({ success: true, newEmail: req.body.email });
   } catch (error) {
     unexpectedError(error, next);
   }
