@@ -157,6 +157,11 @@ const CardComponent = () => {
               isAdded={isAdded}
             />
           </Grid>
+          <Grid container xs="auto" md={2} item>
+            <Paper style={{ height: '100%' }} variant="outlined">
+              <Transactions card={card} />
+            </Paper>
+          </Grid>
         </Grid>
       </Box>
     </Container>
