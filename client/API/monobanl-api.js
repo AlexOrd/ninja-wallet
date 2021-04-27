@@ -2,9 +2,11 @@ import { axiosInstance } from '../config/axios';
 
 export const monobankApi = {
   createMonobankAccount: async (monobankData, header) => {
-    const res = await axiosInstance.post('/api/monobank/create-monobank-account', monobankData, {
-      headers: { 'monobank-token': header },
-    });
+    const res = await axiosInstance.post(
+      '/api/monobank/create-monobank-account',
+      { headers: { 'monobank-token': header } },
+      monobankData
+    );
     return res.data;
   },
   getUserInfo: async (header) => {
@@ -13,10 +15,22 @@ export const monobankApi = {
     });
     return res.data;
   },
-  getStatementInfo: async (header) => {
-    const res = await axiosInstance.get(`/api/monobank/get-statement-info`, {
-      headers: { 'monobank-token': header },
-    });
+  getStatementInfo: async (monobankToken, monobankAccountId, monobankUserDataId) => {
+    const res = await axiosInstance.post(
+      `/api/monobank/get-statement-info`,
+      {
+        monobankAccountId,
+        monobankUserDataId,
+      },
+      {
+        headers: { 'monobank-token': monobankToken },
+      }
+    );
+    return res.data;
+  },
+  getMonobankUserAccounts: async () => {
+    const res = await axiosInstance.get('/api/monobank/get-monobank-accounts');
+
     return res.data;
   },
   applyTransaction: async (monobankData, header) => {

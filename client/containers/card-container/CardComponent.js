@@ -10,7 +10,11 @@ import {
   changeCard,
 } from '../../actions/cardAction';
 
-import { fetchUserInfo } from '../../actions/monobankAction';
+import {
+  fetchUserInfo,
+  fetchUserMonobankAccounts,
+  getStatementDataThunk,
+} from '../../actions/monobankAction';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -72,25 +76,30 @@ const CardComponent = () => {
   const [transaction, setTransaction] = useState({});
   const [monobankToken, setMonobankToken] = useState('');
   const [openType, setOpenType] = useState('');
+  const [monbankTransactions, setMonobankTransactions] = useState(null);
+  const statementsMonobankData = useSelector((state) => state.monobank.statementsData);
+  const userMonobankAccounts = useSelector((state) => state.monobank.userMonobankAccounts);
   const cards = useSelector((state) => state.card.card.cards);
-  const monobank = useSelector((state) => state.monobank.monobankInfo.data);
-
+  const monobankInfo = useSelector((state) => state.monobank.monobankInfo);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (fetchCards() !== undefined) dispatch(fetchCards());
+    dispatch(fetchUserMonobankAccounts());
   }, []);
 
   const submitMonobankToken = (token) => {
-    if (fetchUserInfo(token) !== undefined) dispatch(fetchUserInfo(token));
+    if (token) {
+      dispatch(fetchUserInfo(token));
+    }
   };
 
   const cardsData = cards === undefined ? [] : cards;
-  const monobankData = monobank === undefined ? {} : monobank.monobankInfo;
+  const monobankData = monobankInfo === undefined ? {} : monobankInfo.monobankInfo;
 
   const sortedCards = cardsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  console.log(cardsData);
-  // console.log(monobankData);
+
+  console.log(monobankData);
 
   const createCard = (card, updateType, cardId) => {
     if (updateType === 'create') {
@@ -133,18 +142,18 @@ const CardComponent = () => {
 
   const switchCard = (card) => {
     setAdded(false);
+    setMonobankTransactions(null);
     setCard(card);
   };
 
-  const toLocalStorage = () => {
-    let auth =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1OTI4ZDcyYTZjMjExYmM2NDAyNWIiLCJkZXZpY2VJRCI6IjYwODdkYjZmNTZlOTRiMWI3NmIyM2M2YiIsImlhdCI6MTYxOTUxNjI3MSwiZXhwIjoxNjE5NjAyNjcxfQ.qicKwOw2e67wBYuNWLYYNZ2SCn4mnVyexOWCgKxER3k';
-    let refresh =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6IjM1NTcwMCIsImRldmljZUlEIjoiNjA4N2RiNmY1NmU5NGIxYjc2YjIzYzZiIiwiaWF0IjoxNjE5NTE2MjcxLCJleHAiOjE2MTk1MTk4NzF9.dJ5q6euOY72uAe-zbGBDrI1BSMcbEERhXdXNEETDwBI';
-    return localStorage.setItem('accessToken', auth), localStorage.setItem('refreshToken', refresh);
+  const getStatementsDataForMonobankCard = (
+    monobankToken,
+    monobankAccountId,
+    monobankUserDataId
+  ) => {
+    // const currentAccount = userMonobankAccounts.find();
+    dispatch(getStatementDataThunk(monobankToken, monobankAccountId, monobankUserDataId));
   };
-
-  toLocalStorage();
 
   return (
     // <Container className={classes.container}>
@@ -173,13 +182,16 @@ const CardComponent = () => {
             </Container>
           </Paper>
         </Grid>
-
         <Grid container xs={true} md={7} item>
           <CardItems
+            setMonobankTransactions={setMonobankTransactions}
+            getStatementsDataForMonobankCard={getStatementsDataForMonobankCard}
+            statementsMonobankData={statementsMonobankData}
             className={classes.cardItem}
             card={card}
             createCard={createCard}
             openCardCreator={openCardCreator}
+            setUpdateType={setUpdateType}
             updateType={updateType}
             setCard={setCard}
             isAdded={isAdded}
@@ -187,20 +199,23 @@ const CardComponent = () => {
             monobankToken={monobankToken}
             setMonobankToken={setMonobankToken}
             submitMonobankToken={submitMonobankToken}
-            monobankData={monobankData}
-            transaction={transaction}
           />
         </Grid>
-        {card.transactions !== undefined && card.transactions.length > 0 && (
-          <Grid container xs={2} item>
-            <Paper className={classes.transactionsList} variant="outlined">
-              <Transactions
-                card={card}
-                setUpdateType={setUpdateType}
-                setTransaction={setTransaction}
-              />
-            </Paper>
-          </Grid>
+        <Grid container xs="auto" md={2} item>
+          <div>
+            monobank:
+            {monbankTransactions &&
+              monbankTransactions.map((transaction) => (
+                <div>
+                  {transaction.description}
+                  {transaction.amount}
+                </div>
+              ))}
+          </div>
+          <Paper style={{ height: '100%' }} variant="outlined">
+            <Transactions card={card} setTransaction={setTransaction} />
+          </Paper>
+        </Grid>
         )}
         <Grid xs={12} container item></Grid>
       </Grid>
