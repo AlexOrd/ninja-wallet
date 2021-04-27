@@ -34,6 +34,11 @@ const CustomListItem = ({
   const [categoryName, setCategoryName] = useState(category.name);
   const [isLoading, setLoading] = useState(false);
 
+  const handleCategoryDelete = () => {
+    setLoading(true);
+    deleteCategory(() => setLoading(false));
+  };
+
   const submitCategoryEdit = () => {
     setLoading(true);
     editCategory(
@@ -113,7 +118,7 @@ const CustomListItem = ({
             setColor={setColor}
             color={color}
             category={category}
-            deleteCategory={deleteCategory}
+            deleteCategory={handleCategoryDelete}
             disableEditMode={disableEditChanges}
           />
         )}
@@ -172,17 +177,11 @@ const ListItemActionsExistedCategory = ({
       <Grid container alignItems="center">
         <Grid container alignItems="center" item xs={true}>
           {isEditMode ? (
-            // <InputColor
-            //   initialValue={category.color}
-            //   color={category?.color?.hex}
-            //   placement="left"
-            //   onChange={(color) => setColor(color)}
-            // />
-            <input
-              className={classes.categoryColorInput}
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
-              type="color"
+            <InputColor
+              initialValue={category.color}
+              color={category?.color?.hex}
+              placement="left"
+              onChange={(color) => setColor(color.hex)}
             />
           ) : (
             <div

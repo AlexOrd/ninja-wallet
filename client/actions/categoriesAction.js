@@ -58,10 +58,10 @@ export const createCategoryThunk = (newCategoryData, success) => async (dispatch
   } catch (err) {}
 };
 
-export const deleteCategoryThunk = (categoryId) => async (dispatch) => {
+export const deleteCategoryThunk = (categoryId, success) => async (dispatch) => {
   try {
     const res = await API.categoriesAPI.deleteCategory(categoryId);
 
-    dispatch(fetchCategories());
+    dispatch(fetchCategories(success));
   } catch (err) {}
 };

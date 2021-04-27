@@ -154,6 +154,12 @@ export const deleteCategory = async (req, res) => {
     });
   }
 
+  const categoryTransaction = await Transaction.find({transactionCategory: category._id})
+
+  const transactionsForDeleteIds = categoryTransaction.map(transaction => transaction._id)
+
+  await Transaction.deleteMany({_id: transactionsForDeleteIds})
+
   try {
     await Category.deleteOne({ _id: categoryId });
 

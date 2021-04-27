@@ -12,7 +12,6 @@ const CategoriesContainer = (props) => {
   const dispatch = useDispatch();
 
   const [activeCategory, setActiveCategory] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
   const [allCategoriesSum, setAllCategoriesSum] = useState(null);
 
   useEffect(() => {
@@ -24,13 +23,8 @@ const CategoriesContainer = (props) => {
     dispatch(fetchCategories());
   }, []);
 
-  const getCategoriesFilteredByDate = () => {
-    dispatch(
-      fetchCategoriesFilteredByDate(
-        selectedDate && selectedDate.length > 0 && (selectedDate[0] || null),
-        selectedDate && selectedDate.length > 1 && (selectedDate[1] || null)
-      )
-    );
+  const getCategoriesFilteredByDate = (from, to) => {
+    dispatch(fetchCategoriesFilteredByDate(from, to));
   };
 
   const classes = useStyles();
@@ -51,8 +45,6 @@ const CategoriesContainer = (props) => {
           filterByDate={getCategoriesFilteredByDate}
           allCategoriesSum={allCategoriesSum}
           classes={classes}
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
           activeCategory={activeCategory}
           categories={categories}
         />

@@ -1,20 +1,51 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Button, Grid, Link, ListItemIcon, Typography } from '@material-ui/core';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
+import Select from '@material-ui/core/Select';
+
+const sortByDateOptions = [
+  {
+    id: 'today',
+    label: 'today',
+    from: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()),
+    to: new Date().getTime(),
+  },
+  {
+    id: 'last7days',
+    label: 'last 7 days',
+    from: new Date().getTime() - 24 * 60 * 60 * 1000 * 7, // -7 days
+    to: new Date().getTime(),
+  },
+  {
+    id: 'last30days',
+    label: 'last 30 days',
+    from: new Date().getTime() - 24 * 60 * 60 * 1000 * 30,
+    to: new Date().getTime(),
+  },
+  {
+    id: 'allTime',
+    label: 'All time',
+  },
+  {
+    id: 'custom',
+    label: 'custom',
+  },
+];
 
 const CategoriesList = ({
   classes,
   allCategoriesSum,
   categories,
   activeCategory,
-  setSelectedDate,
-  selectedDate,
   filterByDate,
 }) => {
+  const [selectedCustomDate, setSelectedCustomDate] = useState([new Date(), new Date()]);
+  const [sortByDateType, setSortByDateType] = useState('allTime');
+
   const calcPersentage = (categorySum) => {
     const persentage = (categorySum / allCategoriesSum) * 100;
     if (persentage) {
@@ -22,6 +53,21 @@ const CategoriesList = ({
     } else {
       return '0%';
     }
+  };
+
+  const handleApplyFilterByDate = () => {
+    const selectedOption = sortByDateOptions.find((option) => option.id === sortByDateType);
+    const datesForSort =
+      sortByDateType === 'allTime'
+        ? { from: null, to: null }
+        : sortByDateType === 'custom'
+        ? {
+            from: selectedCustomDate.length > 0 ? selectedCustomDate[0].getTime() : null,
+            to: selectedCustomDate.length > 1 ? selectedCustomDate[1].getTime() : null,
+          }
+        : { from: selectedOption.from, to: selectedOption.to };
+
+    filterByDate(datesForSort.from, datesForSort.to);
   };
 
   return categories.length > 0 ? (
@@ -32,18 +78,49 @@ const CategoriesList = ({
         container
         justify="space-between"
         alignItems="center"
+        alignContent="center"
       >
         <Grid item xs="auto">
           <Typography variant="body1">Filter by date:</Typography>
         </Grid>
         <Grid xs={true} justify="flex-end" spacing={2} container direction="row" item>
-          <Grid item justify="flex-end" container xs={true}>
-            <DateRangePicker onChange={setSelectedDate} value={selectedDate} />
+          <Grid
+            item
+            alignItems="flex-end"
+            justify="center"
+            spacing={2}
+            direction="column"
+            container
+            xs={true}
+          >
+            <Grid item xs={12}>
+              <Select
+                native
+                value={sortByDateType}
+                onChange={(e) => setSortByDateType(e.target.value)}
+                inputProps={{
+                  name: 'age',
+                  id: 'age-native-simple',
+                }}
+              >
+                {sortByDateOptions.map((option) => (
+                  <option value={option.id}>{option.label}</option>
+                ))}
+              </Select>
+            </Grid>
+
+            {sortByDateType === 'custom' && (
+              <Grid item xs={12}>
+                <DateRangePicker onChange={setSelectedCustomDate} value={selectedCustomDate} />
+              </Grid>
+            )}
           </Grid>
-          <Grid item xs="auto">
-            <Button onClick={filterByDate} variant="outlined">
-              apply
-            </Button>
+          <Grid container alignItems="center" item xs={1}>
+            <Grid>
+              <Button onClick={handleApplyFilterByDate} variant="outlined">
+                apply
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12}>

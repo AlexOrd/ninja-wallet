@@ -29,8 +29,8 @@ const ManageCategories = (props) => {
     dispatch(editCategoryThunk(categoryId, newCategoryData, success));
   };
 
-  const deleteCategory = (categoryId) => {
-    dispatch(deleteCategoryThunk(categoryId));
+  const deleteCategory = (categoryId, success) => {
+    dispatch(deleteCategoryThunk(categoryId, success));
   };
 
   return (
@@ -63,7 +63,7 @@ const ManageCategories = (props) => {
                 classes={classes}
                 editCategory={editCategory}
                 category={category}
-                deleteCategory={() => deleteCategory(category._id)}
+                deleteCategory={(success) => deleteCategory(category._id, success)}
               />
             ))}
           </List>
