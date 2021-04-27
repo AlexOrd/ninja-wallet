@@ -7,9 +7,10 @@ import './style.css';
 import OtherCardInfo from './OtherCardInfo';
 import Grid from '@material-ui/core/Grid';
 import CreateCardForm from './CreateCardForm';
+import TransactionInfo from './TransactionInfo';
 import { Box, Button, List, ListItem, ListItemText } from '@material-ui/core';
 
-import { fetchUserInfo, createMonobankThunk } from '../../actions/monobankAction';
+import { createMonobankThunk, setMonobankAccout } from '../../actions/monobankAction';
 
 const useStyles = makeStyles({
   root: {
@@ -22,10 +23,10 @@ const CardItems = ({
   isAdded,
   card,
   setCard,
-  error,
   createCard,
   openCardCreator,
   updateType,
+  setUpdateType,
   openType,
   monobankToken,
   setMonobankToken,
@@ -47,26 +48,25 @@ const CardItems = ({
             />
           </Box>
         </Grid>
-        {!isAdded && (
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              alignContent="center"
-              onClick={() => openCardCreator('update')}
-            >
-              Edit card
-            </Button>
-          </Grid>
-        )}
       </Grid>
       <Grid md={6} item>
         <Box m={3}>
           <OtherCardInfo card={card} />
         </Box>
       </Grid>
-
-      {isAdded && (
+      {!isAdded && card._id && (
+        <Grid xs={12} md={12} container justify="center" item>
+          <Button
+            variant="contained"
+            color="primary"
+            alignContent="center"
+            onClick={() => openCardCreator('update', 'simple')}
+          >
+            Edit card
+          </Button>
+        </Grid>
+      )}
+      {
         <Grid justify="center" alignItems="center" md={12}>
           {monobankData.clientId ? (
             <MonobankCards monobankData={monobankData} monobankToken={monobankToken} />
@@ -81,23 +81,25 @@ const CardItems = ({
               setMonobankToken={setMonobankToken}
               submitMonobankToken={submitMonobankToken}
             />
-          )}
-          {error !== undefined ? (
-            <Grid md={12}>
-              {error.data.details.map(({ message }) => (
-                <ul>
-                  <li>{message}</li>
-                </ul>
-              ))}
-            </Grid>
-          ) : (
-            ''
+            // <TransactionInfo  />
           )}
         </Grid>
-      )}
+      }
     </Grid>
   );
 };
+
+// {error !== undefined ? (
+//   <Grid md={12}>
+//     {error.data.details.map(({ message }) => (
+//       <ul>
+//         <li>{message}</li>
+//       </ul>
+//     ))}
+//   </Grid>
+// ) : (
+//   ''
+// )}
 
 const MonobankCards = ({ monobankData, monobankToken }) => {
   const dispatch = useDispatch();
@@ -109,7 +111,8 @@ const MonobankCards = ({ monobankData, monobankToken }) => {
       cardNumber: cardInfo.maskedPan[0],
     };
     dispatch(createMonobankThunk(createdAccount, monobankToken));
-    console.log(createdAccount);
+    dispatch(setMonobankAccout({}));
+    // console.log(createdAccount);
   };
 
   return (
@@ -124,6 +127,7 @@ const MonobankCards = ({ monobankData, monobankToken }) => {
           </ListItemText>
         </ListItem>
       ))}
+      <button onClick={() => dispatch(setMonobankAccout({}))}>Close</button>
     </List>
   );
 };
