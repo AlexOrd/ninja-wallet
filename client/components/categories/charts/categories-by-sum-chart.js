@@ -60,8 +60,8 @@ const CategoriesBySumChart = ({ categories, activeCategory, setActiveCategory })
           </Pie>
         </PieChart>
       </ResponsiveContainer>
-      <Typography variant="body2" align="center">
-        categories by sum spended
+      <Typography variant="h6" align="center">
+        Categories by sum spended
       </Typography>
     </>
   );

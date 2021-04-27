@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '0px',
     minHeight: 'auto',
     fontWeight: '300',
+    fontSize: '1.4em',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: '3px',
     textDecoration: 'none',
@@ -19,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
   cardCategory: {
     color: grayColor[0],
     margin: '0',
-    fontSize: '14px',
     marginTop: '0',
     paddingTop: '10px',
     marginBottom: '0',

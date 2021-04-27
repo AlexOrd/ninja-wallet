@@ -43,7 +43,7 @@ const ManageCategories = (props) => {
           <Grid container justify="flex-end">
             <Grid item className={classes.viewAnalyticsLinkWrapper} xs="auto">
               <Button
-                size="small"
+                size="medium"
                 variant="outlined"
                 color="primary"
                 component={Link}
@@ -103,9 +103,9 @@ const CreateNewCategory = ({ classes }) => {
     <>
       <Grid container justify="center" item>
         <AddCircleIcon
+          className={classes.addCategoryIcon}
           color={newCategoryData ? 'disabled' : 'primary'}
           onClick={startCreatingNewCategory}
-          fontSize="large"
         />
       </Grid>
       {newCategoryData && (

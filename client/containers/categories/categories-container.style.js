@@ -13,6 +13,14 @@ export const useStyles = makeStyles((theme) => ({
   chartWrapper: {
     padding: theme.spacing(0, 1, 0),
   },
+  categoryItem: {
+    '& .MuiListItemText-primary': {
+      fontSize: '1.4em',
+    },
+    '& .MuiListItemText-secondary': {
+      fontSize: '1.1em',
+    },
+  },
   categoriesListContainer: {
     alignSelf: 'flex-end',
     minHeight: 'calc(100vh - 200px - 20px - 4em)',

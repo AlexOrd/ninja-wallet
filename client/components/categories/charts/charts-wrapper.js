@@ -32,7 +32,7 @@ const Charts = ({ activeCategory, setActiveCategory, categoriesData }) => {
       <Hidden xsDown>
         <Grid container item direction="row" xs={12} md={12}>
           {ChartsData.map((chart, index) => (
-            <Grid key={index} item xs={6}>
+            <Grid key={index} item xs={6} md={6}>
               {chart}
             </Grid>
           ))}

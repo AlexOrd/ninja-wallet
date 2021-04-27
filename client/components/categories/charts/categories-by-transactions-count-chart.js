@@ -30,7 +30,7 @@ const CategoriesByTransactionsCount = ({ categories, setActiveCategory }) => {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-      <Typography variant="body2" align="center">
+      <Typography variant="h6" align="center">
         Categories by transactions count
       </Typography>
     </>

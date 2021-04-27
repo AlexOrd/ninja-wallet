@@ -24,7 +24,7 @@ export const DeleteButton = ({ deleteCategory }) => {
 
   return (
     <IconButton aria-describedby={id} edge="end" aria-label="delete">
-      <DeleteIcon onClick={handleClick} />
+      <DeleteIcon fontSize="large" onClick={handleClick} />
       <PopConfirm
         label="Do you want to delete this category with all transactions in the category?"
         id={id}

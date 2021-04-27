@@ -30,7 +30,7 @@ export const EditButton = ({ isEditMode, disableEditMode, handleClickOnEditIcon 
 
   return (
     <IconButton aria-describedby={id} edge="end" aria-label="delete">
-      <EditIcon onClick={handleClick} />
+      <EditIcon fontSize="large" onClick={handleClick} />
       <PopConfirm
         label="Do you want save your changes?"
         id={id}

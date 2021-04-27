@@ -60,8 +60,12 @@ const NewestCategory = ({ classes, newestCategory }) => {
           <CardIcon color="warning">
             <NewReleasesIcon />
           </CardIcon>
-          <p className={classes.cardCategory}>Newest category:</p>
-          <h3 className={classes.cardTitle}>{newestCategory.name}</h3>
+          <Typography variant="h6" className={classes.cardCategory}>
+            Newest category:
+          </Typography>
+          <Typography variant="subtitle2" className={classes.cardTitle}>
+            {newestCategory.name}
+          </Typography>
         </CardHeader>
       </Card>
     </Grid>
@@ -76,12 +80,18 @@ const MostSpentMoneyCategory = ({ classes, mostSpendMoneyCategory }) => {
           <CardIcon color="success">
             <AttachMoneyIcon />
           </CardIcon>
-          <p className={classes.cardCategory}>Most spent money in category:</p>
-          <h3 className={classes.cardTitle}>{mostSpendMoneyCategory.name}</h3>
+          <Typography variant="h6" className={classes.cardCategory}>
+            Most spent money in category:
+          </Typography>
+          <Typography variant="subtitle2" className={classes.cardTitle}>
+            {mostSpendMoneyCategory.name}
+          </Typography>
         </CardHeader>
         <CardFooter stats>
           <div className={classes.stats}>
-            <Typography variant="body2">spent {mostSpendMoneyCategory.expensesSum}$</Typography>
+            <Typography variant="subtitle2" className={classes.cardTitle}>
+              spent {mostSpendMoneyCategory.expensesSum}$
+            </Typography>
           </div>
         </CardFooter>
       </Card>
@@ -97,12 +107,16 @@ const MostTransactionsCount = ({ classes, mostTransactionsCountCategory }) => {
           <CardIcon color="info">
             <TrendingUpIcon />
           </CardIcon>
-          <p className={classes.cardCategory}>Most transactions count in category:</p>
-          <h3 className={classes.cardTitle}>{mostTransactionsCountCategory.name}</h3>
+          <Typography variant="h6" className={classes.cardCategory}>
+            Most transactions count in category:
+          </Typography>
+          <Typography variant="subtitle2" className={classes.cardTitle}>
+            {mostTransactionsCountCategory.name}
+          </Typography>
         </CardHeader>
         <CardFooter stats>
           <div className={classes.stats}>
-            <Typography variant="body2">
+            <Typography variant="subtitle2" className={classes.cardTitle}>
               Transactions count: {mostTransactionsCountCategory.transactionsCount}
             </Typography>
           </div>

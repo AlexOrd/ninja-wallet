@@ -2,7 +2,14 @@ import React, { useEffect, useState } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Button, Grid, Link, ListItemIcon, Typography } from '@material-ui/core';
+import {
+  Button,
+  Grid,
+  Link,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  Typography,
+} from '@material-ui/core';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import Select from '@material-ui/core/Select';
@@ -49,7 +56,7 @@ const CategoriesList = ({
   const calcPersentage = (categorySum) => {
     const persentage = (categorySum / allCategoriesSum) * 100;
     if (persentage) {
-      return persentage < 1 ? '<1 %' : persentage.toFixed(0) + '%';
+      return persentage < 1 ? '<1%' : persentage.toFixed(0) + '%';
     } else {
       return '0%';
     }
@@ -117,7 +124,7 @@ const CategoriesList = ({
           </Grid>
           <Grid container alignItems="center" item xs={1}>
             <Grid>
-              <Button onClick={handleApplyFilterByDate} variant="outlined">
+              <Button color="primary" onClick={handleApplyFilterByDate} variant="contained">
                 apply
               </Button>
             </Grid>
@@ -136,9 +143,15 @@ const CategoriesList = ({
                   <FiberManualRecordIcon style={{ color: category.color }} />
                 </ListItemIcon>
                 <ListItemText
-                  secondary={`${category.expensesSum}$ (${calcPersentage(category.expensesSum)})`}
+                  className={classes.categoryItem}
+                  secondary={category.description || null}
                   primary={category.name}
                 />
+                <ListItemSecondaryAction>
+                  <Typography variant="h6">
+                    {category.expensesSum}$ ({calcPersentage(category.expensesSum)})
+                  </Typography>
+                </ListItemSecondaryAction>
               </ListItem>
             ))}
           </List>

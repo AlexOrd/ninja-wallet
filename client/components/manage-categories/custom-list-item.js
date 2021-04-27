@@ -31,7 +31,8 @@ const CustomListItem = ({
 }) => {
   const [color, setColor] = useState(category.color || '#5e72e4');
   const [isEditMode, setEditMode] = useState(type === 'create' ? true : false);
-  const [categoryName, setCategoryName] = useState(category.name);
+  const [categoryName, setCategoryName] = useState(category.name || '');
+  const [categoryDescription, setCategoryDescription] = useState(category.description || '');
   const [isLoading, setLoading] = useState(false);
 
   const handleCategoryDelete = () => {
@@ -46,6 +47,7 @@ const CustomListItem = ({
       {
         name: categoryName,
         color: color,
+        description: categoryDescription,
       },
       () => setLoading(false)
     );
@@ -53,6 +55,7 @@ const CustomListItem = ({
 
   const disableEditChanges = () => {
     setCategoryName(category.name);
+    setCategoryDescription(category.description);
     setEditMode(false);
   };
 
@@ -67,7 +70,9 @@ const CustomListItem = ({
 
   const handleSave = () => {
     setLoading(true);
-    createCategory({ name: categoryName, color: color }, () => setLoading(false));
+    createCategory({ name: categoryName, description: categoryDescription, color: color }, () =>
+      setLoading(false)
+    );
   };
 
   const handleFormSubmit = (e) => {
@@ -80,26 +85,43 @@ const CustomListItem = ({
 
   useEffect(() => {
     if (type === 'create') {
-      handleNewCategoryChange({ name: categoryName, color: color?.hex ? color.hex : color });
+      handleNewCategoryChange({
+        name: categoryName,
+        description: categoryDescription,
+        color: color?.hex ? color.hex : color,
+      });
     }
-  }, [categoryName, color]);
+  }, [categoryName, color, categoryDescription]);
 
   if (isLoading) {
-    return <Skeleton height="48px" animation="wave" />;
+    return <Skeleton height="60px" animation="wave" />;
   }
 
   return (
-    <ListItem selected={isEditMode} className={classes.listItemWrapper}>
+    <ListItem selected={isEditMode}>
       <form onSubmit={handleFormSubmit}>
         <ListItemText>
           {isEditMode ? (
-            <TextField
-              required
-              value={categoryName}
-              onChange={(e) => setCategoryName(e.target.value)}
-            />
+            <>
+              <TextField
+                required
+                fullWidth
+                label="name"
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
+              />
+              <TextField
+                fullWidth
+                label="description"
+                value={categoryDescription}
+                onChange={(e) => setCategoryDescription(e.target.value)}
+              />
+            </>
           ) : (
-            <span>{category.name}</span>
+            <>
+              <Typography variant="h6">{category.name}</Typography>
+              <Typography variant="body2">{category.description || null}</Typography>
+            </>
           )}
         </ListItemText>
         {type === 'create' ? (
@@ -140,21 +162,15 @@ const ListItemActionsNewCategory = ({ classes, setColor, category, deleteNewCate
               setColor(color);
             }}
           />
-          {/* <input
-            className={classes.categoryColorInput}
-            value={category.color}
-            onChange={(e) => setColor(e.target.value)}
-            type="color"
-          /> */}
         </Grid>
         <Grid item>
           <IconButton type="submit" edge="end" aria-label="edit">
-            <SaveIcon style={{ color: green[500] }} />
+            <SaveIcon fontSize="large" style={{ color: green[500] }} />
           </IconButton>
         </Grid>
         <Grid item>
           <IconButton onClick={deleteNewCategory} edge="end" aria-label="delete">
-            <DeleteIcon />
+            <DeleteIcon fontSize="large" />
           </IconButton>
         </Grid>
       </Grid>
