@@ -3,6 +3,7 @@ import { validator } from './joiValidator';
 
 export const validateChangingPassword = (req, res, next) => {
   try {
+    console.log(req.body)
     const { err } = validator('changingPassword')(req.body);
 
     if (err) return next(err);

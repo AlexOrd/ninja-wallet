@@ -4,6 +4,7 @@ dotenv.config();
 
 export function connect() {
     const URL = process.env.MONGODB_URI;
+    const local = process.env.LOCALE_DB_URL
     mongoose.set('useCreateIndex', true);
 
     // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
@@ -11,10 +12,11 @@ export function connect() {
     mongoose.set('useFindAndModify', false);
 
     // Connection establishment
-    mongoose.connect(URL, {
+    mongoose.connect(local, {
         useNewUrlParser: true,
         useCreateIndex: true,
         useUnifiedTopology: true,
+        dbName: 'projectTest'
     });
 
 

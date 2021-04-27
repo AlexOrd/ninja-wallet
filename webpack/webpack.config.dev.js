@@ -13,6 +13,7 @@ const config = {
     context: path.resolve(CURRENT_WORKING_DIR, 'client'),
     entry: {
         app: [
+            'regenerator-runtime',
             'webpack-hot-middleware/client', // bundle the client for hot reloading
             './main.js'  // the entry point of app
         ]
