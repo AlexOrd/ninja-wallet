@@ -1,17 +1,17 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import Snackbar from '@material-ui/core/Snackbar';
+import Fade from '@material-ui/core/Fade';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      marginTop: '30px',
-      marginLeft: '40%',
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
     },
   },
   btn: {
@@ -43,22 +43,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 export default function ButtonCreateOrUpdate(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleClick = () => {
+    props.onClick(() => setOpen(true));
   };
 
-  const handleClose = () => {
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
     setOpen(false);
   };
 
   return (
     <div className={classes.root}>
       <Button
-        onClick={() => props.onClick(handleOpen)}
+        onClick={handleClick}
         className={classes.btn}
         variant="contained"
         color="primary"
@@ -66,7 +74,7 @@ export default function ButtonCreateOrUpdate(props) {
       >
         {props.isCreating ? 'Create!' : 'Update!'}
       </Button>
-      <Modal
+      {/* <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
@@ -92,7 +100,14 @@ export default function ButtonCreateOrUpdate(props) {
             </Button>
           </div>
         </Fade>
-      </Modal>
+      </Modal> */}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          {props.isCreating
+            ? 'Transaction successfully created!'
+            : 'Transaction successfully updated!'}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

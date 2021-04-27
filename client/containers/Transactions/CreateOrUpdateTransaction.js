@@ -9,7 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from './Transactions.style';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ButtonCreateOrUpdate from './ButtonCreateOrUpdate';
 
@@ -20,7 +20,7 @@ export default function CreateOrUpdateTransaction() {
   const { type, id } = useParams();
   const classes = useStyles();
   const isCreating = type === 'create';
-  // const isEditing = type === 'edit';
+  const [isRedirected, setIsRedirected] = useState(false);
   const [transaction, setTransaction] = useState(null);
   const [categories, setCategories] = useState(null);
   const [category, setCategory] = useState(null);
@@ -52,7 +52,7 @@ export default function CreateOrUpdateTransaction() {
           setMerchant(transaction.merchantName);
           setDescription(transaction.transactionType);
           setSum(transaction.sum);
-          setCard(transaction.cardId);
+          setCard(transaction.cardId._id);
           setCategory(transaction.transactionCategory);
         });
     }
@@ -102,7 +102,7 @@ export default function CreateOrUpdateTransaction() {
 
   const validateField = (field) => field !== '' && field !== null;
 
-  const createTransaction = (onSuccess) => {
+  const createTransaction = (success) => {
     console.log(validateField(sum), sum);
     if (
       validateField(description) &&
@@ -134,15 +134,18 @@ export default function CreateOrUpdateTransaction() {
           }
         )
         .then((res) => {
+          setIsRedirected(true);
           console.log(res.data);
-          onSuccess();
+        })
+        .finally(() => {
+          success();
         });
     } else {
       alert('You did not fill all fields!');
     }
   };
 
-  const editTransaction = () => {
+  const editTransaction = (success) => {
     console.log(validateField(sum), sum);
     if (
       validateField(description) &&
@@ -170,19 +173,27 @@ export default function CreateOrUpdateTransaction() {
         })
         .then((res) => {
           console.log(res.data);
+          setIsRedirected(true);
+        })
+        .finally(() => {
+          success();
         });
     } else {
       alert('You did not fill all fields!');
     }
   };
 
-  const handleSubmitBtnClick = (onSuccess) => {
+  const handleSubmitBtnClick = (success) => {
+    console.log(isCreating);
     if (isCreating) {
-      createTransaction(onSuccess);
+      createTransaction(success);
     } else {
-      editTransaction(onSuccess);
+      editTransaction(success);
     }
   };
+  if (isRedirected) {
+    return <Redirect to="/transactions" />;
+  }
   return (
     <Container className={classes.container} maxWidth="sm">
       <Typography className={classes.title} variant="h4">
@@ -191,10 +202,11 @@ export default function CreateOrUpdateTransaction() {
       <FormControl required className={classes.selectControl}>
         <InputLabel id="card">Card</InputLabel>
         <Select
-          defaultValue={transaction?.cardId._id}
+          // defaultValue={transaction?.cardId._id}
           labelId="card"
           id="11"
           onChange={handleChangeCard}
+          value={card}
         >
           {cards?.map((card) => {
             return <MenuItem value={card._id}>{card.cardName}</MenuItem>;
@@ -203,15 +215,8 @@ export default function CreateOrUpdateTransaction() {
       </FormControl>
       <FormControl required className={classes.selectControl}>
         <InputLabel id="category">Category</InputLabel>
-        <Select
-          defaultValue={category?.name}
-          labelId="category"
-          id="1"
-          value={category?._id}
-          onChange={handleChangeCategory}
-        >
+        <Select labelId="category" id="1" value={category} onChange={handleChangeCategory}>
           {categories?.map((category) => {
-            console.log(categories);
             return <MenuItem value={category._id}>{category.name}</MenuItem>;
           })}
         </Select>
@@ -246,7 +251,7 @@ export default function CreateOrUpdateTransaction() {
       </form>
       <ButtonCreateOrUpdate
         isCreating={isCreating}
-        onClick={(onSuccess) => handleSubmitBtnClick(onSuccess)}
+        onClick={(success) => handleSubmitBtnClick(success)}
       />
     </Container>
   );

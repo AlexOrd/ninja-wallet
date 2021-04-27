@@ -148,7 +148,7 @@ export default function TransactionsList() {
 
                         <TableCell align="right">
                           {' '}
-                          <Options id={row._id} />
+                          <Options setTransactions={setTransactions} id={row._id} />
                         </TableCell>
                       </TableRow>
                     );

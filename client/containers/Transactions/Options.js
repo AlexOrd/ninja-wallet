@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { useStyles } from './Transactions.style';
+import axios from 'axios';
 
 const StyledIconButton = withStyles((theme) => ({
   root: {
@@ -37,7 +38,7 @@ export default function Options(props) {
   };
 
   const deleteTransaction = () => {
-    const apiUrlDelete = `http://localhost:3000/api/transactions/${id}`;
+    const apiUrlDelete = `http://localhost:3000/api/transactions/${props.id}`;
 
     axios
       .delete(
@@ -52,6 +53,18 @@ export default function Options(props) {
       )
       .then((res) => {
         console.log(res.data);
+        const apiUrl = 'http://localhost:3000/api/transactions';
+        axios
+          .get(apiUrl, {
+            headers: {
+              authorization: ACCESS_TOKEN,
+              'refresh-token': REFRESH_TOKEN,
+            },
+          })
+          .then((res) => {
+            const allTransactions = res.data.transactions;
+            props.setTransactions(allTransactions);
+          });
       });
   };
 
