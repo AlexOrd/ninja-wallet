@@ -72,6 +72,7 @@ const CardComponent = () => {
   const [transaction, setTransaction] = useState({});
   const [monobankToken, setMonobankToken] = useState('');
   const [openType, setOpenType] = useState('');
+  const [monbankTransactions, setMonobankTransactions] = useState(null);
   const statementsMonobankData = useSelector((state) => state.monobank.statementsData);
   const userMonobankAccounts = useSelector((state) => state.monobank.userMonobankAccounts);
   const cards = useSelector((state) => state.card.card.cards);
@@ -135,6 +136,7 @@ const CardComponent = () => {
 
   const switchCard = (card) => {
     setAdded(false);
+    setMonobankTransactions(null);
     setCard(card);
   };
 
@@ -144,7 +146,7 @@ const CardComponent = () => {
     monobankUserDataId
   ) => {
     // const currentAccount = userMonobankAccounts.find();
-    dispatch(getStatementDataThunk());
+    dispatch(getStatementDataThunk(monobankToken, monobankAccountId, monobankUserDataId));
   };
 
   // const toLocalStorage = () => {
@@ -186,6 +188,7 @@ const CardComponent = () => {
 
           <Grid container xs={true} md={7} item>
             <CardItems
+              setMonobankTransactions={setMonobankTransactions}
               getStatementsDataForMonobankCard={getStatementsDataForMonobankCard}
               statementsMonobankData={statementsMonobankData}
               className={classes.cardItem}
@@ -203,6 +206,16 @@ const CardComponent = () => {
             />
           </Grid>
           <Grid container xs="auto" md={2} item>
+            <div>
+              monobank:
+              {monbankTransactions &&
+                monbankTransactions.map((transaction) => (
+                  <div>
+                    {transaction.description}
+                    {transaction.amount}
+                  </div>
+                ))}
+            </div>
             <Paper style={{ height: '100%' }} variant="outlined">
               <Transactions card={card} setTransaction={setTransaction} />
             </Paper>

@@ -26,7 +26,9 @@ const monobankReducer = (state = initialState, action) => {
     //   return { ...state, statementsData: action.data.statementsData };
     // }
     case ADD_DATA_TO_STATEMENTS: {
-      const statementsMonobankAccountsIds = statementsData.map(statement.monobankAccountId);
+      const statementsMonobankAccountsIds = state.statementsData.map(
+        (statement) => statement.monobankAccountId
+      );
 
       if (statementsMonobankAccountsIds.includes(action.data.monobankAccountId)) {
         const newStatementsData = state.statementsData.map((statement) => {

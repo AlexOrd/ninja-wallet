@@ -79,9 +79,12 @@ export const getUserMonobankDataAccounts = async (req, res) => {
 };
 
 export const getStatementData = async (req, res) => {
+  const sevenDaysAgoData = new Date();
+  sevenDaysAgoData.setDate(sevenDaysAgoData.getDate() - 10);
+
   const monobankToken = req.headers['monobank-token'];
   const monobankAccountId = req.body.monobankAccountId;
-  const dateFrom = req.body.from;
+  const dateFrom = req.body.from || sevenDaysAgoData.getTime();
   const dateTo = req.body.to || new Date().getTime();
   const monobankUserDataId = req.body.monobankUserDataId;
 
@@ -101,15 +104,20 @@ export const getStatementData = async (req, res) => {
     );
 
     const filteredTransactions = monobankApiRes.data.filter((transaction) => {
-      if (dontReturnTransactionIds.includes(transaction.id)) {
+      if (dontReturnTransactionIds.includes(transaction.id) || transaction.amount >= 0) {
         return false;
       }
       return true;
     });
 
+    const onlyExpenses = filteredTransactions.map((transaction) => ({
+      ...transaction,
+      amount: Math.abs(transaction.amount / 100),
+    }));
+
     res.status(HttpStatus.CREATED).json({
       success: true,
-      data: { monobankTransactions: filteredTransactions },
+      data: { monobankTransactions: onlyExpenses },
     });
   } catch (err) {
     console.log(err);

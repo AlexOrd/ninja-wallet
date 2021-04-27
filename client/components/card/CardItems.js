@@ -29,10 +29,10 @@ const CardItems = ({
   setMonobankToken,
   submitMonobankToken,
   statementsMonobankData,
+  setMonobankTransactions,
   getStatementsDataForMonobankCard,
 }) => {
   const [isMonoCard, setIsMonoCard] = useState(false);
-  const [monbankTransactions, setMonbankTransactions] = useState([]);
   const userMonobankAccounts = useSelector((state) => state.monobank.userMonobankAccounts);
   const monobankLocalCardsIds = useSelector((state) => state.monobank.monobankLocalCardsIds);
 
@@ -64,18 +64,13 @@ const CardItems = ({
         );
       }
 
-      setMonbankTransactions(
-        statementsMonobankData.filter(
-          (statement) => statement.monobankAccountId === monobankAccount._id
-        )
+      const cardStatementsMonobankData = statementsMonobankData.filter(
+        (statement) => statement.monobankAccountId === monobankAccount.monobankAccountId
       );
+
+      setMonobankTransactions(...cardStatementsMonobankData.map((card) => card.statements));
     }
-  }, [
-    isMonoCard,
-    statementsMonobankData,
-    // monobankToken,
-    userMonobankAccounts,
-  ]);
+  }, [isMonoCard, statementsMonobankData, statementsMonobankData.length, userMonobankAccounts]);
 
   return (
     <Grid className={classes.root} container alignContent="flex-start" alignItems="justify">
