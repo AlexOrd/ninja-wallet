@@ -17,15 +17,16 @@ const Transactions = ({ card, setTransaction, openCardCreator }) => {
 
   return (
     <List m={0} p={0} component="nav" aria-label="secondary mailbox folders">
-      {card?.transactions.map((transaction) => (
-        <ListItem key={transaction._id} alignItems="center" button>
-          <ListItemText
-            onClick={() => (setTransaction(transaction), openCardCreator('transaction'))}
-          >
-            {transaction.merchantName}
-          </ListItemText>
-        </ListItem>
-      ))}
+      {card.transaction !== undefined &&
+        card.transactions.map((transaction) => (
+          <ListItem key={transaction._id} alignItems="center" button>
+            <ListItemText
+              onClick={() => (setTransaction(transaction), openCardCreator('transaction'))}
+            >
+              {transaction.merchantName}
+            </ListItemText>
+          </ListItem>
+        ))}
     </List>
   );
 };

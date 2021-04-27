@@ -68,7 +68,7 @@ const CardItems = ({
       )}
       {
         <Grid justify="center" alignItems="center" md={12}>
-          {monobankData.clientId ? (
+          {monobankData !== undefined && monobankData.clientId ? (
             <MonobankCards monobankData={monobankData} monobankToken={monobankToken} />
           ) : (
             <CreateCardForm

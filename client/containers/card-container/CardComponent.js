@@ -216,7 +216,6 @@ const CardComponent = () => {
             <Transactions card={card} setTransaction={setTransaction} />
           </Paper>
         </Grid>
-        )}
         <Grid xs={12} container item></Grid>
       </Grid>
     </Box>
