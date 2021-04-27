@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { SignIn, SignUp, RestorePassword, WarnSnackbar } from './components';
 import { FetchStatusSnackBars } from '../../components/common/fetch_status_snackbars/FetchStatusSnackBars';
-import { getEmailProviderError } from '../../selectors/auth';
+import { getAuthorizationStatus, getEmailProviderError } from '../../selectors/auth';
 
 function AuthPage() {
   const styles = useStyles();
-  const [showWarnAboutSkip, setShowWarnAboutSkip] = React.useState(false);
-  const isEmailError = useSelector(getEmailProviderError);
+  const [isVisibleWarnMessage, setVisibleWarnMessage] = React.useState(false);
+  const siAuthorized = useSelector(getAuthorizationStatus);
 
   return (
     <Box className={styles.root}>
@@ -19,9 +19,8 @@ function AuthPage() {
           render={() => (
             <SignUp
               {...{
-                isEmailError,
-                setShowWarnAboutSkip,
-                showWarnAboutSkip,
+                setVisibleWarnMessage,
+                isVisibleWarnMessage,
               }}
             />
           )}
@@ -31,7 +30,7 @@ function AuthPage() {
         <Redirect to="/auth/sign-up" />
       </Switch>
       <FetchStatusSnackBars reducerName="authorization" />
-      {showWarnAboutSkip && (
+      {isVisibleWarnMessage && (
         <WarnSnackbar text="You can do it later from settings but we strongly recommend to do it now" />
       )}
     </Box>
@@ -42,7 +41,7 @@ function useStyles() {
   return makeStyles({
     root: {
       width: '100%',
-      minHeight: '100vh',
+      minHeight: '90vh',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',

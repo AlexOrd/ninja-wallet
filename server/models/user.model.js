@@ -4,7 +4,6 @@ import './userPhoto.model';
 const Schema = mongoose.Schema;
 
 const deviceSchema = new mongoose.Schema({
-  confirmCode: String,
   deviceType: {
     type: String,
     default: 'mobile',

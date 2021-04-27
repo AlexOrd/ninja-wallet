@@ -1,4 +1,5 @@
 export const authFetchStatusNames = {
+  CHECK_AUTH: 'checkAuth',
   CREATE_NEW_PASSWORD: 'createNewPassword',
   GET_REST_PASSWORD_CREDENTIALS: 'getRestPasswordCredentials',
   RESEND_REST_PASSWORD_CREDENTIALS: 'resendRestPasswordCredentials',

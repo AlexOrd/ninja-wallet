@@ -16,6 +16,7 @@ const {
   RESEND_REST_PASSWORD_CREDENTIALS,
   VERIFY_REST_REST_PASSWORD_CONFIRM_CODE,
   CREATE_NEW_PASSWORD,
+  CHECK_AUTH,
 } = authFetchStatusNames;
 
 const {
@@ -38,6 +39,7 @@ let initialState = {
   fetchError: null,
   commonFetchStatus: IDLE,
   authorization: {
+    [CHECK_AUTH]: IDLE,
     [RESEND_VERIFY_EMAIL_CODE]: IDLE,
     [SEND_VERIFY_EMAIL_CODE]: IDLE,
     [VERIFY_EMAIL]: IDLE,

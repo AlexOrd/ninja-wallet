@@ -10,6 +10,7 @@ const {
   VERIFY_REST_REST_PASSWORD_CONFIRM_CODE,
   NOTIFY_ABOUT_SIGN_IN,
   DOUBLE_AUTHENTICATE,
+  CHECK_AUTH,
 } = authFetchStatusNames;
 
 const {
@@ -43,6 +44,8 @@ export const successMessages = {
   },
 
   messages: {
+    //auth
+    [CHECK_AUTH]: 'Success login to system',
     [CHANGE_EMAIL]: 'Email has changed successfully',
     [CHANGE_PASSWORD]: 'Password has changed successfully',
     [CREATE_NEW_PASSWORD]: 'Password has restored successfully',

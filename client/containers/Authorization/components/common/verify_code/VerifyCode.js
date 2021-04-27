@@ -13,14 +13,13 @@ export const VerifyCode = ({
   isEmailError,
   title,
   autofocus,
-  setShowWarnAboutSkip,
-  showWarnAboutSkip,
+  setVisibleWarnMessage,
+  isVisibleWarnMessage,
 }) => {
   const styles = useStyles();
-
   const skipHandler = () => {
-    if (!showWarnAboutSkip) {
-      return setShowWarnAboutSkip(true);
+    if (!isVisibleWarnMessage) {
+      return setVisibleWarnMessage(true);
     }
 
     return skipStep();

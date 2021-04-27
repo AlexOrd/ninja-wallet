@@ -2,35 +2,14 @@ import User from '../../models/user.model';
 import { unexpectedError, authErrors } from '../../utils/auth/errors';
 import { authVerifiers } from '../../utils/auth/aux_functions/verifiers';
 import { createJWToken } from '../../utils/auth/aux_functions/for_tokens';
-import {
-  setAuthHeaders,
-  encryptData,
-  generateRandomString,
-} from '../../utils/auth/aux_functions/common';
+import { setAuthHeaders } from '../../utils/auth/aux_functions/common';
 import { tokensNames } from '../../utils/auth/constants';
 import { getDeviceInfo } from '../../utils/auth/aux_functions/get_device_info';
 import { telegramBot } from '../../bots/telegram_bot';
-const { INCORRECT_AUTH_DATA } = authErrors;
+import { parseDeviceInfo } from '../../utils/bot/aux_functions';
+import { doubleAuthenticateMessage, messageAboutSignIn } from '../../utils/bot/messages';
 
-const keyboard = {
-  reply_markup: {
-    inline_keyboard: [
-      [
-        {
-          text: 'Confirm',
-          callback_data: 'confirm',
-        },
-      ],
-      [
-        {
-          text: 'Deny',
-          callback_data: 'deny',
-        },
-      ],
-    ],
-    one_time_keyboard: true,
-  },
-};
+const { INCORRECT_AUTH_DATA } = authErrors;
 
 export const signIn = async (req, res, next) => {
   try {
@@ -42,10 +21,7 @@ export const signIn = async (req, res, next) => {
     const { err: passwordVerifyError } = await authVerifiers.password(user, password);
     if (passwordVerifyError) return next(passwordVerifyError);
 
-    const confirmCode = generateRandomString();
     user.auth.openedOnDevices.push({
-      confirmCode: encryptData(confirmCode),
-      
       lastLogin: new Date(),
       ...getDeviceInfo(req),
     });
@@ -53,22 +29,26 @@ export const signIn = async (req, res, next) => {
     const lastAddedDeviceIdx = user.auth.openedOnDevices.length - 1;
     const deviceID = user.auth.openedOnDevices[lastAddedDeviceIdx]._id;
 
-    const refreshToken = createJWToken({ confirmCode, deviceID }, tokensNames.REFRESH);
     const accessToken = createJWToken({ userID: user._id, deviceID }, tokensNames.ACCESS);
+    const refreshToken = createJWToken({}, tokensNames.REFRESH);
     user.save();
 
-    if (user.auth.notifyAboutSignIn) {
+    const isConnectedBot = user.bots.telegram.chatID;
+    if (user.auth.notifyAboutSignIn && !user.auth.doubleAuthenticate && isConnectedBot) {
       try {
-        telegramBot.sendMessage(348781339, 'notify');
+        const { device, browser, platform } = parseDeviceInfo(req);
+        const notification = messageAboutSignIn(device, browser, platform)
+        telegramBot.sendMessage(user.bots.telegram.chatID, notification);
       } catch (error) {}
     }
 
-    if (user.auth.doubleAuthenticate) {
+    if (user.auth.doubleAuthenticate && isConnectedBot) {
       const callBackQueryListener = (resp) => {
         if (resp.data === 'confirm') {
           telegramBot.removeListener('callback_query', callBackQueryListener);
           telegramBot.deleteMessage(348781339, resp.message.message_id);
 
+          setAuthHeaders(accessToken, refreshToken, res);
           return res.status(200).send({ success: true });
         }
 
@@ -81,7 +61,13 @@ export const signIn = async (req, res, next) => {
       };
 
       telegramBot.addListener('callback_query', callBackQueryListener);
-      telegramBot.sendMessage(348781339, 'login from some device', keyboard);
+      const { message, keyboard } = doubleAuthenticateMessage;
+      telegramBot.sendMessage(348781339, message, {
+        reply_markup: {
+          inline_keyboard: keyboard,
+          one_time_keyboard: true,
+        },
+      });
     }
 
     if (!user.auth.doubleAuthenticate) {

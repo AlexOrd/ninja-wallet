@@ -1,7 +1,8 @@
 export const ROUTES = {
+  dashboard: '/dashboard',
   transactions: '/transactions',
   categories: '/categories',
   profile: '/profile',
-  auth: '/auth',
+  authorization: '/auth',
   settings: '/settings',
 };

@@ -36,7 +36,8 @@ telegramBot.onText(/\/get (.+)/, async (msg, [source, match]) => {
     user.bots.telegram.confirmCode = confirmCode;
     user.save();
 
-    await sendEmail('vitaliidrapaliuk@gmail.com', 'Verify telegram bot', confirmCode);
+    const message = `Code for verification your bot:   ${confirmCode},   use command "/verify" and insert it there`
+    await sendEmail('vitaliidrapaliuk@gmail.com', 'Verify telegram bot', message);
 
     telegramBot.sendMessage(msg.chat.id, `Letter with your confirmation code has sent on ${match}`);
   } catch (error) {
@@ -74,6 +75,16 @@ telegramBot.onText(/\/verify (.+)/, async (msg, [source, match]) => {
 });
 
 telegramBot.onText(/\/start/, async (msg, [source, match]) => {
+  const message = 'Welcome to ninja wallet -- the best money manager!';
+  telegramBot.sendMessage(msg.chat.id, message);
+});
+
+telegramBot.onText(/\/help/, async (msg, [source, match]) => {
+  const message = 'Welcome to our app!';
+  telegramBot.sendMessage(msg.chat.id, message);
+});
+
+telegramBot.onText(/\/appLink/, async (msg, [source, match]) => {
   const message = 'Welcome to our app!';
   telegramBot.sendMessage(msg.chat.id, message);
 });

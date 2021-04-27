@@ -10,7 +10,7 @@ import { delays } from '../../../../utils/auth/constants';
 import { SignUpForm } from './components';
 import { Done, VerifyCode, AuthStepper } from '../common';
 import { authValidators } from '../../../../utils/auth/validation';
-import { getAuthPrivateFS } from '../../../../selectors/auth';
+import { getAuthPrivateFS, getEmailProviderError } from '../../../../selectors/auth';
 import { invokeAfterDelay } from '../../../../utils/auth/tools';
 import { isSuccessFetchStatus } from '../../../../utils/fetch_statuses/aux_functions';
 import { authFetchStatusNames } from '../../../../utils/auth/names';
@@ -24,7 +24,7 @@ const stepperIcons = {
   3: <CheckIcon />,
 };
 
-export function SignUp({ isEmailError, setShowWarnAboutSkip, showWarnAboutSkip }) {
+export function SignUp({ setVisibleWarnMessage, isVisibleWarnMessage }) {
   const dispatch = useDispatch();
   const [activeStep, setActiveStep] = React.useState(0);
   const styles = useStyles();
@@ -35,6 +35,7 @@ export function SignUp({ isEmailError, setShowWarnAboutSkip, showWarnAboutSkip }
 
   const signUpFS = useSelector(getAuthPrivateFS(SIGN_UP));
   const verifyEmailFS = useSelector(getAuthPrivateFS(VERIFY_EMAIL));
+  const isEmailError = useSelector(getEmailProviderError);
 
   const resendCodeHandler = () => dispatch(resendVerifyEmailCode);
   const signUpHandler = ({ email, password }) => dispatch(signUp(email, password));
@@ -74,8 +75,8 @@ export function SignUp({ isEmailError, setShowWarnAboutSkip, showWarnAboutSkip }
             submitHandler: verifyEmailHandler,
             skipStep: nextStep,
             validate: authValidators.verificationCode,
-            setShowWarnAboutSkip,
-            showWarnAboutSkip,
+            setVisibleWarnMessage,
+            isVisibleWarnMessage,
             title: 'Check out verification code',
           }}
         />

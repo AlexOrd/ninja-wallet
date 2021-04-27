@@ -18,7 +18,6 @@ export const signUp = async (req, res, next) => {
         const isUsedEmail = await User.findOne({ email: email });
         if (isUsedEmail) return next(authErrors.LOGIN_ALREADY_USE);
 
-        const confirmCode = generateRandomString();
         const codeForEmailVerification = generateRandomNumbers();
         const user = new User({
             email,
@@ -26,7 +25,6 @@ export const signUp = async (req, res, next) => {
                 password: encryptData(password),
                 openedOnDevices: [
                     {
-                        confirmCode: encryptData(confirmCode),
                         lastLogin: new Date(),
                         ...getDeviceInfo(req)
                     },
@@ -40,9 +38,9 @@ export const signUp = async (req, res, next) => {
         user.save();
 
         const deviceID = user.auth.openedOnDevices[0]._id;
-
-        const refreshToken = createJWToken({ confirmCode, deviceID }, tokensNames.REFRESH);
+       
         const accessToken = createJWToken({ userID: user._id, deviceID }, tokensNames.ACCESS);
+        const refreshToken = createJWToken({}, tokensNames.REFRESH);
 
         setAuthHeaders(accessToken, refreshToken, res);
 

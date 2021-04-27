@@ -14,6 +14,7 @@ const {
   UNEXPECTED_SERVER_ERROR,
   USER_BY_EMAIL_NOT_FOUND,
   DOUBLE_AUTHENTICATED_DENIED,
+  SIGN_OUT_FROM_ANOTHER_DEVICE,
 } = fetchErrorsNames;
 
 export const errorMessages = {
@@ -75,5 +76,8 @@ export const errorMessages = {
   },
   [DOUBLE_AUTHENTICATED_DENIED]: {
     message: 'Account owner did not confirm this sign in!',
+  },
+  [SIGN_OUT_FROM_ANOTHER_DEVICE]: {
+    message: 'Account owner has exited from this device!',
   },
 };

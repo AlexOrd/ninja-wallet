@@ -23,7 +23,7 @@ export const SignIn = () => {
   React.useEffect(() => {
     if (isSuccessFetchStatus(signInFS))
       setTimeout(() => {
-        push('/app');
+        push('/dashboard');
       }, delays.AFTER_SIGN_IN);
   }, [signInFS]);
 

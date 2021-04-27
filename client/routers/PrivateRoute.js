@@ -1,18 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { getAuthorizationStatus } from '../selectors/auth';
-
-import { isAuthenticated } from '../utils/jwtUtil';
+import { isAuthenticated } from '../utils/auth/for_tokens';
 
 const PrivateRoute = ({ component: Component, layout: Layout, ...rest }) => {
-  const isAuthorized = useSelector(getAuthorizationStatus);
-
+  console.log('isAuthenticated', isAuthenticated);
   return (
     <Route
       {...rest}
       render={(props) =>
-        isAuthorized ? (
+        isAuthenticated() ? (
           <Layout>
             <Component {...props} />
           </Layout>

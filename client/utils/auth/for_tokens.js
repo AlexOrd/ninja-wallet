@@ -1,6 +1,7 @@
 import { fetchErrorsNames, tokensNames } from './constants';
 import store from '../../store/configureStore';
-
+import jwtDecode from 'jwt-decode';
+import { getLocalStorage } from '../storageUtil';
 import { AUTHORIZATION } from '../../actions/types/auth';
 
 const { MISSING_TOKEN, INVALID_TOKEN } = fetchErrorsNames;
@@ -46,6 +47,7 @@ export const setAuthStatus = (status) => {
 
 export const isAuthError = (err) => {
   if (
+    // SIGN_OUT_FROM_ANOTHER_DEVICE
     err?.response?.data?.error === MISSING_TOKEN ||
     err?.response?.data?.error === INVALID_TOKEN
   ) {
@@ -53,4 +55,28 @@ export const isAuthError = (err) => {
   }
 
   return false;
+};
+
+export const isTokenExpired = (token) => {
+  try {
+    const decoded = jwtDecode(token);
+    if (decoded.exp < Date.now() / 1000) {
+      return true;
+    }
+
+    return false;
+  } catch (e) {
+    return false;
+  }
+};
+
+export const getToken = (tokenName) => {
+  return getLocalStorage(tokenName);
+};
+
+export const isAuthenticated = () => {
+  const isAccessToken = getToken(ACCESS_TOKEN_STORAGE_NAME);
+  const isExpiredRefreshToken = isTokenExpired(getToken(REFRESH_TOKEN_HEADERS_NAME));
+
+  return isAccessToken && !isExpiredRefreshToken;
 };
