@@ -29,9 +29,16 @@ const useStyles = makeStyles({
   },
 });
 
-const CreateCardForm = ({ createCard, card, setCard, updateType }) => {
-  const classes = useStyles();
-
+const CreateCardForm = ({
+  createCard,
+  card,
+  setCard,
+  updateType,
+  openType,
+  monobankToken,
+  setMonobankToken,
+  submitMonobankToken,
+}) => {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(card, 'hello');
@@ -43,6 +50,25 @@ const CreateCardForm = ({ createCard, card, setCard, updateType }) => {
       return createCard(card, updateType, card._id);
     }
   };
+  console.log(openType);
+  return (
+    <div>
+      {(openType === 'simple' && (
+        <CreateSimpleCard onSubmit={onSubmit} setCard={setCard} card={card} />
+      )) ||
+        (openType === 'monobank' && (
+          <CreateMonoBankCard
+            monobankToken={monobankToken}
+            setMonobankToken={setMonobankToken}
+            submitMonobankToken={submitMonobankToken}
+          />
+        ))}
+    </div>
+  );
+};
+
+const CreateSimpleCard = ({ onSubmit, setCard, card }) => {
+  const classes = useStyles();
 
   return (
     <form action="" onSubmit={(e) => onSubmit(e)}>
@@ -105,16 +131,38 @@ const CreateCardForm = ({ createCard, card, setCard, updateType }) => {
         </Grid>
       </Grid>
       <Grid xs={12} md={12}>
-        <Box className={classes.button} pt={7}>
-          <Button type="submit" color="primary" value="submit">
-            Update
-          </Button>
-        </Box>
-        <Box className={classes.button} pt={7}>
-          <Button color="secondary">Close</Button>
-        </Box>
+        <Button type="submit" color="primary" value="submit">
+          Update
+        </Button>
+        <Button color="secondary">Close</Button>
       </Grid>
     </form>
+  );
+};
+
+const CreateMonoBankCard = ({ monobankToken, setMonobankToken, submitMonobankToken }) => {
+  const classes = useStyles();
+
+  return (
+    <Grid className={classes.formContainer} justify="center" alignItems="center" md={12} container>
+      <Grid xs={6}>
+        <Box>
+          <TextField
+            className={classes.cardNumber}
+            label="Monobank token"
+            variant="outlined"
+            onChange={(e) => setMonobankToken(e.target.value)}
+            value={monobankToken}
+          />
+        </Box>
+        <br />
+        <Box>
+          <Button onClick={() => submitMonobankToken(monobankToken)} color="primary">
+            Send Token
+          </Button>
+        </Box>
+      </Grid>
+    </Grid>
   );
 };
 

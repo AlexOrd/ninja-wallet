@@ -22,7 +22,10 @@ const CardItems = ({
   createCard,
   openCardCreator,
   updateType,
-  setUpdateType,
+  openType,
+  monobankToken,
+  setMonobankToken,
+  submitMonobankToken,
 }) => {
   const classes = useStyles();
 
@@ -60,12 +63,15 @@ const CardItems = ({
 
       {isAdded && (
         <Grid justify="center" alignItems="center" md={12}>
-          {/* <Box alignContent="center" > */}
           <CreateCardForm
             createCard={createCard}
             card={card}
             setCard={setCard}
             updateType={updateType}
+            openType={openType}
+            monobankToken={monobankToken}
+            setMonobankToken={setMonobankToken}
+            submitMonobankToken={submitMonobankToken}
           />
           {error !== undefined ? (
             <Grid md={12}>

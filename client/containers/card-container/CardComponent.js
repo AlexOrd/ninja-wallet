@@ -10,6 +10,8 @@ import {
   changeCard,
 } from '../../actions/cardAction';
 
+import { fetchUserInfo } from '../../actions/monobankAction';
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -45,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.light,
     color: theme.palette.getContrastText(theme.palette.primary.light),
   },
+  addMono: {
+    backgroundColor: theme.palette.secondary.dark,
+    color: theme.palette.getContrastText(theme.palette.secondary.dark),
+  },
 }));
 
 const cardType = {
@@ -60,7 +66,10 @@ const CardComponent = () => {
   const [isAdded, setAdded] = useState(false);
   const [updateType, setUpdateType] = useState('');
   const [transaction, setTransaction] = useState({});
-  const cards = useSelector((state) => state);
+  const [monobankToken, setMonobankToken] = useState('');
+  const [openType, setOpenType] = useState('');
+  const cards = useSelector((state) => state.card.card.cards);
+  const monobank = useSelector((state) => state.monobank.monobankInfo.data);
 
   const dispatch = useDispatch();
 
@@ -68,9 +77,19 @@ const CardComponent = () => {
     if (fetchCards() !== undefined) dispatch(fetchCards());
   }, []);
 
-  const cardsData = cards.card.card.cards === undefined ? [] : cards.card.card.cards;
+  // useEffect(() => {
+
+  const submitMonobankToken = (token) => {
+    if (fetchUserInfo(token) !== undefined) dispatch(fetchUserInfo(token));
+  };
+  // }, [])
+
+  const cardsData = cards === undefined ? [] : cards;
+  const monobankData = monobank === undefined ? {} : monobank.monobankInfo;
 
   const sortedCards = cardsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  console.log(monobankData);
 
   const createCard = (card, updateType, cardId) => {
     if (updateType === 'create') {
@@ -85,16 +104,23 @@ const CardComponent = () => {
     dispatch(deleteCardThunk(cardId));
   };
 
-  const openCardCreator = (type) => {
-    if (type === 'create') {
+  const openCardCreator = (type, typeCreator) => {
+    if (type === 'create' && typeCreator === 'simple') {
       setAdded(true);
       setCard(cardType);
       setUpdateType('create');
+      setOpenType(typeCreator);
       return;
     }
-    if (type === 'update') {
+    if (type === 'update' && typeCreator === 'simple') {
       setAdded(true);
       setUpdateType('update');
+      setOpenType(typeCreator);
+      return;
+    }
+    if (type === 'create' && typeCreator === 'monobank') {
+      setAdded(true);
+      setOpenType(typeCreator);
       return;
     }
   };
@@ -123,10 +149,17 @@ const CardComponent = () => {
                 <h3>Your card</h3>
                 <ListItem
                   className={classes.addCard}
-                  onClick={() => openCardCreator('create')}
+                  onClick={() => openCardCreator('create', 'simple')}
                   button
                 >
                   <ListItemText primary="+Add card" />
+                </ListItem>
+                <ListItem
+                  className={classes.addMono}
+                  onClick={() => openCardCreator('create', 'monobank')}
+                  button
+                >
+                  <ListItemText primary="+Add monobank card" />
                 </ListItem>
 
                 <CardList cards={sortedCards} switchCard={switchCard} deleteCard={deleteCard} />
@@ -144,6 +177,10 @@ const CardComponent = () => {
               updateType={updateType}
               setCard={setCard}
               isAdded={isAdded}
+              openType={openType}
+              monobankToken={monobankToken}
+              setMonobankToken={setMonobankToken}
+              submitMonobankToken={submitMonobankToken}
             />
           </Grid>
           <Grid container xs="auto" md={2} item>
@@ -160,6 +197,7 @@ const CardComponent = () => {
           </Grid>
         </Grid>
       </Box>
+      {/* <Box></Box> */}
     </Container>
   );
 };

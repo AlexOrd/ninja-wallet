@@ -40,7 +40,7 @@ export const addMonobankAccountToUser = async (req, res) => {
   try {
     const newCard = new Card({
       userId: req.userID,
-      cardNumber: req.body.monobankCardNum, 
+      cardNumber: req.body.cardNumber, 
       currency: 'uah',
       cardName: 'monobank',
     });

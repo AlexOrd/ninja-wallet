@@ -5,6 +5,7 @@ import { reducer as formReducer } from 'redux-form';
 // Import custom components
 import authReducer from './authReducer';
 import cardReducer from './cardReducer';
+import monobankReducer from './monobankReducer';
 
 const appReducer = (history) =>
   combineReducers({
@@ -12,6 +13,7 @@ const appReducer = (history) =>
     form: formReducer, // ← redux-form
     auth: authReducer,
     card: cardReducer,
+    monobank: monobankReducer,
   });
 
 const rootReducer = (state, action) => {
