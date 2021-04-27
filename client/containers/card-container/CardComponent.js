@@ -59,7 +59,6 @@ const CardComponent = () => {
   const [card, setCard] = useState(cardType);
   const [isAdded, setAdded] = useState(false);
   const [updateType, setUpdateType] = useState('');
-  const [transaction, setTransaction] = useState({});
   const cards = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -70,7 +69,15 @@ const CardComponent = () => {
 
   const cardsData = cards.card.card.cards === undefined ? [] : cards.card.card.cards;
 
-  const sortedCards = cardsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const sortedCardsByDate = [...cardsData].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+  // console.log(cardsData)
+  const sortedCardsByTotalSum = [...cardsData].sort(
+    (a, b) =>
+      b.transactions.reduce((acc, curr) => acc + curr.sum, 0) -
+      a.transactions.reduce((acc, curr) => acc + curr.sum, 0)
+  );
 
   const createCard = (card, updateType, cardId) => {
     if (updateType === 'create') {
@@ -120,7 +127,7 @@ const CardComponent = () => {
           <Grid item xs={3}>
             <Paper style={{ height: '100%' }} variant="outlined">
               <Container className={classes.gridList}>
-                <h3>Your card</h3>
+                <h3>Your cards</h3>
                 <ListItem
                   className={classes.addCard}
                   onClick={() => openCardCreator('create')}
@@ -129,12 +136,16 @@ const CardComponent = () => {
                   <ListItemText primary="+Add card" />
                 </ListItem>
 
-                <CardList cards={sortedCards} switchCard={switchCard} deleteCard={deleteCard} />
+                <CardList
+                  cards={sortedCardsByDate}
+                  switchCard={switchCard}
+                  deleteCard={deleteCard}
+                />
               </Container>
             </Paper>
           </Grid>
 
-          <Grid container xs={true} md={7} item>
+          <Grid container xs={true} md={6} item>
             <CardItems
               className={classes.cardItem}
               card={card}
@@ -145,18 +156,6 @@ const CardComponent = () => {
               setCard={setCard}
               isAdded={isAdded}
             />
-          </Grid>
-          <Grid container xs="auto" md={2} item>
-            <Paper style={{ height: '100%' }} variant="outlined">
-              <Transactions card={card} setTransaction={setTransaction} />
-            </Paper>
-          </Grid>
-          <Grid xs={12} container item>
-            {transaction._id && (
-              <Grid container justify="center" item>
-                <TransactionInfo transaction={transaction} />
-              </Grid>
-            )}
           </Grid>
         </Grid>
       </Box>

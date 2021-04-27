@@ -14,16 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
-const CardItems = ({
-  isAdded,
-  card,
-  setCard,
-  error,
-  createCard,
-  openCardCreator,
-  updateType,
-  setUpdateType,
-}) => {
+const CardItems = ({ isAdded, card, setCard, error, createCard, openCardCreator, updateType }) => {
   const classes = useStyles();
 
   return (
@@ -52,7 +43,7 @@ const CardItems = ({
           </Grid>
         )}
       </Grid>
-      <Grid md={6} item>
+      <Grid md={5} item>
         <Box m={3}>
           <OtherCardInfo card={card} />
         </Box>
@@ -60,7 +51,6 @@ const CardItems = ({
 
       {isAdded && (
         <Grid justify="center" alignItems="center" md={12}>
-          {/* <Box alignContent="center" > */}
           <CreateCardForm
             createCard={createCard}
             card={card}
