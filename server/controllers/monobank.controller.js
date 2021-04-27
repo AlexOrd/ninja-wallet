@@ -64,6 +64,7 @@ export const addMonobankAccountToUser = async (req, res) => {
     console.log(err);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
+      err
     });
   }
 };

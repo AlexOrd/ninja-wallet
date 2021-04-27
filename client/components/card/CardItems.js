@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Cards from 'react-credit-cards';
 import './style.css';
 import OtherCardInfo from './OtherCardInfo';
 import Grid from '@material-ui/core/Grid';
 import CreateCardForm from './CreateCardForm';
-import { Box, Button } from '@material-ui/core';
+import { Box, Button, List, ListItem, ListItemText } from '@material-ui/core';
+
+import { fetchUserInfo, createMonobankThunk } from '../../actions/monobankAction';
 
 const useStyles = makeStyles({
   root: {
@@ -26,6 +30,7 @@ const CardItems = ({
   monobankToken,
   setMonobankToken,
   submitMonobankToken,
+  monobankData,
 }) => {
   const classes = useStyles();
 
@@ -63,16 +68,20 @@ const CardItems = ({
 
       {isAdded && (
         <Grid justify="center" alignItems="center" md={12}>
-          <CreateCardForm
-            createCard={createCard}
-            card={card}
-            setCard={setCard}
-            updateType={updateType}
-            openType={openType}
-            monobankToken={monobankToken}
-            setMonobankToken={setMonobankToken}
-            submitMonobankToken={submitMonobankToken}
-          />
+          {monobankData.clientId ? (
+            <MonobankCards monobankData={monobankData} monobankToken={monobankToken} />
+          ) : (
+            <CreateCardForm
+              createCard={createCard}
+              card={card}
+              setCard={setCard}
+              updateType={updateType}
+              openType={openType}
+              monobankToken={monobankToken}
+              setMonobankToken={setMonobankToken}
+              submitMonobankToken={submitMonobankToken}
+            />
+          )}
           {error !== undefined ? (
             <Grid md={12}>
               {error.data.details.map(({ message }) => (
@@ -87,6 +96,35 @@ const CardItems = ({
         </Grid>
       )}
     </Grid>
+  );
+};
+
+const MonobankCards = ({ monobankData, monobankToken }) => {
+  const dispatch = useDispatch();
+
+  const createMonobankAccout = (cardInfo) => {
+    const createdAccount = {
+      monobankToken: monobankToken,
+      monobankAccountId: cardInfo.id,
+      cardNumber: cardInfo.maskedPan[0],
+    };
+    dispatch(createMonobankThunk(createdAccount, monobankToken));
+    console.log(createdAccount);
+  };
+
+  return (
+    <List>
+      <ListItem>Card owner: {monobankData.name}</ListItem>
+      Cards:
+      {monobankData.accounts.map((cardInfo) => (
+        <ListItem>
+          <ListItemText>
+            {cardInfo.maskedPan[0]}
+            <button onClick={() => createMonobankAccout(cardInfo)}>Create monobank account</button>
+          </ListItemText>
+        </ListItem>
+      ))}
+    </List>
   );
 };
 

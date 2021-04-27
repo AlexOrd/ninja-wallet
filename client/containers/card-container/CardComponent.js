@@ -88,8 +88,8 @@ const CardComponent = () => {
   const monobankData = monobank === undefined ? {} : monobank.monobankInfo;
 
   const sortedCards = cardsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-  console.log(monobankData);
+  console.log(cardsData);
+  // console.log(monobankData);
 
   const createCard = (card, updateType, cardId) => {
     if (updateType === 'create') {
@@ -132,9 +132,9 @@ const CardComponent = () => {
 
   const toLocalStorage = () => {
     let auth =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1OTI4ZDcyYTZjMjExYmM2NDAyNWIiLCJkZXZpY2VJRCI6IjYwODZkMzU2YTE1M2RhMTgyZGI2MGJkMSIsImlhdCI6MTYxOTQ0ODY2MiwiZXhwIjoxNjE5NTM1MDYyfQ.fKXTnMS3c9W6fS0aRd4m5JdTMxAjwlR9mT0DnAzUBzs';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1OTI4ZDcyYTZjMjExYmM2NDAyNWIiLCJkZXZpY2VJRCI6IjYwODdkYjZmNTZlOTRiMWI3NmIyM2M2YiIsImlhdCI6MTYxOTUxNjI3MSwiZXhwIjoxNjE5NjAyNjcxfQ.qicKwOw2e67wBYuNWLYYNZ2SCn4mnVyexOWCgKxER3k';
     let refresh =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6IjQxODcyNCIsImRldmljZUlEIjoiNjA4NmQzNTZhMTUzZGExODJkYjYwYmQxIiwiaWF0IjoxNjE5NDQ4NjYyLCJleHAiOjE2MTk0NTIyNjJ9.tc7gVEhAG1DkUYcLBiwloMkhs_x4ffd5XZICHSpB_3Y';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6IjM1NTcwMCIsImRldmljZUlEIjoiNjA4N2RiNmY1NmU5NGIxYjc2YjIzYzZiIiwiaWF0IjoxNjE5NTE2MjcxLCJleHAiOjE2MTk1MTk4NzF9.dJ5q6euOY72uAe-zbGBDrI1BSMcbEERhXdXNEETDwBI';
     return localStorage.setItem('accessToken', auth), localStorage.setItem('refreshToken', refresh);
   };
   toLocalStorage();
@@ -181,6 +181,7 @@ const CardComponent = () => {
               monobankToken={monobankToken}
               setMonobankToken={setMonobankToken}
               submitMonobankToken={submitMonobankToken}
+              monobankData={monobankData}
             />
           </Grid>
           <Grid container xs="auto" md={2} item>
