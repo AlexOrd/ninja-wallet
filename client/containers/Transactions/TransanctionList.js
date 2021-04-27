@@ -17,7 +17,7 @@ import { useStyles } from './Transactions.style';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
-import LongMenu from './Options';
+import Options from './Options';
 import moment from 'moment';
 import axios from 'axios';
 
@@ -67,9 +67,9 @@ export default function TransactionsList() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [transactions, setTransactions] = React.useState();
   const ACCESS_TOKEN =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1MTc1OTk3NmVhODgzOTQzNTNlNGUiLCJkZXZpY2VJRCI6IjYwODUxNzU5OTc2ZWE4ODM5NDM1M2U0ZiIsImlhdCI6MTYxOTMzNTAwMSwiZXhwIjoxNjE5NDIxNDAxfQ.iiUJP8GaYJVbg0ReDk1TDnvvsfVF-uZPlLDUZiuAyOg';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1MTc1OTk3NmVhODgzOTQzNTNlNGUiLCJkZXZpY2VJRCI6IjYwODgzMWViY2M5OTQ5NmZiYzYwNDEwMyIsImlhdCI6MTYxOTUzODQxMSwiZXhwIjoxNjE5NjI0ODExfQ.6qiTfxMu339Nqjc_hsWHgXhH3x1eWgg04gDCGLQg3o0';
   const REFRESH_TOKEN =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6IjhjZmYyNWY3LTRiYmEtNDFlMC1iNmE5LWYxZjNiYzM1MjcyYyIsImRldmljZUlEIjoiNjA4NTE3NTk5NzZlYTg4Mzk0MzUzZTRmIiwiaWF0IjoxNjE5MzM1MDAxLCJleHAiOjE2MTkzMzg2MDF9.rc3SdPEpNqZCNYFNF1OMuBKpfopqx0cSfsSc0MfI0dA';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6Ijc1MTgxOSIsImRldmljZUlEIjoiNjA4ODMxZWJjYzk5NDk2ZmJjNjA0MTAzIiwiaWF0IjoxNjE5NTM4NDExLCJleHAiOjE2MTk1NDIwMTF9.VaZK2-0HuKy_yzVYBlL-fV_1NUiSyuoodSM1j6daiM4';
   useEffect(() => {
     const apiUrl = 'http://localhost:3000/api/transactions';
     axios
@@ -139,7 +139,7 @@ export default function TransactionsList() {
                         className={classes.row}
                       >
                         <TableCell component="th" id={labelId} scope="row" padding="2">
-                          {row.transactionType}
+                          {`${row.transactionType}  ${row.merchant ? 'at' + row.merchant : ''}`}
                         </TableCell>
                         <TableCell align="right">{moment(row.createdAt).format('L')}</TableCell>
                         <TableCell align="right">{row.cardId.cardName}</TableCell>
@@ -148,7 +148,7 @@ export default function TransactionsList() {
 
                         <TableCell align="right">
                           {' '}
-                          <LongMenu />
+                          <Options id={row._id} />
                         </TableCell>
                       </TableRow>
                     );

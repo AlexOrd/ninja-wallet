@@ -78,4 +78,8 @@ export const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.dark,
     fontWeight: 'bold',
   },
+  btnLinkOptions: {
+    textDecoration: 'none',
+    color: theme.palette.primary.dark,
+  },
 }));

@@ -15,7 +15,7 @@ function TransactionTableHead(props) {
 
   const StyledTableCell = withStyles((theme) => ({
     head: {
-      backgroundColor: theme.palette.primary.dark,
+      backgroundColor: theme.palette.info.light,
       fontSize: 16,
     },
     body: {
@@ -33,20 +33,20 @@ function TransactionTableHead(props) {
 
   const headCells = [
     {
-      id: 'description',
+      id: 'transactionType',
       numeric: false,
       disablePadding: true,
       label: 'Description',
     },
-    { id: 'date', numeric: false, disablePadding: false, label: 'Date' },
-    { id: 'card', numeric: true, disablePadding: false, label: 'Card' },
+    { id: 'createdAt', numeric: false, disablePadding: false, label: 'Date' },
+    { id: 'cardId', numeric: true, disablePadding: false, label: 'Card' },
     {
-      id: 'category',
+      id: 'transactionCategory',
       numeric: false,
       disablePadding: false,
       label: 'Category',
     },
-    { id: 'amount', numeric: true, disablePadding: false, label: 'Amount' },
+    { id: 'sum', numeric: true, disablePadding: false, label: 'Amount' },
   ];
 
   return (
@@ -82,13 +82,13 @@ function TransactionTableHead(props) {
     </TableHead>
   );
 }
-// TransactionTableHead.propTypes = {
-//   classes: PropTypes.object.isRequired,
-//   numSelected: PropTypes.number,
-//   onRequestSort: PropTypes.func.isRequired,
-//   onSelectAllClick: PropTypes.func,
-//   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-//   orderBy: PropTypes.string.isRequired,
-//   rowCount: PropTypes.number.isRequired,
-// };
+TransactionTableHead.propTypes = {
+  classes: PropTypes.object.isRequired,
+  numSelected: PropTypes.number,
+  onRequestSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func,
+  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  orderBy: PropTypes.string.isRequired,
+  rowCount: PropTypes.number.isRequired,
+};
 export default TransactionTableHead;

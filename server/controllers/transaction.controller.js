@@ -92,7 +92,7 @@ exports.getTransaction = async (req, res) => {
 // if does not exist this transaction
 exports.updateTransaction = async (req, res) => {
   if (!doesTransactionIdExist(req.params.id)) {
-    return res.send(400).json({
+    return res.send(404).json({
       success: false,
       message: 'This transaction does not exist!',
     });
@@ -107,7 +107,7 @@ exports.updateTransaction = async (req, res) => {
       transaction,
     });
   } catch (err) {
-    res.status(404).json({
+    res.status(500).json({
       success: 'false',
       message: 'notUpdated',
     });
