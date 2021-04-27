@@ -4,7 +4,6 @@ import { generateRandomString } from '../utils/auth/aux_functions/common';
 import { sendEmail } from '../utils/auth/aux_functions/for_mail';
 import { validate } from '../utils/validation/validate';
 
-
 const API_KEY = process.env.TELEGRAM_BOT_API_KEY;
 export const telegramBot = new TelegramBot(API_KEY, {
   polling: {
@@ -22,6 +21,7 @@ telegramBot.onText(/\/get (.+)/, async (msg, [source, match]) => {
   try {
     const { err } = validate('auth')('email')({ email: match });
     if (err) return telegramBot.sendMessage(msg.chat.id, err.message);
+
     const user = await User.findOne({ email: 'vitaliidrapaliuk@gmail.com' });
     if (!user) return telegramBot.sendMessage(msg.chat.id, 'user not found');
 
@@ -36,7 +36,7 @@ telegramBot.onText(/\/get (.+)/, async (msg, [source, match]) => {
     user.bots.telegram.confirmCode = confirmCode;
     user.save();
 
-    const message = `Code for verification your bot:   ${confirmCode},   use command "/verify" and insert it there`
+    const message = `Code for verification your bot:   ${confirmCode},   use command "/verify" and insert it there`;
     await sendEmail('vitaliidrapaliuk@gmail.com', 'Verify telegram bot', message);
 
     telegramBot.sendMessage(msg.chat.id, `Letter with your confirmation code has sent on ${match}`);
@@ -68,8 +68,8 @@ telegramBot.onText(/\/verify (.+)/, async (msg, [source, match]) => {
   user.save();
 
   let message = user.firstName
-    ? `Congratulations ${user.firstName}! Your application connected with our bot`
-    : 'Congratulations! Your application connected with our bot';
+    ? `Congratulate ${user.firstName}! Your application connected with our bot, you have new opportunity in your security!`
+    : 'Congratulate you! Your application connected with our bot, you have new opportunity in your security!';
 
   telegramBot.sendMessage(msg.chat.id, message);
 });

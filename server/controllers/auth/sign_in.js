@@ -57,10 +57,14 @@ export const signIn = async (req, res, next) => {
           telegramBot.deleteMessage(348781339, resp.message.message_id);
           return next(authErrors.DOUBLE_AUTHENTICATED_DENIED);
         }
+        
         telegramBot.removeListener('callback_query', callBackQueryListener);
       };
 
-      telegramBot.addListener('callback_query', callBackQueryListener);
+      const result = await telegramBot.addListener('callback_query', callBackQueryListener);
+
+      console.log('result', result)
+
       const { message, keyboard } = doubleAuthenticateMessage;
       telegramBot.sendMessage(348781339, message, {
         reply_markup: {
@@ -78,3 +82,24 @@ export const signIn = async (req, res, next) => {
     return unexpectedError(err, next);
   }
 };
+
+
+// function loadScript(src, callback) {
+//   let script = document.createElement('script');
+//   script.src = src;
+
+//   script.onload = () => callback(null, script);
+//   script.onerror = () => callback(new Error(`Ошибка загрузки скрипта ${src}`));
+
+//   document.head.append(script);
+// }
+
+// let loadScriptPromise = function(src) {
+//   return new Promise((resolve, reject) => {
+//     telegramBot.addListener('callback_query')
+//     loadScript(src, (err, script) => {
+//       if (err) reject(err)
+//       else resolve(script);
+//     });
+//   })
+// }
