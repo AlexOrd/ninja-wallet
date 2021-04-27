@@ -10,7 +10,11 @@ import {
   changeCard,
 } from '../../actions/cardAction';
 
-import { fetchUserInfo } from '../../actions/monobankAction';
+import {
+  fetchUserInfo,
+  fetchUserMonobankAccounts,
+  getStatementDataThunk,
+} from '../../actions/monobankAction';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -68,24 +72,28 @@ const CardComponent = () => {
   const [transaction, setTransaction] = useState({});
   const [monobankToken, setMonobankToken] = useState('');
   const [openType, setOpenType] = useState('');
+  const statementsMonobankData = useSelector((state) => state.monobank.statementsData);
+  const userMonobankAccounts = useSelector((state) => state.monobank.userMonobankAccounts);
   const cards = useSelector((state) => state.card.card.cards);
-  const monobank = useSelector((state) => state.monobank.monobankInfo.data);
-
+  const monobankInfo = useSelector((state) => state.monobank.monobankInfo);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (fetchCards() !== undefined) dispatch(fetchCards());
+    dispatch(fetchUserMonobankAccounts());
   }, []);
 
   // useEffect(() => {
 
   const submitMonobankToken = (token) => {
-    if (fetchUserInfo(token) !== undefined) dispatch(fetchUserInfo(token));
+    if (token) {
+      dispatch(fetchUserInfo(token));
+    }
   };
   // }, [])
 
   const cardsData = cards === undefined ? [] : cards;
-  const monobankData = monobank === undefined ? {} : monobank.monobankInfo;
+  const monobankData = monobankInfo === undefined ? {} : monobankInfo.monobankInfo;
 
   const sortedCards = cardsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -130,14 +138,23 @@ const CardComponent = () => {
     setCard(card);
   };
 
-  const toLocalStorage = () => {
-    let auth =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1OTI4ZDcyYTZjMjExYmM2NDAyNWIiLCJkZXZpY2VJRCI6IjYwODZkMzU2YTE1M2RhMTgyZGI2MGJkMSIsImlhdCI6MTYxOTQ0ODY2MiwiZXhwIjoxNjE5NTM1MDYyfQ.fKXTnMS3c9W6fS0aRd4m5JdTMxAjwlR9mT0DnAzUBzs';
-    let refresh =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6IjQxODcyNCIsImRldmljZUlEIjoiNjA4NmQzNTZhMTUzZGExODJkYjYwYmQxIiwiaWF0IjoxNjE5NDQ4NjYyLCJleHAiOjE2MTk0NTIyNjJ9.tc7gVEhAG1DkUYcLBiwloMkhs_x4ffd5XZICHSpB_3Y';
-    return localStorage.setItem('accessToken', auth), localStorage.setItem('refreshToken', refresh);
+  const getStatementsDataForMonobankCard = (
+    monobankToken,
+    monobankAccountId,
+    monobankUserDataId
+  ) => {
+    // const currentAccount = userMonobankAccounts.find();
+    dispatch(getStatementDataThunk());
   };
-  toLocalStorage();
+
+  // const toLocalStorage = () => {
+  //   let auth =
+  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1OTI4ZDcyYTZjMjExYmM2NDAyNWIiLCJkZXZpY2VJRCI6IjYwODZkMzU2YTE1M2RhMTgyZGI2MGJkMSIsImlhdCI6MTYxOTQ0ODY2MiwiZXhwIjoxNjE5NTM1MDYyfQ.fKXTnMS3c9W6fS0aRd4m5JdTMxAjwlR9mT0DnAzUBzs';
+  //   let refresh =
+  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6IjQxODcyNCIsImRldmljZUlEIjoiNjA4NmQzNTZhMTUzZGExODJkYjYwYmQxIiwiaWF0IjoxNjE5NDQ4NjYyLCJleHAiOjE2MTk0NTIyNjJ9.tc7gVEhAG1DkUYcLBiwloMkhs_x4ffd5XZICHSpB_3Y';
+  //   return localStorage.setItem('accessToken', auth), localStorage.setItem('refreshToken', refresh);
+  // };
+  // toLocalStorage();
 
   return (
     <Container className={classes.container} maxWidth="lg">
@@ -169,6 +186,8 @@ const CardComponent = () => {
 
           <Grid container xs={true} md={7} item>
             <CardItems
+              getStatementsDataForMonobankCard={getStatementsDataForMonobankCard}
+              statementsMonobankData={statementsMonobankData}
               className={classes.cardItem}
               card={card}
               createCard={createCard}

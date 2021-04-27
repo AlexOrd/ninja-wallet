@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Cards from 'react-credit-cards';
 import './style.css';
@@ -6,6 +6,8 @@ import OtherCardInfo from './OtherCardInfo';
 import Grid from '@material-ui/core/Grid';
 import CreateCardForm from './CreateCardForm';
 import { Box, Button } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {
@@ -26,8 +28,54 @@ const CardItems = ({
   monobankToken,
   setMonobankToken,
   submitMonobankToken,
+  statementsMonobankData,
+  getStatementsDataForMonobankCard,
 }) => {
+  const [isMonoCard, setIsMonoCard] = useState(false);
+  const [monbankTransactions, setMonbankTransactions] = useState([]);
+  const userMonobankAccounts = useSelector((state) => state.monobank.userMonobankAccounts);
+  const monobankLocalCardsIds = useSelector((state) => state.monobank.monobankLocalCardsIds);
+
   const classes = useStyles();
+
+  useEffect(() => {
+    if (monobankLocalCardsIds.length > 0) {
+      setIsMonoCard(monobankLocalCardsIds.includes(card._id));
+    }
+  }, [card, monobankLocalCardsIds]);
+
+  useEffect(() => {
+    if (isMonoCard && userMonobankAccounts) {
+      const monobankAccount = userMonobankAccounts.find((data) => data.card === card._id);
+
+      // if (!monobankToken) {
+      //   setMonobankToken(monobankAccount.monobankToken);
+      // }
+
+      const isStatementDataAlreadyFetched = statementsMonobankData.find(
+        (statement) => statement.monobankAccountId === monobankAccount.monobankAccountId
+      );
+
+      if (!isStatementDataAlreadyFetched) {
+        return getStatementsDataForMonobankCard(
+          monobankAccount.monobankToken,
+          monobankAccount.monobankAccountId,
+          monobankAccount._id
+        );
+      }
+
+      setMonbankTransactions(
+        statementsMonobankData.filter(
+          (statement) => statement.monobankAccountId === monobankAccount._id
+        )
+      );
+    }
+  }, [
+    isMonoCard,
+    statementsMonobankData,
+    // monobankToken,
+    userMonobankAccounts,
+  ]);
 
   return (
     <Grid className={classes.root} container alignContent="flex-start" alignItems="justify">
@@ -57,7 +105,7 @@ const CardItems = ({
       </Grid>
       <Grid md={6} item>
         <Box m={3}>
-          <OtherCardInfo card={card} />
+          <OtherCardInfo isMonoCard={isMonoCard} card={card} />
         </Box>
       </Grid>
 

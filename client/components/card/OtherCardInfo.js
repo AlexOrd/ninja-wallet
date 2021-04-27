@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function OtherCardInfo({ card }) {
+export default function OtherCardInfo({ card, isMonoCard }) {
   const classes = useStyles();
 
   return (
@@ -39,6 +39,12 @@ export default function OtherCardInfo({ card }) {
           Number of transactions :{' '}
           {card.transactions !== undefined ? card.transactions[0].length : 0}
         </Typography>
+        {isMonoCard && (
+          <Typography className={classes.title} color="textSecondary" gutterBottom>
+            {' '}
+            monobank card
+          </Typography>
+        )}
       </CardContent>
     </Card>
   );

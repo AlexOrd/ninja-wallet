@@ -14,7 +14,7 @@ export const getUserInfo = async (req, res) => {
     const monobankApiRes = await axios.get(`${monobankApiBaseUrl}/client-info`, {
       headers: {
         'X-Token': monobankToken,
-      }
+      },
     });
 
     res.status(HttpStatus.CREATED).json({
@@ -29,7 +29,6 @@ export const getUserInfo = async (req, res) => {
 };
 
 export const addMonobankAccountToUser = async (req, res) => {
-
   // if (await doesUserAlreadyAddedThisAccount(req.body.monobankAccountId, req.userID)) {
   //     res.status(HttpStatus.NOT_ACCEPTABLE).json({
   //       success: false,
@@ -40,7 +39,7 @@ export const addMonobankAccountToUser = async (req, res) => {
   try {
     const newCard = new Card({
       userId: req.userID,
-      cardNumber: req.body.cardNumber, 
+      cardNumber: req.body.cardNumber,
       currency: 'uah',
       cardName: 'monobank',
     });
@@ -66,6 +65,17 @@ export const addMonobankAccountToUser = async (req, res) => {
       success: false,
     });
   }
+};
+
+export const getUserMonobankDataAccounts = async (req, res) => {
+  try {
+    const monobankUserAccountsData = await MonobankUserDataModel.find({ userId: req.userID });
+
+    res.status(HttpStatus.CREATED).json({
+      success: true,
+      data: { monobankUserAccountsData: monobankUserAccountsData },
+    });
+  } catch (err) {}
 };
 
 export const getStatementData = async (req, res) => {
