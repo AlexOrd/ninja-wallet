@@ -5,7 +5,6 @@ import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
-import Fade from '@material-ui/core/Fade';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   btn: {
     justifySelf: 'center',
+    margin: 'auto',
   },
   modal: {
     display: 'flex',
@@ -74,33 +74,7 @@ export default function ButtonCreateOrUpdate(props) {
       >
         {props.isCreating ? 'Create!' : 'Update!'}
       </Button>
-      {/* <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <h2 id="transition-modal-title">
-              {props.isCreating
-                ? 'Transaction successfully created!'
-                : 'Transaction successfully updated!'}
-            </h2>
-            <Button className={classes.btnModal} variant="contained" color="primary" size="large">
-              <Link className={classes.btnLink} to="/transactions">
-                Go back to list!
-              </Link>
-            </Button>
-          </div>
-        </Fade>
-      </Modal> */}
+
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
           {props.isCreating

@@ -8,6 +8,10 @@ export const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
       width: '100%',
     },
+    '.makeStyles-root-56': {
+      display: 'flex',
+      justifyContent: 'center',
+    },
   },
   paper: {
     width: '100%',
@@ -50,6 +54,10 @@ export const useStyles = makeStyles((theme) => ({
   },
   container: {
     padding: 30,
+    // display: 'flex',
+    // flexDirection: 'column',
+    // justifyContent: 'center',
+    // alignItems: 'center'
   },
   fab: {
     margin: theme.spacing(2),
@@ -81,5 +89,15 @@ export const useStyles = makeStyles((theme) => ({
   btnLinkOptions: {
     textDecoration: 'none',
     color: theme.palette.primary.dark,
+  },
+  btnCreate: {
+    marginTop: 30,
+    marginLeft: '40%',
+  },
+  popconfirmWrapper: {
+    padding: theme.spacing(2, 4, 2),
+  },
+  btnPop: {
+    marginTop: 20,
   },
 }));

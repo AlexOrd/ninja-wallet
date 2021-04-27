@@ -1,13 +1,13 @@
 import React from 'react';
+import { Button, Grid, Popover, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import { useStyles } from './Transactions.style';
-import axios from 'axios';
+import { axiosInstance } from '../../config/axios';
 
 const StyledIconButton = withStyles((theme) => ({
   root: {
@@ -18,14 +18,9 @@ const StyledIconButton = withStyles((theme) => ({
 }))(IconButton);
 // .MuiIconButton-root
 const ITEM_HEIGHT = 48;
-const ACCESS_TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1MTc1OTk3NmVhODgzOTQzNTNlNGUiLCJkZXZpY2VJRCI6IjYwODgzMWViY2M5OTQ5NmZiYzYwNDEwMyIsImlhdCI6MTYxOTUzODQxMSwiZXhwIjoxNjE5NjI0ODExfQ.6qiTfxMu339Nqjc_hsWHgXhH3x1eWgg04gDCGLQg3o0';
-const REFRESH_TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6Ijc1MTgxOSIsImRldmljZUlEIjoiNjA4ODMxZWJjYzk5NDk2ZmJjNjA0MTAzIiwiaWF0IjoxNjE5NTM4NDExLCJleHAiOjE2MTk1NDIwMTF9.VaZK2-0HuKy_yzVYBlL-fV_1NUiSyuoodSM1j6daiM4';
 
 export default function Options(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const history = useHistory();
   const open = Boolean(anchorEl);
   const classes = useStyles();
 
@@ -37,35 +32,31 @@ export default function Options(props) {
     setAnchorEl(null);
   };
 
+  const [anchorElPopover, setAnchorElPopover] = React.useState(null);
+
+  const handleClickPopover = (event) => {
+    setAnchorElPopover(event.currentTarget);
+  };
+
+  const handleClosePopover = () => {
+    setAnchorElPopover(null);
+    handleClose();
+  };
+
+  const openPopover = Boolean(anchorElPopover);
+  const idPopover = open ? 'simple-popover' : undefined;
+
   const deleteTransaction = () => {
-    const apiUrlDelete = `http://localhost:3000/api/transactions/${props.id}`;
+    const apiUrlDelete = `/api/transactions/${props.id}`;
 
-    axios
-      .delete(
-        apiUrlDelete,
-
-        {
-          headers: {
-            authorization: ACCESS_TOKEN,
-            'refresh-token': REFRESH_TOKEN,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res.data);
-        const apiUrl = 'http://localhost:3000/api/transactions';
-        axios
-          .get(apiUrl, {
-            headers: {
-              authorization: ACCESS_TOKEN,
-              'refresh-token': REFRESH_TOKEN,
-            },
-          })
-          .then((res) => {
-            const allTransactions = res.data.transactions;
-            props.setTransactions(allTransactions);
-          });
+    axiosInstance.delete(apiUrlDelete).then((res) => {
+      console.log(res.data);
+      const apiUrl = '/api/transactions';
+      axiosInstance.get(apiUrl).then((res) => {
+        const allTransactions = res.data.transactions;
+        props.setTransactions(allTransactions);
       });
+    });
   };
 
   return (
@@ -103,14 +94,55 @@ export default function Options(props) {
         </MenuItem>
         <MenuItem
           className={classes.btnLinkOptions}
-          selected={anchorEl}
-          onClick={() => {
-            handleClose();
-            deleteTransaction();
-          }}
+          selected={anchorElPopover}
+          onClick={handleClickPopover}
         >
           Delete
         </MenuItem>
+        <Popover
+          id={idPopover}
+          open={openPopover}
+          anchorElPopover={anchorElPopover}
+          onClose={handleClosePopover}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <Grid className={classes.popconfirmWrapper}>
+            <Grid xs={12} item>
+              <Typography>Do you really want to delete this transaction?</Typography>
+            </Grid>
+            <Grid container spacing={2} justify="center" item xs={12}>
+              <Grid item xs="auto">
+                <Button
+                  className={classes.btnPop}
+                  onClick={handleClosePopover}
+                  size="small"
+                  color="secondary"
+                  variant="outlined"
+                >
+                  No
+                </Button>
+              </Grid>
+              <Grid item xs="auto">
+                <Button
+                  className={classes.btnPop}
+                  onClick={deleteTransaction}
+                  size="small"
+                  color="primary"
+                  variant="contained"
+                >
+                  Yes
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Popover>
       </Menu>
     </div>
   );

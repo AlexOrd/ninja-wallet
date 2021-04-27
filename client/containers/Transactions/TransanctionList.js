@@ -20,6 +20,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Options from './Options';
 import moment from 'moment';
 import axios from 'axios';
+import { axiosInstance } from '../../config/axios';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -66,23 +67,13 @@ export default function TransactionsList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [transactions, setTransactions] = React.useState();
-  const ACCESS_TOKEN =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1MTc1OTk3NmVhODgzOTQzNTNlNGUiLCJkZXZpY2VJRCI6IjYwODgzMWViY2M5OTQ5NmZiYzYwNDEwMyIsImlhdCI6MTYxOTUzODQxMSwiZXhwIjoxNjE5NjI0ODExfQ.6qiTfxMu339Nqjc_hsWHgXhH3x1eWgg04gDCGLQg3o0';
-  const REFRESH_TOKEN =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6Ijc1MTgxOSIsImRldmljZUlEIjoiNjA4ODMxZWJjYzk5NDk2ZmJjNjA0MTAzIiwiaWF0IjoxNjE5NTM4NDExLCJleHAiOjE2MTk1NDIwMTF9.VaZK2-0HuKy_yzVYBlL-fV_1NUiSyuoodSM1j6daiM4';
+
   useEffect(() => {
-    const apiUrl = 'http://localhost:3000/api/transactions';
-    axios
-      .get(apiUrl, {
-        headers: {
-          authorization: ACCESS_TOKEN,
-          'refresh-token': REFRESH_TOKEN,
-        },
-      })
-      .then((res) => {
-        const allTransactions = res.data.transactions;
-        setTransactions(allTransactions);
-      });
+    const apiUrl = '/api/transactions';
+    axiosInstance.get(apiUrl).then((res) => {
+      const allTransactions = res.data.transactions;
+      setTransactions(allTransactions);
+    });
   }, []);
 
   const handleRequestSort = (event, property) => {

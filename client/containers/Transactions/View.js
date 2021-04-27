@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import { axiosInstance } from '../../config/axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,11 +47,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function View(props) {
-  const ACCESS_TOKEN =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1MTc1OTk3NmVhODgzOTQzNTNlNGUiLCJkZXZpY2VJRCI6IjYwODZiMDllMDIwYmY1ODFjNDcxOTZjZSIsImlhdCI6MTYxOTQzOTc3NCwiZXhwIjoxNjE5NTI2MTc0fQ.rJK4vdFfxmvBXy6DFUqM14c6O3uQ-Tnk0G7qgU5XB1o';
-  const REFRESH_TOKEN =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6IjIxMzMzMyIsImRldmljZUlEIjoiNjA4NmIwOWUwMjBiZjU4MWM0NzE5NmNlIiwiaWF0IjoxNjE5NDM5Nzc0LCJleHAiOjE2MTk0NDMzNzR9.3tgHE65229gqJbikqy3tKUJO3sbdgiKnWWayWdFJzcg';
-
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
   const [transaction, setTransaction] = useState();
@@ -58,18 +54,11 @@ export default function View(props) {
 
   useEffect(() => {
     console.log(id);
-    const apiUrlTransaction = `http://localhost:3000/api/transactions/${id}`;
-    axios
-      .get(apiUrlTransaction, {
-        headers: {
-          authorization: ACCESS_TOKEN,
-          'refresh-token': REFRESH_TOKEN,
-        },
-      })
-      .then((res) => {
-        const transaction = res.data.transaction;
-        setTransaction(transaction);
-      });
+    const apiUrlTransaction = `/api/transactions/${id}`;
+    axiosInstance.get(apiUrlTransaction).then((res) => {
+      const transaction = res.data.transaction;
+      setTransaction(transaction);
+    });
   });
 
   return (
