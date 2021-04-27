@@ -23,7 +23,7 @@ const corsOptions = {
     "exposedHeaders": ["Access-Token", "Refresh-Token"],
     "preflightContinue": false,
     "optionsSuccessStatus": 204
-  }
+}
 
 app.use(cors(corsOptions));
 app.use(helmet());

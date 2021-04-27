@@ -7,6 +7,7 @@ import emailRoutes from './email.route';
 import transactionRoutes from './transaction.route';
 import categoriesRoutes from './categories.route';
 import cardRoutes from './card.route';
+import summaryRoute from './summary.route'
 import settingsRoutes from './settings.route';
 
 import { checkAccessAndProvideUserID } from '../middlewares/auth/route_verifiers';
@@ -29,6 +30,7 @@ router.use('/profile', checkAccessAndProvideUserID, profileRoutes);
 
 router.use('/userphoto', checkAccessAndProvideUserID, userPhotoRoutes);
 
+router.use('/summary', checkAccessAndProvideUserID, summaryRoute)
 router.use('/settings', checkAccessAndProvideUserID, settingsRoutes);
 
 export default router;
