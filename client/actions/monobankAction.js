@@ -34,11 +34,13 @@ export const setError = (msg) => ({
 });
 
 export const fetchUserInfo = (header, handleError) => async (dispatch) => {
+  dispatch(setError(''));
   const res = await api.monobankApi.getUserInfo(header, handleError);
   dispatch(setMonobankAccout(res.data.monobankInfo));
 };
 
 export const fetchUserMonobankAccounts = (handleError) => async (dispatch) => {
+  dispatch(setError(''));
   const res = await api.monobankApi.getMonobankUserAccounts(handleError);
 
   dispatch(setUserMonobankAccounts(res.data.monobankUserAccountsData));
@@ -57,6 +59,7 @@ export const getStatementDataThunk = (
   monobankUserDataId,
   handleError
 ) => async (dispatch) => {
+  dispatch(setError(''));
   try {
     const res = await api.monobankApi.getStatementInfo(
       monobankToken,
