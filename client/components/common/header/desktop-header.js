@@ -1,11 +1,15 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import { Button, Grid, Link } from '@material-ui/core';
+import {
+  Button,
+  Grid,
+  Link,
+  Typography,
+  IconButton,
+  AppBar,
+  MenuItem,
+  Menu,
+} from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { useStyles } from './header.styles';
 import { MENU_LINKS } from '../../../shared/menu-links';
@@ -50,7 +54,7 @@ const DesktopHeader = () => {
             MENU_LINKS.map((link) => (
               <Grid key={link.name} className={classes.link} item>
                 <Link underline="none" component={NavLink} to={link.path}>
-                  {link.name}
+                  <Typography>{link.name}</Typography>
                 </Link>
               </Grid>
             ))}
