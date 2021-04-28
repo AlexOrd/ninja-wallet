@@ -157,10 +157,11 @@ const CreateMonoBankCard = ({
   const classes = useStyles();
 
   return (
-    <Grid className={classes.formContainer} justify="center" alignItems="center" md={12} container>
-      <Grid xs={6}>
+    <Grid className={classes.formContainer} justify="center" alignItems="center" xs={12} container>
+      <Grid item xs={12}>
         <Box>
           <TextField
+            fullWidth
             className={classes.cardNumber}
             label="Monobank token"
             variant="outlined"
