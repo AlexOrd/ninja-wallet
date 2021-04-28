@@ -9,11 +9,6 @@ export function SuccessSnackbar({ allFetchStatuses, reducerName }) {
   const [message, setMessage] = React.useState('');
   const closeMessageHandler = () => setShowMessage(false);
 
-  // must use useEffect because there are another
-  // fetch statuses except for SUCCEEDED and every one
-  // rerender this component
-  // but we must reaction only for SUCCEEDED
-
   React.useEffect(() => {
     const messageText = successMessages.getSuccessMessage(allFetchStatuses, reducerName);
     if (messageText) {

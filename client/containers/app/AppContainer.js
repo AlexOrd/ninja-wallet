@@ -36,24 +36,4 @@ function AppContainer() {
   );
 }
 
-// class AppContainer extends Component {
-//   render() {
-//     return (
-//       <StyledAppContainer maxWidth={false}>
-//         <Hidden xsDown>
-//           <DesktopHeader />
-//         </Hidden>
-
-//         <StyledMain>
-//           <MainRouter />
-//         </StyledMain>
-
-//         <Hidden smUp>
-//           <MobileHeader />
-//         </Hidden>
-//       </StyledAppContainer>
-//     );
-//   }
-// }
-
 export default hot(module)(AppContainer);
