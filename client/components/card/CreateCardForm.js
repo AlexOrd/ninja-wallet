@@ -34,7 +34,6 @@ const CreateCardForm = ({
   card,
   setCard,
   updateType,
-  openType,
   monobankToken,
   setMonobankToken,
   submitMonobankToken,
@@ -51,13 +50,12 @@ const CreateCardForm = ({
     }
   };
 
-  console.log(openType);
   return (
     <div>
-      {(openType === 'simple' && (
+      {(updateType === 'create' && (
         <CreateSimpleCard onSubmit={onSubmit} setCard={setCard} card={card} />
       )) ||
-        (openType === 'monobank' && (
+        (updateType === 'monobank' && (
           <CreateMonoBankCard
             monobankToken={monobankToken}
             setMonobankToken={setMonobankToken}

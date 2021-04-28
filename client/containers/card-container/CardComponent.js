@@ -95,7 +95,7 @@ const CardComponent = () => {
   };
 
   const cardsData = cards === undefined ? [] : cards;
-  const monobankData = monobankInfo === undefined ? {} : monobankInfo.monobankInfo;
+  const monobankData = monobankInfo === undefined ? {} : monobankInfo;
 
   const sortedCards = cardsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -114,28 +114,26 @@ const CardComponent = () => {
     dispatch(deleteCardThunk(cardId));
   };
 
-  const openCardCreator = (type, typeCreator) => {
-    if (type === 'create' && typeCreator === 'simple') {
+  const openCardCreator = (type) => {
+    if (type === 'create') {
       setAdded(true);
       setCard(cardType);
       setUpdateType('create');
-      setOpenType(typeCreator);
       return;
     }
-    if (type === 'update' && typeCreator === 'simple') {
+    if (type === 'update') {
       setAdded(true);
       setUpdateType('update');
-      setOpenType(typeCreator);
       return;
     }
-    if (type === 'create' && typeCreator === 'monobank') {
+    if (type === 'monobank') {
       setAdded(true);
-      setOpenType(typeCreator);
+      setUpdateType('monobank');
       return;
     }
     if (type === 'transaction') {
       setAdded(true);
-      setOpenType(type);
+      setUpdateType('transaction');
       return;
     }
   };
@@ -165,14 +163,14 @@ const CardComponent = () => {
               <h3>Your card</h3>
               <ListItem
                 className={classes.addCard}
-                onClick={() => openCardCreator('create', 'simple')}
+                onClick={() => openCardCreator('create')}
                 button
               >
                 <ListItemText primary="+Add card" />
               </ListItem>
               <ListItem
                 className={classes.addMono}
-                onClick={() => openCardCreator('create', 'monobank')}
+                onClick={() => openCardCreator('monobank')}
                 button
               >
                 <ListItemText primary="+Add monobank card" />
@@ -204,8 +202,9 @@ const CardComponent = () => {
             setUpdateType={setUpdateType}
           />
         </Grid>
+
         <div>
-          monobank:
+          Monobank:
           {monbankTransactions &&
             monbankTransactions.map((transaction) => (
               <div>
@@ -219,7 +218,7 @@ const CardComponent = () => {
             <Paper className={classes.transactionsList} variant="outlined">
               <Transactions
                 card={card}
-                setUpdateType={setUpdateType}
+                openCardCreator={openCardCreator}
                 setTransaction={setTransaction}
               />
             </Paper>

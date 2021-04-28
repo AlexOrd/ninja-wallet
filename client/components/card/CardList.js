@@ -27,7 +27,14 @@ const CardList = ({ cards, switchCard, deleteCard }) => {
     >
       {cards.map((card) => (
         <ListItem key={card._id} alignItems="center" button>
-          <ListItemText onClick={() => switchCard(card)} primary={card.cardName} />
+          <ListItemText
+            onClick={() => switchCard(card)}
+            primary={
+              card.cardName === 'monobank'
+                ? `${card.cardName}(${card.cardNumber.slice(12, 16)})`
+                : card.cardName
+            }
+          />
           <DeleteIcon onClick={() => deleteCard(card._id)} />
         </ListItem>
       ))}

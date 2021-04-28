@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Cards from 'react-credit-cards';
 import './style.css';
@@ -100,7 +100,7 @@ const CardItems = ({
             variant="contained"
             color="primary"
             alignContent="center"
-            onClick={() => openCardCreator('update', 'simple')}
+            onClick={() => openCardCreator('update')}
           >
             Edit card
           </Button>
@@ -129,18 +129,6 @@ const CardItems = ({
   );
 };
 
-// {error !== undefined ? (
-//   <Grid md={12}>
-//     {error.data.details.map(({ message }) => (
-//       <ul>
-//         <li>{message}</li>
-//       </ul>
-//     ))}
-//   </Grid>
-// ) : (
-//   ''
-// )}
-
 const MonobankCards = ({ monobankData, monobankToken }) => {
   const dispatch = useDispatch();
 
@@ -150,8 +138,9 @@ const MonobankCards = ({ monobankData, monobankToken }) => {
       monobankAccountId: cardInfo.id,
       cardNumber: cardInfo.maskedPan[0],
     };
+    // console.log(createdAccount)
     dispatch(createMonobankThunk(createdAccount, monobankToken));
-    dispatch(setMonobankAccout({}));
+    // dispatch(setMonobankAccout({}));
     // console.log(createdAccount);
   };
 

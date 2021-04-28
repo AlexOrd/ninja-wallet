@@ -2,11 +2,9 @@ import { axiosInstance } from '../config/axios';
 
 export const monobankApi = {
   createMonobankAccount: async (monobankData, header) => {
-    const res = await axiosInstance.post(
-      '/api/monobank/create-monobank-account',
-      { headers: { 'monobank-token': header } },
-      monobankData
-    );
+    const res = await axiosInstance.post('/api/monobank/create-monobank-account', monobankData, {
+      headers: { 'monobank-token': header },
+    });
     return res.data;
   },
   getUserInfo: async (header) => {
