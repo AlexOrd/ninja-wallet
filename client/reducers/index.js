@@ -7,7 +7,7 @@ import { settingsReducer } from './settings';
 import { fetchStatusesReducer } from './fetch_statuses';
 
 // Import custom components
-// import authReducer from './authReducer';
+import dashboardReducer from './dashboardReducer';
 
 const appReducer = (history) =>
   combineReducers({
@@ -16,6 +16,7 @@ const appReducer = (history) =>
     settings: settingsReducer,
     fetchStatuses: fetchStatusesReducer,
     form: formReducer, // ← redux-form
+    dashboard: dashboardReducer,
   });
 
 const rootReducer = (state, action) => {
