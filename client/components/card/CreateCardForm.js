@@ -40,7 +40,7 @@ const CreateCardForm = ({
 }) => {
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(card, 'hello');
+
     if (updateType === 'create') {
       return createCard(card, updateType);
     }
@@ -53,8 +53,15 @@ const CreateCardForm = ({
   return (
     <div>
       {(updateType === 'create' && (
-        <CreateSimpleCard onSubmit={onSubmit} setCard={setCard} card={card} />
+        <CreateSimpleCard onSubmit={(e) => onSubmit(e, updateType)} setCard={setCard} card={card} />
       )) ||
+        (updateType === 'update' && (
+          <CreateSimpleCard
+            onSubmit={(e) => onSubmit(e, updateType)}
+            setCard={setCard}
+            card={card}
+          />
+        )) ||
         (updateType === 'monobank' && (
           <CreateMonoBankCard
             monobankToken={monobankToken}
