@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'center',
   },
 }));
-const FooterWithSummaryCards = () => {
+const SummaryCards = () => {
   const classes = useStyles();
   const [data, setData] = useState();
   useEffect(() => {
@@ -33,16 +33,23 @@ const FooterWithSummaryCards = () => {
         sum={data.transactionsCount}
         difference={data.transactionsDifference}
         title={'Transactions'}
+        color="rgb(110, 52, 235)"
       />
       <SummaryCard
         icon={<AttachMoneyIcon />}
         sum={data.transactionsSum}
         difference={data.transactionsSumDifference}
         title={'Transactions sum'}
+        color="rgb(68, 230, 32)"
       />
-      <SummaryCard icon={<MoneyIcon />} sum={data.categoriesCount} title={'Categories'} />
+      <SummaryCard
+        icon={<MoneyIcon />}
+        sum={data.categoriesCount}
+        title={'Categories'}
+        color="rgb(52, 235, 235)"
+      />
     </div>
   );
 };
 
-export default FooterWithSummaryCards;
+export default SummaryCards;

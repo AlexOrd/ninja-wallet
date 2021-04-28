@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
   },
   skeletonBlock: {
     display: 'flex',
-    marginLeft: 45,
+    justifyContent: 'center',
   },
   infoBlock: {
     marginLeft: 30,

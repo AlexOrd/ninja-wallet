@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 // Import custom components
-import Header from '../header/Header';
 
 const styles = (theme) => ({
   root: {
@@ -22,7 +21,7 @@ const styles = (theme) => ({
     width: '100%',
     flexGrow: 1,
     padding: 50,
-    paddingRight: 10,
+    paddingRight: 30,
     height: '100%',
     boxSizing: 'border-box',
   },

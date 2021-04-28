@@ -16,14 +16,28 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
     fontSize: 16,
   },
+  card: {
+    marginRight: 20,
+    minWidth: 300,
+    minHeight: 128,
+  },
+  cardContent: {
+    '&:last-child': {
+      paddingBottom: 10,
+    },
+  },
+  avatar: {
+    height: 56,
+    width: 56,
+  },
 }));
 
-const SummaryCard = ({ title, sum, icon, difference }) => {
+const SummaryCard = ({ title, sum, icon, difference, color }) => {
   const classes = useStyles();
 
   return (
-    <Card style={{ marginRight: 20, minWidth: 300 }}>
-      <CardContent>
+    <Card classes={{ root: classes.card }}>
+      <CardContent classes={{ root: classes.cardContent }}>
         <Grid container spacing={3}>
           <Grid item xs={9}>
             <Typography color="textSecondary" gutterBottom variant="h6">
@@ -46,7 +60,9 @@ const SummaryCard = ({ title, sum, icon, difference }) => {
             )}
           </Grid>
           <Grid item xs={3}>
-            <Avatar sx={{ backgroundColor: indigo[600], height: 56, width: 56 }}>{icon}</Avatar>
+            <Avatar style={{ backgroundColor: color }} classes={{ root: classes.avatar }}>
+              {icon}
+            </Avatar>
           </Grid>
         </Grid>
       </CardContent>

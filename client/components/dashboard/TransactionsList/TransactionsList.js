@@ -47,24 +47,29 @@ const styles = () => ({
     padding: 0,
   },
   header: {
-    fontSize: 16,
+    fontSize: 26,
   },
   alertMsg: {
     color: '#721c24',
     display: 'inline-block',
     width: '100%',
     textAlign: 'center',
+    fontSize: 20,
   },
 });
 
-const TransactionsList = ({ data, classes, cards }) => {
+const TransactionsList = ({ data, classes, cards, selectedCard }) => {
   if (!cards || !cards.length) {
     return null;
   }
+  data = data?.slice(0, 5);
   return (
     <div className={classes.container}>
       <Card style={{ width: '100%' }}>
-        <CardHeader classes={{ title: classes.header }} title={`Latest transactions`} />
+        <CardHeader
+          classes={{ title: classes.header }}
+          title={`Latest transactions on card "${selectedCard?.cardName}"`}
+        />
         <Divider />
         <CardContent classes={{ root: classes.card }}>
           <List>
@@ -77,7 +82,10 @@ const TransactionsList = ({ data, classes, cards }) => {
                       <Wallpaper />
                     </Avatar>
                   </ListItemIcon>
-                  <ListItemText primary={item.transactionType} secondary={item.merchantName} />
+                  <ListItemText
+                    primary={item.transactionType}
+                    secondary={'Merchant name: ' + item.merchantName}
+                  />
                   <ListItemSecondaryAction>
                     <span className={classes.redSum}>-{item.sum}</span>
                   </ListItemSecondaryAction>
@@ -97,7 +105,7 @@ const TransactionsList = ({ data, classes, cards }) => {
             )}
 
             {!data &&
-              Array(5)
+              Array(3)
                 .fill(0)
                 .map((_, idx) => (
                   <ListItem key={idx}>
@@ -109,7 +117,7 @@ const TransactionsList = ({ data, classes, cards }) => {
         </CardContent>
         <Divider />
         <CardActions className={classes.actions}>
-          <Link>
+          <Link to="/transactions">
             <Button color="primary" size="small" variant="text">
               View all <ArrowRightIcon />
             </Button>
