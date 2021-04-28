@@ -17,14 +17,18 @@ export function AuthButton({ text = 'Submit', ...rest }) {
 }
 
 function useStyles() {
-  return makeStyles({
-    root: {
-      backgroundColor: '#bbdefb',
-      boxShadow: '0 0 5px #bbdefb',
-      ['&:hover']: {
-        backgroundColor: '#bbdefb',
-        boxShadow: '0 0 6px gray',
+  return makeStyles((theme) => {
+    return {
+      root: {
+        // backgroundColor: '#bbdefb',
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+        boxShadow: '0 0 5px #bbdefb',
+        ['&:hover']: {
+          backgroundColor: '#bbdefb',
+          boxShadow: '0 0 6px gray',
+        },
       },
-    },
+    };
   })();
 }

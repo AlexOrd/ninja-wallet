@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { SettingsSubPart } from '../../common';
-import { AuthButton, VerifyCode } from '../../../../Authorization/components';
+import { AuthButton, VerifyCode } from '../../../../authorization/components';
 import { delays } from '../../../../../utils/auth/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { resendVerifyEmailCode, sendVerifyEmailCode } from '../../../../../actions/settings';

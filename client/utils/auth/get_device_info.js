@@ -11,7 +11,7 @@ import {
   Tablet,
   Desktop,
   Mobile,
-} from '../../containers/Authorization/icons';
+} from '../../containers/authorization/icons';
 
 export const getIcons = ({ deviceType, browser, platform }) => {
   const result = {

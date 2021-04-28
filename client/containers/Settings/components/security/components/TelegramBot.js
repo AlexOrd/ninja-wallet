@@ -1,6 +1,6 @@
 import { Box, makeStyles, Paper, Tooltip, Typography } from '@material-ui/core';
 import React from 'react';
-import { AuthButton } from '../../../../Authorization/components/common';
+import { AuthButton } from '../../../../authorization/components/common';
 import { SettingsSubPart } from '../../common';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { useSelector } from 'react-redux';

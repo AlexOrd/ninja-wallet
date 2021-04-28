@@ -49,8 +49,6 @@ export const RestorePassword = () => {
     getAuthPrivateFS(VERIFY_REST_REST_PASSWORD_CONFIRM_CODE)
   );
 
-  const nextStep = () => setActiveStep((prev) => prev + 1);
-  const prevStep = () => setActiveStep((prev) => prev - 1);
   const resendCodeHandler = () => dispatch(resendRestorePasswordCode(token));
   const requestVerifyCodeHandler = ({ email }) => dispatch(requestVerify(email));
   const verifyCodeHandler = (token) => ({ verifyCode }) => {
@@ -95,10 +93,6 @@ export const RestorePassword = () => {
   if (isExpiredRestSession) return <RestoreSessionEnded {...{ handleReset }} />;
   return (
     <>
-      <div className={styles.buttonsWrapper}>
-        <button onClick={prevStep}>Previous</button>
-        <button onClick={nextStep}>Next</button>
-      </div>
       {activeStep === 0 && (
         <UserEmail
           {...{

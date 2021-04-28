@@ -7,7 +7,7 @@ import { delays } from '../../../../../utils/auth/constants';
 import { invokeAfterDelay } from '../../../../../utils/auth/tools';
 import { isSuccessFetchStatus } from '../../../../../utils/fetch_statuses/aux_functions';
 import { settingsFetchStatusNames } from '../../../../../utils/settings/names';
-import { VerifyCode, UserEmail, AuthButton } from '../../../../Authorization/components';
+import { VerifyCode, UserEmail, AuthButton } from '../../../../authorization/components';
 import { SettingsSubPart } from '../../common';
 
 const { CHANGE_EMAIL, VERIFY_EMAIL } = settingsFetchStatusNames;

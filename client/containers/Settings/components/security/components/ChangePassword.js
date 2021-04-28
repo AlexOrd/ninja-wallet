@@ -1,7 +1,7 @@
 import React from 'react';
 import { SettingsSubPart } from '../../common';
 import { authValidators } from '../../../../../utils/auth/validation';
-import { AuthButton, AuthForm, AuthInput } from '../../../../Authorization/components/common';
+import { AuthButton, AuthForm, AuthInput } from '../../../../authorization/components/common';
 import { useSelector } from 'react-redux';
 import { commonFetchStatuses } from '../../../../../utils/auth/constants';
 import { makeStyles, Typography } from '@material-ui/core';

@@ -31,7 +31,6 @@ export function SignUp({ setVisibleWarnMessage, isVisibleWarnMessage }) {
   const steps = ['Sign up', 'Verification', 'Done'];
 
   const nextStep = () => setActiveStep((prev) => prev + 1);
-  const prevStep = () => setActiveStep((prev) => prev - 1);
 
   const signUpFS = useSelector(getAuthPrivateFS(SIGN_UP));
   const verifyEmailFS = useSelector(getAuthPrivateFS(VERIFY_EMAIL));
@@ -53,11 +52,6 @@ export function SignUp({ setVisibleWarnMessage, isVisibleWarnMessage }) {
 
   return (
     <>
-      <div className={styles.buttonsWrapper}>
-        <button onClick={prevStep}>Previous</button>
-        <button onClick={nextStep}>Next</button>
-      </div>
-
       {activeStep === 0 && (
         <SignUpForm
           {...{
