@@ -27,7 +27,7 @@ const stepperIcons = {
 export function SignUp({ setVisibleWarnMessage, isVisibleWarnMessage }) {
   const dispatch = useDispatch();
   const [activeStep, setActiveStep] = React.useState(0);
-  const styles = useStyles();
+
   const steps = ['Sign up', 'Verification', 'Done'];
 
   const nextStep = () => setActiveStep((prev) => prev + 1);
@@ -80,14 +80,4 @@ export function SignUp({ setVisibleWarnMessage, isVisibleWarnMessage }) {
       <AuthStepper {...{ activeStep, steps, icons: stepperIcons }} />
     </>
   );
-}
-
-function useStyles() {
-  return makeStyles(() => ({
-    buttonsWrapper: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-    },
-  }))();
 }

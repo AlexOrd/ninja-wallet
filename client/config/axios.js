@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { saveTokensToLocaleStorage, setTokensToRequest } from '../utils/auth/for_tokens';
+import store from '../store/configureStore';
+import {
+  isAuthError,
+  saveTokensToLocaleStorage,
+  setTokensToRequest,
+} from '../utils/auth/for_tokens';
+import { setAuthStatus } from '../actions/auth/common';
+import { tokensNames } from '../utils/auth/constants';
 
 const baseURL = 'http://localhost:3000';
 
@@ -12,7 +19,17 @@ axiosInstance.interceptors.response.use(
     saveTokensToLocaleStorage(res);
     return res;
   },
-  (err) => Promise.reject(err)
+
+  (err) => {
+    if (isAuthError(err)) {
+      localStorage.removeItem(tokensNames.ACCESS_TOKEN_STORAGE_NAME);
+      localStorage.removeItem(tokensNames.REFRESH_TOKEN_STORAGE_NAME);
+
+      store.dispatch(setAuthStatus(false));
+    }
+
+    return Promise.reject(err);
+  }
 );
 
 axiosInstance.interceptors.request.use(

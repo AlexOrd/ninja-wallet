@@ -4,6 +4,7 @@ import './userPhoto.model';
 const Schema = mongoose.Schema;
 
 const deviceSchema = new mongoose.Schema({
+  confirmCode: String,
   deviceType: {
     type: String,
     default: 'mobile',
@@ -43,7 +44,7 @@ const schema = new Schema({
     type: Boolean,
     default: false,
   },
-  
+
   avatarId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'userPhoto',
