@@ -23,9 +23,6 @@ const Dashboard = () => {
     if (centeredCardId) {
       dispatch(getCardTransactions(centeredCardId, 5));
     }
-    return () => {
-      //setTransactions(null);
-    };
   }, [centeredCardIdx, cards]);
 
   const selectedCard = cards?.[centeredCardIdx];
