@@ -42,18 +42,16 @@ const CardItems = ({
   const classes = useStyles();
 
   useEffect(() => {
-    if (monobankLocalCardsIds.length > 0) {
-      setIsMonoCard(monobankLocalCardsIds.includes(card._id));
-    }
-  }, [card, monobankLocalCardsIds]);
+    setIsMonoCard(false);
+  }, [card._id]);
 
   useEffect(() => {
     if (isMonoCard && userMonobankAccounts) {
       const monobankAccount = userMonobankAccounts.find((data) => data.card === card._id);
 
-      // if (!monobankToken) {
-      //   setMonobankToken(monobankAccount.monobankToken);
-      // }
+      if (!monobankAccount) {
+        return;
+      }
 
       const isStatementDataAlreadyFetched = statementsMonobankData.find(
         (statement) => statement.monobankAccountId === monobankAccount.monobankAccountId
@@ -73,18 +71,30 @@ const CardItems = ({
 
       setMonobankTransactions(...cardStatementsMonobankData.map((card) => card.statements));
     }
-  }, [isMonoCard, statementsMonobankData, statementsMonobankData.length, userMonobankAccounts]);
+  }, [
+    isMonoCard,
+    card._id,
+    statementsMonobankData,
+    statementsMonobankData.length,
+    userMonobankAccounts,
+  ]);
+
+  useEffect(() => {
+    if (monobankLocalCardsIds.length > 0 && card._id) {
+      setIsMonoCard(monobankLocalCardsIds.includes(card._id));
+    }
+  }, [card._id, isMonoCard, monobankLocalCardsIds]);
 
   return (
-    <Grid className={classes.root} container alignContent="flex-start" alignItems="justify">
+    <Grid className={classes.root} container alignContent="flex-start" alignItems="flex-start">
       <Grid md={6} container justify="center" item>
         <Grid item>
           <Box m={3} className="container">
             <Cards
-              name={'' || card.cardName}
-              number={'' || card.cardNumber}
-              expiry={'' || card.thru}
-              cvc={'' || card.cvc}
+              name={card.cardName || ''}
+              number={card.cardNumber || ''}
+              expiry={card.thru || ''}
+              cvc={card.cvc || ''}
             />
           </Box>
         </Grid>
@@ -99,7 +109,7 @@ const CardItems = ({
           <Button
             variant="contained"
             color="primary"
-            alignContent="center"
+            aligncontent="center"
             onClick={() => openCardCreator('update')}
           >
             Edit card
@@ -107,7 +117,7 @@ const CardItems = ({
         </Grid>
       )}
       {
-        <Grid justify="center" alignItems="center" md={12}>
+        <Grid container justify="center" alignItems="center">
           {monobankData?.clientId ? (
             <MonobankCards monobankData={monobankData} monobankToken={monobankToken} />
           ) : (
