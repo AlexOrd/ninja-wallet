@@ -116,6 +116,23 @@
           }
         }
       },
+      "userPhoto": {
+        "type": "object",
+        "description": "userPhoto schema",
+        "properties": {
+          "_id": {
+            "type": "ObjectId",
+            "description": "Unique identifier",
+            "example": "607421b518477308ec1969ab"
+          },
+          "image": {
+            "type": "string",
+            "description": "Image in dataURI",
+            "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAAAlCAYAAACkqsAEAAAA...",
+            "required": true
+          }
+        }
+      },
       "User": {
         "type": "object",
         "description": "User schema",
@@ -2400,6 +2417,266 @@
           },
           "400": {
             "$ref": "#/components/responses/invalidDataError"
+          },
+          "500": {
+            "$ref": "#/components/responses/serverError"
+          }
+        }
+      }
+    },
+    "/profile": {
+      "get": {
+        "security": [],
+        "tags": ["Profile"],
+        "summary": "Get user data",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accessToken"
+          },
+          {
+            "$ref": "#/components/parameters/refreshToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/invalidDataError"
+          },
+          "500": {
+            "$ref": "#/components/responses/serverError"
+          }
+        }
+      },
+      "put": {
+        "security": [],
+        "tags": ["Profile"],
+        "summary": "Update user data",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accessToken"
+          },
+          {
+            "$ref": "#/components/parameters/refreshToken"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "example": "Andrew"
+                  },
+                  "lastName": {
+                    "example": "Kinal"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/invalidDataError"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "security": [],
+        "tags": ["Profile"],
+        "summary": "Delete profile by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accessToken"
+          },
+          {
+            "$ref": "#/components/parameters/refreshToken"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "object",
+                      "example": "Profile does not exist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/serverError"
+          }
+        }
+      }
+    },
+    "/userphoto": {
+      "post": {
+        "security": [],
+        "tags": ["userphoto"],
+        "summary": "Add user photo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accessToken"
+          },
+          {
+            "$ref": "#/components/parameters/refreshToken"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileString": {
+                    "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAAAlCAYAAACkqsAEAAAA..."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "example": true
+                    },
+                    "fileString": {
+                      "type": "object",
+                      "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAAAlCAYAAACkqsAEAAAA..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/invalidDataError"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/serverError"
+          }
+        }
+      },
+      "put": {
+        "security": [],
+        "tags": ["userphoto"],
+        "summary": "Update user photo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accessToken"
+          },
+          {
+            "$ref": "#/components/parameters/refreshToken"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileString": {
+                    "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAAAlCAYAAACkqsAEAAAA..."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "example": true
+                    },
+                    "fileString": {
+                      "type": "object",
+                      "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAAAlCAYAAACkqsAEAAAA..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/invalidDataError"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFoundError"
           },
           "500": {
             "$ref": "#/components/responses/serverError"
