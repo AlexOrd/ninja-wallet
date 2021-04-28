@@ -4,6 +4,7 @@ import {
   ADD_DATA_TO_STATEMENTS,
   SET_USER_MONOBANK_ACCOUNTS,
   SET_STATEMENT_DATA,
+  REMOVE_MONOBANK_TRANSACTION,
 } from '../constants/actionType';
 
 const initialState = {
@@ -59,6 +60,12 @@ const monobankReducer = (state = initialState, action) => {
         userMonobankAccounts: action.data.userMonobankAccounts,
         monobankLocalCardsIds: action.data.userMonobankAccounts.map((account) => account.card),
       };
+    }
+    case REMOVE_MONOBANK_TRANSACTION: {
+      const transactionId = action.data.transactionId;
+      const monobankUserDataId = action.data.monobankUserDataId;
+      const newStatementsData = state.statementsData.map((statement) => {});
+      return {};
     }
     default: {
       return { ...state };

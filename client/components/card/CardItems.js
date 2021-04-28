@@ -34,6 +34,7 @@ const CardItems = ({
   getStatementsDataForMonobankCard,
   statementsMonobankData,
   setUpdateType,
+  setMonobankAccountId,
 }) => {
   const [isMonoCard, setIsMonoCard] = useState(false);
   const userMonobankAccounts = useSelector((state) => state.monobank.userMonobankAccounts);
@@ -70,6 +71,7 @@ const CardItems = ({
       );
 
       setMonobankTransactions(...cardStatementsMonobankData.map((card) => card.statements));
+      setMonobankAccountId(cardStatementsMonobankData[0].monobankAccountId);
     }
   }, [
     isMonoCard,
@@ -119,7 +121,11 @@ const CardItems = ({
       {
         <Grid container justify="center" alignItems="center">
           {monobankData?.clientId ? (
-            <MonobankCards monobankData={monobankData} monobankToken={monobankToken} />
+            <MonobankCards
+              monobankData={monobankData}
+              openCardCreator={openCardCreator}
+              monobankToken={monobankToken}
+            />
           ) : (
             <CreateCardForm
               createCard={createCard}
@@ -139,7 +145,7 @@ const CardItems = ({
   );
 };
 
-const MonobankCards = ({ monobankData, monobankToken }) => {
+const MonobankCards = ({ monobankData, monobankToken, openCardCreator }) => {
   const dispatch = useDispatch();
 
   const createMonobankAccout = (cardInfo) => {
@@ -166,7 +172,7 @@ const MonobankCards = ({ monobankData, monobankToken }) => {
           </ListItemText>
         </ListItem>
       ))}
-      <button onClick={() => dispatch(setMonobankAccout({}))}>Close</button>
+      <button onClick={() => openCardCreator('close')}>Close</button>
     </List>
   );
 };

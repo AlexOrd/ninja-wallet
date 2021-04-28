@@ -167,13 +167,14 @@ export const dismissTransaction = async (req, res) => {
 
 export const applyTransaction = async (req, res) => {
   try {
+    debugger
     const monobankUserData = await MonobankUserDataModel.findOne({
       _id: req.body.monobankUserDataId,
     });
 
     if (!monobankUserData) {
     }
-
+    
     const transactionAlreadyAddedOrDismissed = checkIfTransactionAlreadyAddedOrDismissed(
       monobankUserData.appliedTransactionIds,
       monobankUserData.dismissedTransactionIds,
@@ -212,6 +213,7 @@ export const applyTransaction = async (req, res) => {
     console.log(err);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
+      err
     });
   }
 };

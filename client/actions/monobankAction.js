@@ -4,6 +4,7 @@ import {
   SET_NEW_MONOBANK_ACCOUNT,
   ADD_DATA_TO_STATEMENTS,
   SET_USER_MONOBANK_ACCOUNTS,
+  REMOVE_MONOBANK_TRANSACTION,
 } from '../constants/actionType';
 import { fetchCards } from './cardAction';
 
@@ -41,6 +42,7 @@ export const fetchUserMonobankAccounts = () => async (dispatch) => {
 export const createMonobankThunk = (createMonobank, header) => async (dispatch) => {
   try {
     const res = await api.monobankApi.createMonobankAccount(createMonobank, header);
+    console.log('');
     dispatch(fetchCards());
   } catch (error) {}
 };
@@ -61,4 +63,17 @@ export const getStatementDataThunk = (
   } catch (err) {
     console.log(err);
   }
+};
+
+export const removeMonobankTransaction = (transactionId, monobankUserDataId) => ({
+  type: REMOVE_MONOBANK_TRANSACTION,
+  data: { transactionId, monobankUserDataId },
+});
+
+export const applyTransaction = (transaction, header) => async (dispatch) => {
+  try {
+    const res = await api.monobankApi.applyTransaction(transaction, header);
+    // console.log('apply transaction')
+    dispatch(removeMonobankTransaction(transaction._id, transaction.monobankUserDataId));
+  } catch (err) {}
 };

@@ -32,19 +32,15 @@ export const monobankApi = {
     return res.data;
   },
   applyTransaction: async (monobankData, header) => {
-    const res = await axiosInstance.post(
-      `/api/monobank/${cardId}`,
-      { headers: { 'monobank-token': header } },
-      monobankData
-    );
+    const res = await axiosInstance.post(`/api/monobank/apply-transaction`, monobankData, {
+      headers: { 'monobank-token': header },
+    });
     return res.data;
   },
   dismissTransaction: async (monobankData) => {
-    const res = await axiosInstance.post(
-      `/api/monobank/dismiss-transaction`,
-      { headers: { 'monobank-token': header } },
-      monobankData
-    );
+    const res = await axiosInstance.post(`/api/monobank/dismiss-transaction`, monobankData, {
+      headers: { 'monobank-token': header },
+    });
     return res.data;
   },
 };

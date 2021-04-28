@@ -14,6 +14,7 @@ import {
   fetchUserInfo,
   fetchUserMonobankAccounts,
   getStatementDataThunk,
+  applyTransaction,
 } from '../../actions/monobankAction';
 
 import Container from '@material-ui/core/Container';
@@ -81,6 +82,9 @@ const CardComponent = () => {
   const userMonobankAccounts = useSelector((state) => state.monobank.userMonobankAccounts);
   const cards = useSelector((state) => state.card.card.cards);
   const monobankInfo = useSelector((state) => state.monobank.monobankInfo);
+  // const monobankAccoutToken = useSelector((state) => state.monobank.userMonobankAccounts)
+  const [monobankAccountId, setMonobankAccountId] = useState('');
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -102,8 +106,6 @@ const CardComponent = () => {
 
   const sortedCards = cardsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-  console.log(monobankData);
-
   const createCard = (card, updateType, cardId) => {
     if (updateType === 'create') {
       return dispatch(createCardThunk(card));
@@ -118,38 +120,35 @@ const CardComponent = () => {
   };
 
   const openCardCreator = (type) => {
-    if (type === 'create') {
-      console.log(type, 'from create');
-      setAdded(true);
-      setCard(cardType);
-      setUpdateType('create');
-      return;
-    }
-    if (type === 'update') {
-      setAdded(true);
-      setUpdateType('update');
-      return;
-    }
-    if (type === 'monobank') {
-      setAdded(true);
-      setUpdateType('monobank');
-      return;
-    }
-    if (type === 'transaction') {
-      setAdded(true);
-      setUpdateType('transaction');
-      return;
-    }
-    if (type === 'close') {
-      setAdded(false);
-      setUpdateType(type);
-      return;
+    switch (type) {
+      case 'create':
+        setAdded(true);
+        setCard(cardType);
+        setUpdateType(type);
+        break;
+      case 'update':
+        setAdded(true);
+        setUpdateType(type);
+        break;
+      case 'monobank':
+        setAdded(true);
+        setUpdateType(type);
+        break;
+      case 'transaction':
+        setAdded(true);
+        setUpdateType('monobank');
+        break;
+      case 'close':
+        setAdded(false);
+        setUpdateType(type);
+        break;
     }
   };
 
   const switchCard = (card) => {
     openCardCreator('close');
     setMonobankTransactions(null);
+    setAdded(false);
     setCard(card);
   };
 
@@ -158,12 +157,36 @@ const CardComponent = () => {
     monobankAccountId,
     monobankUserDataId
   ) => {
-    // const currentAccount = userMonobankAccounts.find();
     dispatch(getStatementDataThunk(monobankToken, monobankAccountId, monobankUserDataId));
   };
 
+  const applyMonobankTransaction = (transaction) => {
+    const userMonobankData = userMonobankAccounts.find(
+      (account) => account.monobankAccountId === monobankAccountId
+    );
+    // console.log(monobankAccountToken);
+    dispatch(
+      applyTransaction(
+        { ...transaction, monobankUserDataId: userMonobankData._id },
+        userMonobankData.monobankToken
+      )
+    );
+  };
+
+  const dismissMonobankTransaction = (transaction) => {
+    const monobankAccountToken = userMonobankAccounts.find(
+      (account) => account.monobankAccountId === monobankAccountId
+    ).monobankToken;
+
+    dispatch(
+      dismissTransaction(
+        { ...transaction, monobankAccountId: monobankAccountId },
+        monobankAccountToken
+      )
+    );
+  };
+
   return (
-    // <Container className={classes.container}>
     <Box component="div" className={classes.box}>
       <Grid container>
         <Grid item xs={3}>
@@ -209,30 +232,21 @@ const CardComponent = () => {
             getStatementsDataForMonobankCard={getStatementsDataForMonobankCard}
             statementsMonobankData={statementsMonobankData}
             setUpdateType={setUpdateType}
+            setMonobankAccountId={setMonobankAccountId}
           />
         </Grid>
 
-        <div>
-          Monobank:
-          {monbankTransactions &&
-            monbankTransactions.map((transaction) => (
-              <div key={transaction.id}>
-                {transaction.description}
-                {transaction.amount}
-              </div>
-            ))}
-        </div>
-        {card.transactions !== undefined && card.transactions.length > 0 && (
-          <Grid container xs={2} item>
-            <Paper className={classes.transactionsList} variant="outlined">
-              <Transactions
-                card={card}
-                openCardCreator={openCardCreator}
-                setTransaction={setTransaction}
-              />
-            </Paper>
-          </Grid>
-        )}
+        <Grid container xs={2} item>
+          <Paper className={classes.transactionsList} variant="outlined">
+            <Transactions
+              transactions={monbankTransactions || card.transactions}
+              openCardCreator={openCardCreator}
+              setTransaction={setTransaction}
+              applyMonobankTransaction={applyMonobankTransaction}
+            />
+          </Paper>
+        </Grid>
+
         <Grid xs={12} container item></Grid>
       </Grid>
     </Box>
