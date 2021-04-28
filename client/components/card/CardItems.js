@@ -94,7 +94,7 @@ const CardItems = ({
           <OtherCardInfo isMonoCard={isMonoCard} card={card} />
         </Box>
       </Grid>
-      {!isAdded && card._id && (
+      {!isAdded && (
         <Grid xs={12} md={12} container justify="center" item>
           <Button
             variant="contained"

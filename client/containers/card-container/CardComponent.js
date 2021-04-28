@@ -116,6 +116,7 @@ const CardComponent = () => {
 
   const openCardCreator = (type) => {
     if (type === 'create') {
+      console.log(type, 'from create');
       setAdded(true);
       setCard(cardType);
       setUpdateType('create');
@@ -136,10 +137,15 @@ const CardComponent = () => {
       setUpdateType('transaction');
       return;
     }
+    if (type === 'close') {
+      setAdded(false);
+      setUpdateType(type);
+      return;
+    }
   };
 
   const switchCard = (card) => {
-    setAdded(false);
+    openCardCreator('close');
     setMonobankTransactions(null);
     setCard(card);
   };
