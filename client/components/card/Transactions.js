@@ -12,26 +12,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Transactions = ({ card, setTransaction }) => {
+const Transactions = ({ card, setTransaction, openCardCreator }) => {
   const classes = useStyles();
 
   return (
-    <List
-      m={0}
-      p={0}
-      component="nav"
-      // className={classes.root}
-      aria-label="secondary mailbox folders"
-    >
-      {card.transactions !== undefined
-        ? card.transactions[0].map((transaction) => (
-            <ListItem key={transaction._id} alignItems="center" button>
-              <ListItemText onClick={() => setTransaction(transaction)}>
-                {transaction.merchantName}
-              </ListItemText>
-            </ListItem>
-          ))
-        : ''}
+    <List m={0} p={0} component="nav" aria-label="secondary mailbox folders">
+      {card?.transactions.map((transaction) => (
+        <ListItem key={transaction._id} alignItems="center" button>
+          <ListItemText
+            onClick={() => (setTransaction(transaction), openCardCreator('transaction'))}
+          >
+            {transaction.merchantName}
+          </ListItemText>
+        </ListItem>
+      ))}
     </List>
   );
 };

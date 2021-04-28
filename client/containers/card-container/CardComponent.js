@@ -30,8 +30,8 @@ import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: '0',
-    padding: '0',
+    margin: '30px',
+    padding: '30px',
   },
   gridList: {
     display: 'inline-block',
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     height: 'auto',
   },
   container: {
-    padding: theme.spacing(1),
+    // padding: theme.spacing(1),
   },
   addCard: {
     backgroundColor: theme.palette.primary.light,
@@ -54,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
   addMono: {
     backgroundColor: theme.palette.secondary.dark,
     color: theme.palette.getContrastText(theme.palette.secondary.dark),
+  },
+  transactionsList: {
+    height: '100%',
+    width: '100%',
   },
 }));
 
@@ -84,14 +88,11 @@ const CardComponent = () => {
     dispatch(fetchUserMonobankAccounts());
   }, []);
 
-  // useEffect(() => {
-
   const submitMonobankToken = (token) => {
     if (token) {
       dispatch(fetchUserInfo(token));
     }
   };
-  // }, [])
 
   const cardsData = cards === undefined ? [] : cards;
   const monobankData = monobankInfo === undefined ? {} : monobankInfo.monobankInfo;
@@ -132,6 +133,11 @@ const CardComponent = () => {
       setOpenType(typeCreator);
       return;
     }
+    if (type === 'transaction') {
+      setAdded(true);
+      setOpenType(type);
+      return;
+    }
   };
 
   const switchCard = (card) => {
@@ -149,88 +155,79 @@ const CardComponent = () => {
     dispatch(getStatementDataThunk(monobankToken, monobankAccountId, monobankUserDataId));
   };
 
-  // const toLocalStorage = () => {
-  //   let auth =
-  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MDg1OTI4ZDcyYTZjMjExYmM2NDAyNWIiLCJkZXZpY2VJRCI6IjYwODZkMzU2YTE1M2RhMTgyZGI2MGJkMSIsImlhdCI6MTYxOTQ0ODY2MiwiZXhwIjoxNjE5NTM1MDYyfQ.fKXTnMS3c9W6fS0aRd4m5JdTMxAjwlR9mT0DnAzUBzs';
-  //   let refresh =
-  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb25maXJtQ29kZSI6IjQxODcyNCIsImRldmljZUlEIjoiNjA4NmQzNTZhMTUzZGExODJkYjYwYmQxIiwiaWF0IjoxNjE5NDQ4NjYyLCJleHAiOjE2MTk0NTIyNjJ9.tc7gVEhAG1DkUYcLBiwloMkhs_x4ffd5XZICHSpB_3Y';
-  //   return localStorage.setItem('accessToken', auth), localStorage.setItem('refreshToken', refresh);
-  // };
-  // toLocalStorage();
-
   return (
-    <Container className={classes.container} maxWidth="lg">
-      <Box component="div" className={classes.box}>
-        <Grid className={classes.girdContainer} spacing={2} container>
-          <Grid item xs={3}>
-            <Paper style={{ height: '100%' }} variant="outlined">
-              <Container className={classes.gridList}>
-                <h3>Your card</h3>
-                <ListItem
-                  className={classes.addCard}
-                  onClick={() => openCardCreator('create', 'simple')}
-                  button
-                >
-                  <ListItemText primary="+Add card" />
-                </ListItem>
-                <ListItem
-                  className={classes.addMono}
-                  onClick={() => openCardCreator('create', 'monobank')}
-                  button
-                >
-                  <ListItemText primary="+Add monobank card" />
-                </ListItem>
+    // <Container className={classes.container}>
+    <Box component="div" className={classes.box}>
+      <Grid container>
+        <Grid item xs={3}>
+          <Paper style={{ height: '100%' }} variant="outlined">
+            <Container className={classes.gridList}>
+              <h3>Your card</h3>
+              <ListItem
+                className={classes.addCard}
+                onClick={() => openCardCreator('create', 'simple')}
+                button
+              >
+                <ListItemText primary="+Add card" />
+              </ListItem>
+              <ListItem
+                className={classes.addMono}
+                onClick={() => openCardCreator('create', 'monobank')}
+                button
+              >
+                <ListItemText primary="+Add monobank card" />
+              </ListItem>
 
-                <CardList cards={sortedCards} switchCard={switchCard} deleteCard={deleteCard} />
-              </Container>
-            </Paper>
-          </Grid>
-
-          <Grid container xs={true} md={7} item>
-            <CardItems
-              setMonobankTransactions={setMonobankTransactions}
-              getStatementsDataForMonobankCard={getStatementsDataForMonobankCard}
-              statementsMonobankData={statementsMonobankData}
-              className={classes.cardItem}
-              card={card}
-              createCard={createCard}
-              openCardCreator={openCardCreator}
-              setUpdateType={setUpdateType}
-              updateType={updateType}
-              setCard={setCard}
-              isAdded={isAdded}
-              openType={openType}
-              monobankToken={monobankToken}
-              setMonobankToken={setMonobankToken}
-              submitMonobankToken={submitMonobankToken}
-            />
-          </Grid>
-          <Grid container xs="auto" md={2} item>
-            <div>
-              monobank:
-              {monbankTransactions &&
-                monbankTransactions.map((transaction) => (
-                  <div>
-                    {transaction.description}
-                    {transaction.amount}
-                  </div>
-                ))}
-            </div>
-            <Paper style={{ height: '100%' }} variant="outlined">
-              <Transactions card={card} setTransaction={setTransaction} />
-            </Paper>
-          </Grid>
-          <Grid xs={12} container item>
-            {transaction._id && (
-              <Grid container justify="center" item>
-                <TransactionInfo transaction={transaction} />
-              </Grid>
-            )}
-          </Grid>
+              <CardList cards={sortedCards} switchCard={switchCard} deleteCard={deleteCard} />
+            </Container>
+          </Paper>
         </Grid>
-      </Box>
-      {/* <Box></Box> */}
-    </Container>
+
+        <Grid container xs={true} md={7} item>
+          <CardItems
+            className={classes.cardItem}
+            card={card}
+            createCard={createCard}
+            openCardCreator={openCardCreator}
+            updateType={updateType}
+            setCard={setCard}
+            isAdded={isAdded}
+            openType={openType}
+            monobankToken={monobankToken}
+            setMonobankToken={setMonobankToken}
+            submitMonobankToken={submitMonobankToken}
+            monobankData={monobankData}
+            setMonobankTransactions={setMonobankTransactions}
+            transaction={transaction}
+            getStatementsDataForMonobankCard={getStatementsDataForMonobankCard}
+            statementsMonobankData={statementsMonobankData}
+            setUpdateType={setUpdateType}
+          />
+        </Grid>
+        <div>
+          monobank:
+          {monbankTransactions &&
+            monbankTransactions.map((transaction) => (
+              <div>
+                {transaction.description}
+                {transaction.amount}
+              </div>
+            ))}
+        </div>
+        {card.transactions !== undefined && card.transactions.length > 0 && (
+          <Grid container xs={2} item>
+            <Paper className={classes.transactionsList} variant="outlined">
+              <Transactions
+                card={card}
+                setUpdateType={setUpdateType}
+                setTransaction={setTransaction}
+              />
+            </Paper>
+          </Grid>
+        )}
+        <Grid xs={12} container item></Grid>
+      </Grid>
+    </Box>
   );
 };
 

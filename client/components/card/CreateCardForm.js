@@ -50,6 +50,7 @@ const CreateCardForm = ({
       return createCard(card, updateType, card._id);
     }
   };
+
   console.log(openType);
   return (
     <div>
