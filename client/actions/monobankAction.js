@@ -77,3 +77,12 @@ export const applyTransaction = (transaction, header) => async (dispatch) => {
     dispatch(removeMonobankTransaction(transaction.transactionId, transaction.monobankAccountId));
   } catch (err) {}
 };
+
+export const dismissTransaction = (transaction, header) => async (dispatch) => {
+  console.log(transaction);
+  try {
+    const res = await api.monobankApi.dismissTransaction(transaction, header);
+
+    dispatch(removeMonobankTransaction(transaction.transactionId, transaction.monobankAccountId));
+  } catch (err) {}
+};

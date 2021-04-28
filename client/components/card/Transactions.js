@@ -15,6 +15,7 @@ const Transactions = ({
   setTransaction,
   openCardCreator,
   applyMonobankTransaction,
+  dismissMonobankTransaction,
 }) => {
   const classes = useStyles();
 
@@ -29,17 +30,25 @@ const Transactions = ({
             <Box>Description: {transaction.merchantName || transaction.description}</Box>
             <Box>Payment price: {transaction.amount} </Box>
             {transaction.id !== undefined && (
-              <Checkbox
-                color="primary"
-                onClick={() =>
-                  applyMonobankTransaction({
-                    transactionId: transaction.id,
-                    transactionSum: transaction.amount,
-                    transactionDescription: transaction.description,
-                  })
-                }
-                inputProps={{ 'aria-label': 'secondary checkbox' }}
-              />
+              <Box>
+                <Checkbox
+                  color="primary"
+                  onClick={() =>
+                    applyMonobankTransaction({
+                      transactionId: transaction.id,
+                      transactionSum: transaction.amount,
+                      transactionDescription: transaction.description,
+                    })
+                  }
+                  inputProps={{ 'aria-label': 'secondary checkbox' }}
+                />
+                <Checkbox
+                  defaultChecked
+                  indeterminate
+                  inputProps={{ 'aria-label': 'indeterminate checkbox' }}
+                  onClick={() => dismissMonobankTransaction(transaction.id)}
+                />
+              </Box>
             )}
           </ListItemText>
         </ListItem>

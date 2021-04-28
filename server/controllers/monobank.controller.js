@@ -29,6 +29,13 @@ export const getUserInfo = async (req, res) => {
 };
 
 export const addMonobankAccountToUser = async (req, res) => {
+
+  if(await doUserAccountAlreadyExist(req.body.monobankAccountId)) {
+    return res.status(HttpStatus.NOT_ACCEPTABLE).json({
+      success: false,
+      msg: 'This account already exist'
+    })
+  }
   // if (await doesUserAlreadyAddedThisAccount(req.body.monobankAccountId, req.userID)) {
   //     res.status(HttpStatus.NOT_ACCEPTABLE).json({
   //       success: false,
@@ -161,20 +168,20 @@ export const dismissTransaction = async (req, res) => {
     console.log(err);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
+      err
     });
   }
 };
 
 export const applyTransaction = async (req, res) => {
   try {
-    debugger
     const monobankUserData = await MonobankUserDataModel.findOne({
       _id: req.body.monobankUserDataId,
     });
 
     if (!monobankUserData) {
     }
-    
+
     const transactionAlreadyAddedOrDismissed = checkIfTransactionAlreadyAddedOrDismissed(
       monobankUserData.appliedTransactionIds,
       monobankUserData.dismissedTransactionIds,
@@ -242,12 +249,13 @@ const checkIfTransactionAlreadyAddedOrDismissed = (
   };
 };
 
-const doesUserAlreadyAddedThisAccount = async (accoutId, userId) => {
-  const user = await User.findOne({ _id: userId });
 
-  if (user.monobankUserData.includes(accoutId)) {
-    return true;
-  }
+const doUserAccountAlreadyExist = async (accountId) => {
+  const monobankAccount = await MonobankUserDataModel.findOne({ monobankAccountId: accountId });
+  console.log(monobankAccount)
+  if(!monobankAccount) {
+    return false;
+  } 
 
-  return false;
-};
+  return true
+}

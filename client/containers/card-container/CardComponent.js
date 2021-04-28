@@ -15,6 +15,7 @@ import {
   fetchUserMonobankAccounts,
   getStatementDataThunk,
   applyTransaction,
+  dismissTransaction,
 } from '../../actions/monobankAction';
 
 import Container from '@material-ui/core/Container';
@@ -164,7 +165,7 @@ const CardComponent = () => {
     const userMonobankData = userMonobankAccounts.find(
       (account) => account.monobankAccountId === monobankAccountId
     );
-    // console.log(monobankAccountToken);
+
     dispatch(
       applyTransaction(
         {
@@ -177,15 +178,19 @@ const CardComponent = () => {
     );
   };
 
-  const dismissMonobankTransaction = (transaction) => {
-    const monobankAccountToken = userMonobankAccounts.find(
+  const dismissMonobankTransaction = (transactionId) => {
+    const userMonobankData = userMonobankAccounts.find(
       (account) => account.monobankAccountId === monobankAccountId
-    ).monobankToken;
+    );
 
     dispatch(
       dismissTransaction(
-        { ...transaction, monobankAccountId: monobankAccountId },
-        monobankAccountToken
+        {
+          monobankUserDataId: userMonobankData._id,
+          transactionId,
+          monobankAccountId: userMonobankData.monobankAccountId,
+        },
+        userMonobankData.monobankToken
       )
     );
   };
@@ -247,6 +252,7 @@ const CardComponent = () => {
               openCardCreator={openCardCreator}
               setTransaction={setTransaction}
               applyMonobankTransaction={applyMonobankTransaction}
+              dismissMonobankTransaction={dismissMonobankTransaction}
             />
           </Paper>
         </Grid>

@@ -37,7 +37,7 @@ export const monobankApi = {
     });
     return res.data;
   },
-  dismissTransaction: async (monobankData) => {
+  dismissTransaction: async (monobankData, header) => {
     const res = await axiosInstance.post(`/api/monobank/dismiss-transaction`, monobankData, {
       headers: { 'monobank-token': header },
     });

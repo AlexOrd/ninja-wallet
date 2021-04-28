@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import { Card } from '../models/card.model';
-import { Transaction } from '../models/transaction.model'
-import { validateCard, isCardExist, checkCardOwner } from '../utils/card-validations'
+import { Transaction } from '../models/transaction.model';
+import { MonobankUserDataModel } from '../models/monobank.model';
+import { validateCard, isCardExist, checkCardOwner } from '../utils/card-validations';
 
 export const createCard = async (req, res) => {
   const checkCreditCard = await validateCard(req.body, req.userID)
@@ -95,6 +96,9 @@ export const removeCardById = async (req, res) => {
   const cardExist = await isCardExist(req.params.id)
   const card = await Card.findOne({ _id: req.params.id })
 
+  const monobankCard = await MonobankUserDataModel.findOne({ card: req.params.id })
+  
+
   if (!checkCardOwner(card, req.userID)) {
     return res.status(400).send({ success: false, message: 'User error' })
   }
@@ -105,6 +109,9 @@ export const removeCardById = async (req, res) => {
 
   try {
     await Card.deleteOne({ _id: req.params.id });
+    if(monobankCard) {
+      await MonobankUserDataModel.deleteOne({ _id: monobankCard._id })
+    }
     res.status(200).send({ message: 'Card was deleted', success: true });
   } catch (err) {
     res.status(400).send({ err, success: false });

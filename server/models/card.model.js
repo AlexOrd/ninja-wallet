@@ -26,6 +26,9 @@ const schema = new Schema({
   balance: {
     type: Number,
     default: 0
+  },
+  monobankAccoutId: {
+    type: String
   }
 }, { timestamps: true, collection: 'card' });
 
