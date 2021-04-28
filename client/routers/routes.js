@@ -4,31 +4,39 @@ import loadable from '@loadable/component';
 
 // Import custom components
 import PrivateRoute from './PrivateRoute';
-import RestrictRoute from './RestrictRoute';
 import MainLayout from '../components/common/layout/MainLayout';
-import NotFound from '../components/error/NotFound';
+import { NotFound } from '../components/error/not_found/NotFound';
 import { ROUTES } from '../shared/routes-list';
 import ManageCategories from '../containers/manage-categories/manage-categories-container';
 import CategoriesContainer from '../containers/categories/categories-container';
+import { AuthRoute } from './AuthRoute';
+import { RootRoute } from './RootRoute';
 
-const AsyncLoginForm = loadable(() => import('../containers/auth/LoginContainer'));
-const AsyncSignUpForm = loadable(() => import('../containers/auth/SignUpContainer'));
 const AsyncDashboard = loadable(() => import('../containers/dashboard/DashboardContainer'));
+const AsyncAuthPage = loadable(() => import('../containers/authorization/AuthPage'));
+const AsyncSettingsPage = loadable(() => import('../containers/settings/Settings'));
 
-const Router = () => (
-  <>
-    <Switch>
-      <RestrictRoute exact path="/" component={AsyncLoginForm} />
-      <RestrictRoute exact path="/signup" component={AsyncSignUpForm} />
+const Router = () => {
+  return (
+    <>
+      <Switch>
+        <RootRoute exact path={ROUTES.root} />
+        <AuthRoute path={ROUTES.authorization} component={AsyncAuthPage} />
 
-      <Route exact path={ROUTES.categories} component={ManageCategories} />
-      <Route exact path={ROUTES.categoriesStats} component={CategoriesContainer} />
+        <PrivateRoute exact path={ROUTES.categories} layout={MainLayout} component={ManageCategories} />
+        <PrivateRoute exact path={ROUTES.categoriesStats} layout={MainLayout} component={CategoriesContainer} />
 
-      <PrivateRoute exact path="/dashboard" layout={MainLayout} component={AsyncDashboard} />
-
-      <Route component={NotFound} />
-    </Switch>
-  </>
-);
+        <PrivateRoute exact path="/dashboard" layout={MainLayout} component={AsyncDashboard} />
+        <PrivateRoute
+          exact
+          path={ROUTES.settings}
+          layout={MainLayout}
+          component={AsyncSettingsPage}
+        />
+        <Route component={NotFound} />
+      </Switch>
+    </>
+  );
+};
 
 export default Router;

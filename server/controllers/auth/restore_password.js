@@ -11,6 +11,7 @@ import { createJWToken } from '../../utils/auth/aux_functions/for_tokens';
 import { findUserById } from '../../utils/auth/aux_functions/selectors';
 import { getDeviceInfo } from '../../utils/auth/aux_functions/get_device_info';
 import { authVerifiers } from '../../utils/auth/aux_functions/verifiers';
+import { telegramBot } from '../../bots/telegram_bot';
 const { ACCESS, REFRESH } = tokensNames;
 const { USER_NOT_FOUND, USER_BY_EMAIL_NOT_FOUND } = authErrors;
 
@@ -20,17 +21,22 @@ export const issueCredentials = async (req, res, next) => {
     if (!user) return next(USER_BY_EMAIL_NOT_FOUND);
 
     const confirmCode = generateRandomNumbers();
-    const saltedconfirmCode = encryptData(confirmCode);
+    const saltedConfirmCode = encryptData(confirmCode);
     const confirmToken = createJWToken(
-      { code: saltedconfirmCode, userID: user._id },
+      { code: encryptData(confirmCode), userID: user._id },
       tokensNames.RESTORE
     );
 
-    user.auth.codeForPasswordChanging = saltedconfirmCode;
+    user.auth.codeForPasswordChanging = encryptData(confirmCode);
     user.save();
 
-    const emailText = `It is your confirmation code: ${confirmCode}`;
-    const { err: errSendEmail } = await sendEmail(req.body.email, 'Restore password', emailText);
+    const message = `Code for restore password: ${confirmCode}`;
+    if(user.bots.telegram.chatID) {
+      telegramBot.sendMessage(user.bots.telegram.chatID, message)
+      return res.status(200).send({ confirmToken, success: true });
+    }
+
+    const { err: errSendEmail } = await sendEmail(req.body.email, 'Restore password', message);
     if (errSendEmail) return next(errSendEmail);
 
     return res.status(200).send({ confirmToken, success: true });
@@ -76,17 +82,23 @@ export const reissueCredentials = async (req, res, next) => {
     if (errFindingUser) return errFindingUser;
 
     const confirmCode = generateRandomNumbers();
-    const saltedconfirmCode = encryptData(confirmCode);
+    const saltedConfirmCode = encryptData(confirmCode);
     const confirmToken = createJWToken(
-      { code: saltedconfirmCode, userID: user._id },
+      { code: saltedConfirmCode, userID: user._id },
       tokensNames.RESTORE
     );
 
-    user.auth.codeForPasswordChanging = saltedconfirmCode;
+    user.auth.codeForPasswordChanging = saltedConfirmCode;
     user.save();
 
-    const emailText = `It is your verification code: ${confirmCode}`;
-    const { err: errSendEmail } = await sendEmail(user.email, 'Restore password', emailText);
+
+    const message = `Code for restore password: ${confirmCode}`;
+    if(user.bots.telegram.chatID) {
+      telegramBot.sendMessage(user.bots.telegram.chatID, message)
+      return res.status(200).send({ confirmToken, success: true });
+    }
+
+    const { err: errSendEmail } = await sendEmail(user.email, 'Restore password', message);
     if (errSendEmail) return next(errSendEmail);
 
     return res.status(200).send({ confirmToken, success: true });
