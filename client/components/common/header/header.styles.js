@@ -51,4 +51,7 @@ export const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.main,
     },
   },
+  signOut: {
+    color: theme.palette.getContrastText(theme.palette.primary.main),
+  },
 }));

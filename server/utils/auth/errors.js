@@ -17,7 +17,9 @@ export const authErrors = {
     USER_BY_EMAIL_NOT_FOUND: createRespErr('USER_BY_EMAIL_NOT_FOUND', 403, 'user didn`t find by passed email'),
     BOT_HAS_ALREADY_VERIFIED: createRespErr('BOT_HAS_ALREADY_VERIFIED', 403, 'you tried verify your bot repeatedly'),
     PASSWORDS_ARE_EQUAL: createRespErr('PASSWORDS_ARE_EQUAL', 403, 'new password is equal with old password'),
-    DOUBLE_AUTHENTICATED_DENIED: createRespErr('DOUBLE_AUTHENTICATED_DENIED', 403, 'user didn`t confirm this sign in')
+    DOUBLE_AUTHENTICATED_DENIED: createRespErr('DOUBLE_AUTHENTICATED_DENIED', 403, 'user didn`t confirm this sign in'),
+    SIGN_OUT_FROM_ANOTHER_DEVICE: createRespErr('SIGN_OUT_FROM_ANOTHER_DEVICE', 403, 'account owner has exited from this device')
+
 }
 
 export const unexpectedError = (error, next) => {

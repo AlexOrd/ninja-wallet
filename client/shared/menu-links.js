@@ -20,4 +20,9 @@ export const MENU_LINKS = [
     path: ROUTES.profile,
     icon: <PersonIcon />,
   },
+  {
+    name: 'settings',
+    path: ROUTES.settings,
+    icon: <PersonIcon />,
+  },
 ];

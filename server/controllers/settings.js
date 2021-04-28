@@ -89,6 +89,8 @@ export const disconnectTelegramBot = async (req, res, next) => {
     if (findingUserErr) return next(findingUserErr);
 
     user.bots.telegram.chatID = '';
+    user.auth.notifyAboutSignIn = false
+    user.auth.doubleAuthenticate = false
     user.save();
 
     res.status(200).send({ success: true });
