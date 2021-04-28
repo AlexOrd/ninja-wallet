@@ -2,6 +2,12 @@ import TelegramBot from 'node-telegram-bot-api';
 import User from '../models/user.model';
 import { generateRandomString } from '../utils/auth/aux_functions/common';
 import { sendEmail } from '../utils/auth/aux_functions/for_mail';
+import {
+  messageAboutConnected,
+  messageAboutHarming,
+  messageAboutSentLetter,
+  messageAboutIncorrectCode,
+} from '../utils/bot/messages';
 import { validate } from '../utils/validation/validate';
 
 const API_KEY = process.env.TELEGRAM_BOT_API_KEY;
@@ -17,38 +23,39 @@ export const telegramBot = new TelegramBot(API_KEY, {
 
 console.log('Bot has been started...');
 
-telegramBot.onText(/\/get (.+)/, async (msg, [source, match]) => {
+telegramBot.onText(/\/get (.+)/, async (msg, [source, email]) => {
   try {
-    const { err } = validate('auth')('email')({ email: match });
+    const { err } = validate('auth')('email')({ email });
     if (err) return telegramBot.sendMessage(msg.chat.id, err.message);
 
-    const user = await User.findOne({ email: 'vitaliidrapaliuk@gmail.com' });
+    const user = await User.findOne({ email });
     if (!user) return telegramBot.sendMessage(msg.chat.id, 'user not found');
 
     const chatID = user.bots.telegram.chatID;
     if (chatID && chatID !== msg.chat.id) {
-      return telegramBot.sendMessage(chatID, 'some one wants harm you');
+      telegramBot.sendMessage(chatID, messageAboutHarming.sender);
+      return telegramBot.sendMessage(chatID, messageAboutHarming.owner);
     }
 
-    if (chatID) return telegramBot.sendMessage(chatID, 'your bot is verified');
+    if (chatID) return telegramBot.sendMessage(chatID, messageAboutConnected);
 
     const confirmCode = generateRandomString();
     user.bots.telegram.confirmCode = confirmCode;
     user.save();
 
     const message = `Code for verification your bot:   ${confirmCode},   use command "/verify" and insert it there`;
-    await sendEmail('vitaliidrapaliuk@gmail.com', 'Verify telegram bot', message);
+    await sendEmail(email, 'Connected with telegram bot', message);
 
-    telegramBot.sendMessage(msg.chat.id, `Letter with your confirmation code has sent on ${match}`);
+    telegramBot.sendMessage(msg.chat.id, messageAboutSentLetter(email));
   } catch (error) {
     telegramBot.sendMessage(msg.chat.id, 'unexpected error');
   }
 });
 
-telegramBot.onText(/\/verify (.+)/, async (msg, [source, match]) => {
-  const user = await User.findOne({ 'bots.telegram.confirmCode': match });
+telegramBot.onText(/\/verify (.+)/, async (msg, [source, confirmCode]) => {
+  const user = await User.findOne({ 'bots.telegram.confirmCode': confirmCode });
   if (!user) {
-    return telegramBot.sendMessage(msg.chat.id, 'This confirm code is incorrect, try again!');
+    return telegramBot.sendMessage(msg.chat.id, messageAboutIncorrectCode(confirmCode));
   }
 
   const chatID = user.bots.telegram.chatID;

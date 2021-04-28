@@ -22,7 +22,7 @@ export const checkAuth = async (dispatch) => {
     setFetchError(null, dispatch);
   } catch ({ response }) {
     setFetchStatus(FAILED);
-    setFetchError(response, dispatch);
+    // setFetchError(response, dispatch);
   } finally {
     setFetchStatus(IDLE);
   }

@@ -14,7 +14,6 @@ import {
 export function AccountSecurity() {
   const dispatch = useDispatch();
   const handleChangePassword = ({ oldPassword, newPassword, confirmPassword }) => {
-    console.log('this', oldPassword, newPassword, confirmPassword);
     dispatch(changePassword(oldPassword, newPassword, confirmPassword));
   };
 

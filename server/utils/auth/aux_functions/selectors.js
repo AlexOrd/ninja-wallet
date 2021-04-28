@@ -12,7 +12,6 @@ export const findUserById = async (id) => {
 
 export const getDeviceByID = (user, deviceID) => {
   const deviceObject = user.auth.openedOnDevices.id(deviceID);
-  console.log(' ------', deviceObject)
   if (!deviceObject) return { err: authErrors.ACCESS_DENIED };
 
   return { deviceObject };

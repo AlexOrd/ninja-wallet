@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { getAuthorizationStatus } from '../selectors/auth';
 
-import { isAuthenticated } from '../utils/auth/for_tokens';
-
 const RestrictRoute = ({ component: Component, ...rest }) => {
   const isAuthorized = useSelector(getAuthorizationStatus);
 

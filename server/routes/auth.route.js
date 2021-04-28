@@ -28,11 +28,7 @@ router
   .post('/sign-in', validateAuthData, deviceDetector, signIn)
   .delete('/sign-out', checkAccessAndProvideUserID, signOut)
 
-  .get('/check-auth', checkAccessAndProvideUserID, (req, res) => {
-    setTimeout(() => {
-      res.status(200).end()
-    }, 5000)
-  })
+  .get('/check-auth', checkAccessAndProvideUserID, (req, res) => res.status(200).end())
 
   .post('/restore-password/get-credentials', validateCredentialsIssue, issueCredentials)
   .post('/restore-password/verify-code', validateConfirmCode, verifyCredentials, verifyConfirmCode)

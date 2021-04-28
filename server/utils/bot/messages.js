@@ -23,3 +23,9 @@ export const doubleAuthenticateMessage = {
     ],
   ],
 };
+
+
+export const messageAboutConnected = `Congratulate! Your application has connected with bot.`
+export const messageAboutHarming = {owner: 'Some user attempted to connect with your bot', sender: 'This bot has already connected with app, if you are owner, you should go in settings of your application'}
+export const messageAboutSentLetter = (email) => `Letter with your confirmation code has sent on ${email}`
+export const messageAboutIncorrectCode = (code) => `${code} is incorrect, try again!`

@@ -32,8 +32,6 @@ export const settingsReducer = (state = initialState, action) => {
         userEmail,
       } = payload;
 
-      console.log('payload', payload);
-
       return {
         ...state,
         userEmail,

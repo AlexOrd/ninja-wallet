@@ -8,6 +8,7 @@ import MainLayout from '../components/common/layout/MainLayout';
 import { NotFound } from '../components/error/not_found/NotFound';
 import { ROUTES } from '../shared/routes-list';
 import { AuthRoute } from './AuthRoute';
+import { RootRoute } from './RootRoute';
 
 const AsyncDashboard = loadable(() => import('../containers/dashboard/DashboardContainer'));
 const AsyncAuthPage = loadable(() => import('../containers/authorization/AuthPage'));
@@ -17,7 +18,8 @@ const Router = () => {
   return (
     <>
       <Switch>
-        <AuthRoute path="/auth" component={AsyncAuthPage} />
+        <RootRoute exact path={ROUTES.root} />
+        <AuthRoute path={ROUTES.authorization} component={AsyncAuthPage} />
         <PrivateRoute
           exact
           path={ROUTES.categories}

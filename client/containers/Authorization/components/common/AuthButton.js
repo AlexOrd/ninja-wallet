@@ -25,7 +25,7 @@ function useStyles() {
         color: theme.palette.getContrastText(theme.palette.primary.main),
         boxShadow: '0 0 5px #bbdefb',
         ['&:hover']: {
-          backgroundColor: '#bbdefb',
+          backgroundColor: '#1A237E',
           boxShadow: '0 0 6px gray',
         },
       },

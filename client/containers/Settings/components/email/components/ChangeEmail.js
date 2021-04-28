@@ -58,6 +58,7 @@ export function ChangeEmail({
           {activeStep === 0 && (
             <UserEmail
               {...{
+                placeholder: 'new email',
                 submitHandler: changeEmail,
                 validate: newEmailValidator,
               }}
@@ -74,7 +75,7 @@ export function ChangeEmail({
               }}
             />
           )}
-          {activeStep === 2 && <h1>Success</h1>}
+          {activeStep === 2 && <Typography>Email has changed and verified succeeded</Typography>}
         </Box>
       )}
     </SettingsSubPart>

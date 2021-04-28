@@ -4,7 +4,7 @@ import { AuthInput } from './AuthInput';
 import { AuthButton } from './AuthButton';
 import { Box, Typography, makeStyles } from '@material-ui/core';
 
-export const UserEmail = ({ submitHandler, validate, title }) => {
+export const UserEmail = ({ submitHandler, validate, title, placeholder = 'your email' }) => {
   const styles = useStyles();
 
   return (
@@ -15,7 +15,7 @@ export const UserEmail = ({ submitHandler, validate, title }) => {
         </Typography>
       )}
       <AuthForm {...{ submitHandler, validate, initialValues: { email: '' }, autoFocus: true }}>
-        <AuthInput name="email" placeholder="your email" />
+        <AuthInput name="email" placeholder={placeholder} />
         <AuthButton text="send" />
       </AuthForm>
     </Box>

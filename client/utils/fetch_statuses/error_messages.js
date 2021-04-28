@@ -15,6 +15,9 @@ const {
   USER_BY_EMAIL_NOT_FOUND,
   DOUBLE_AUTHENTICATED_DENIED,
   SIGN_OUT_FROM_ANOTHER_DEVICE,
+  EXPIRED_TOKEN,
+  MISSING_TOKEN,
+  INVALID_TOKEN,
 } = fetchErrorsNames;
 
 export const errorMessages = {

@@ -61,8 +61,8 @@ export function TelegramBot({
             <>
               <Box className={styles.linkWrapper}>
                 <Typography className={styles.linkExample}>Link to our bot</Typography>
-                <a className={styles.link} target="blanc" href="https://t.me/test_login_chaky_bot">
-                  @test_login_chaky_bot
+                <a className={styles.link} target="blanc" href="https://t.me/ninja_wallet_bot">
+                  @ninja_wallet_bot
                 </a>
               </Box>
               <Box>

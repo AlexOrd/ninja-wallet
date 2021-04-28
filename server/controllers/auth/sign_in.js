@@ -61,9 +61,7 @@ export const signIn = async (req, res, next) => {
         telegramBot.removeListener('callback_query', callBackQueryListener);
       };
 
-      const result = await telegramBot.addListener('callback_query', callBackQueryListener);
-
-      console.log('result', result)
+      telegramBot.addListener('callback_query', callBackQueryListener);
 
       const { message, keyboard } = doubleAuthenticateMessage;
       telegramBot.sendMessage(348781339, message, {
