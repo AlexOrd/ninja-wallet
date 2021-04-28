@@ -55,6 +55,7 @@ export default function Options(props) {
       axiosInstance.get(apiUrl).then((res) => {
         const allTransactions = res.data.transactions;
         props.setTransactions(allTransactions);
+        handleClosePopover();
       });
     });
   };

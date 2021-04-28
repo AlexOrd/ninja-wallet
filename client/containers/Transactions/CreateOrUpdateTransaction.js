@@ -169,25 +169,19 @@ export default function CreateOrUpdateTransaction() {
       <Typography className={classes.title} variant="h4">
         {isCreating ? 'Creating' : 'Editing'} Transaction
       </Typography>
-      <FormControl required className={classes.selectControl}>
-        <InputLabel id="card">Card</InputLabel>
-        <Select
-          // defaultValue={transaction?.cardId._id}
-          labelId="card"
-          id="11"
-          onChange={handleChangeCard}
-          value={card}
-        >
+      <FormControl required={isCreating} className={classes.selectControl}>
+        <InputLabel id="card">{isCreating ? 'Card' : ''}</InputLabel>
+        <Select labelId="card" id="11" onChange={handleChangeCard} value={card}>
           {cards?.map((card) => {
-            return <MenuItem value={card._id}>{card.cardName}</MenuItem>;
+            return <MenuItem value={card._id || ''}>{card.cardName}</MenuItem>;
           })}
         </Select>
       </FormControl>
-      <FormControl required className={classes.selectControl}>
-        <InputLabel id="category">Category</InputLabel>
+      <FormControl required={isCreating} className={classes.selectControl}>
+        <InputLabel id="category">{isCreating ? 'Category' : ''}</InputLabel>
         <Select labelId="category" id="1" value={category} onChange={handleChangeCategory}>
           {categories?.map((category) => {
-            return <MenuItem value={category._id}>{category.name}</MenuItem>;
+            return <MenuItem value={category._id || ''}>{category.name}</MenuItem>;
           })}
         </Select>
       </FormControl>
@@ -200,12 +194,12 @@ export default function CreateOrUpdateTransaction() {
           onChange={handleChangeDescription}
         />
         <TextField
-          required
+          required={isCreating}
           value={merchant || ''}
           label="Merchant"
           onChange={handleChangeMerchant}
         />
-        <TextField required value={sum || ''} label="Sum" onChange={handleChangeSum} />
+        <TextField required={isCreating} value={sum || ''} label="Sum" onChange={handleChangeSum} />
       </form>
       <ButtonCreateOrUpdate
         isCreating={isCreating}

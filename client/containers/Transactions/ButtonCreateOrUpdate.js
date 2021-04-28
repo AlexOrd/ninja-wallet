@@ -1,6 +1,5 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-
+import { Button, Grid } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
@@ -65,16 +64,17 @@ export default function ButtonCreateOrUpdate(props) {
 
   return (
     <div className={classes.root}>
-      <Button
-        onClick={handleClick}
-        className={classes.btn}
-        variant="contained"
-        color="primary"
-        size="large"
-      >
-        {props.isCreating ? 'Create!' : 'Update!'}
-      </Button>
-
+      <Grid container justify="center">
+        <Button
+          onClick={handleClick}
+          className={classes.btn}
+          variant="contained"
+          color="primary"
+          size="large"
+        >
+          {props.isCreating ? 'Create!' : 'Update!'}
+        </Button>
+      </Grid>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
           {props.isCreating
