@@ -78,7 +78,7 @@ const SliderWithCards = ({ cards, setCenteredCardIdx }) => {
         <div className={classes.skeletonBlock}>
           <div>
             <Skeleton variant="text" />
-            <Skeleton variant="circle" width={40} height={40} />
+            <Skeleton variant="circle" width={40} height={40} style={{ margin: '7px 0' }} />
             <Skeleton variant="rect" width={300} height={175} />
           </div>
           <div className={classes.infoBlock}>

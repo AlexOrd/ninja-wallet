@@ -2,37 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import SliderWithCards from './Slider/Slider';
 import TransactionsList from './TransactionsList/TransactionsList';
-import { axiosInstance } from '../../config/axios';
 import ExchangeRateBlock from './ExchangeRateBlock/ExchangeRateBlock';
 import SummaryCards from './SummaryCards/SummaryCards';
+import { getAllCards, getCardTransactions, getSummaryInfo } from '../../actions/dashboardActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Dashboard = () => {
-  const [transactions, setTransactions] = useState(null);
+  const dispatch = useDispatch();
+  const transactions = useSelector(({ dashboard }) => dashboard.transactions.data);
   const [centeredCardIdx, setCenteredCardIdx] = useState(0);
-  const [cards, setCards] = useState(null);
+  const cards = useSelector(({ dashboard }) => dashboard.cards.data);
 
   useEffect(() => {
-    axiosInstance.get('/api/card').then(({ data }) => {
-      setCards(data.cards);
-    });
+    dispatch(getAllCards());
+    dispatch(getSummaryInfo());
   }, []);
 
   useEffect(() => {
-    let isCancalledReq = false;
     const centeredCardId = cards?.[centeredCardIdx]?._id;
     if (centeredCardId) {
-      axiosInstance
-        .get('/api/transactions/cardId/' + centeredCardId)
-        .then(({ data: { data } }) => {
-          if (!isCancalledReq) {
-            setTransactions(data.transactions);
-          }
-        })
-        .catch((e) => console.log(e));
+      dispatch(getCardTransactions(centeredCardId, 5));
     }
     return () => {
-      isCancalledReq = true;
-      setTransactions(null);
+      //setTransactions(null);
     };
   }, [centeredCardIdx, cards]);
 

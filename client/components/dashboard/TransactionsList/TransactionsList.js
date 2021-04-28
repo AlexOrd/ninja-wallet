@@ -26,7 +26,7 @@ const styles = () => ({
   container: {
     display: 'flex',
     justifyContent: 'center',
-    marginTop: 50,
+    marginTop: 40,
   },
   root: {
     paddingTop: 0,

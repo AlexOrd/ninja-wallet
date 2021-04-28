@@ -1,10 +1,7 @@
 import React from 'react';
-import { Avatar, Box, Card, CardContent, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Avatar, Card, CardContent, Grid, makeStyles, Typography } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpIcon from '@material-ui/icons/ArrowUpward';
-
-import MoneyIcon from '@material-ui/icons/Money';
-import { red, indigo } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(() => ({
   text: {
@@ -46,7 +43,7 @@ const SummaryCard = ({ title, sum, icon, difference, color }) => {
             <Typography color="textPrimary" variant="h6">
               {sum}
             </Typography>
-            {difference && (
+            {!!difference && (
               <div className={classes.difference}>
                 <span
                   className={classes.difference}

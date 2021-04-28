@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import SummaryCard from '../SummaryCard/SummaryCard';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import MoneyIcon from '@material-ui/icons/Money';
-import { axiosInstance } from '../../../config/axios';
 import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(() => ({
   footer: {
@@ -14,14 +14,10 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'center',
   },
 }));
+
 const SummaryCards = () => {
   const classes = useStyles();
-  const [data, setData] = useState();
-  useEffect(() => {
-    axiosInstance.get('/api/summary').then(({ data }) => {
-      setData(data.data);
-    });
-  }, []);
+  const data = useSelector(({ dashboard }) => dashboard.summaryData.data);
 
   if (!data) {
     return null;
