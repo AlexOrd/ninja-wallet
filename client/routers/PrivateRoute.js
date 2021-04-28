@@ -1,18 +1,20 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { isAuthenticated } from '../utils/auth/for_tokens';
+import { getAuthorizationStatus } from '../selectors/auth';
 
 const PrivateRoute = ({ component: Component, layout: Layout, ...rest }) => {
-  console.log('isAuthenticated', isAuthenticated);
+  const isAuthorized = useSelector(getAuthorizationStatus);
+
   return (
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated() ? (
-          <Layout>
-            <Component {...props} />
-          </Layout>
+        isAuthorized ? (
+          // <Layout>
+          <Component {...props} />
         ) : (
+          // </Layout>
           <Redirect
             to={{
               pathname: '/auth',

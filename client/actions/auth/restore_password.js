@@ -75,7 +75,7 @@ export const createNewPassword = (confirmationToken, newPassword, confirmationPa
       newPassword,
       confirmationPassword
     );
-    dispatch({ type: AUTHORIZATION, payload: { isAuthorized: true } });
+    dispatch({ type: AUTHORIZATION, payload: { isAuthorized: false } });
     setFetchStatus(SUCCEEDED);
     dispatch({ type: SET_PERMISSION_FOR_CHANGE_PASSWORD, payload: { isPermission: false } });
     dispatch({ type: SET_RESTORE_PASSWORD_TOKEN, payload: { token: '' } });

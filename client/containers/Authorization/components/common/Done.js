@@ -2,9 +2,19 @@ import React from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { Success } from '../../icons';
+import { useDispatch } from 'react-redux';
+import { invokeAfterDelay } from '../../../../utils/auth/tools';
+import { setAuthStatus, setRedirectPermission } from '../../../../actions/auth/common';
 
 export function Done({ linkText = 'To app' }) {
   const styles = useStyles();
+  const dispatch = useDispatch();
+  const setAuthStatusHandler = () => dispatch(setAuthStatus(true));
+
+  React.useState(() => {
+    setAuthStatusHandler();
+    // invokeAfterDelay(, delays.BETWEEN_STEPS);
+  }, []);
 
   return (
     <Box className={styles.box}>

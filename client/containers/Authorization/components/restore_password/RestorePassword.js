@@ -34,14 +34,6 @@ const {
   VERIFY_REST_REST_PASSWORD_CONFIRM_CODE,
 } = authFetchStatusNames;
 
-const stepperIcons = {
-  1: <AlternateEmailIcon />,
-  2: <VerifiedUserIcon />,
-  3: <VpnKeyIcon />,
-  4: <CheckIcon />,
-};
-const steps = ['Email', 'Verification', 'New password', 'Done'];
-
 export const RestorePassword = () => {
   const dispatch = useDispatch();
   const styles = useStyles();
@@ -73,7 +65,6 @@ export const RestorePassword = () => {
     setActiveStep(0);
   };
 
-  React.useEffect(() => setFetchError(null, dispatch), []); //!?
   React.useEffect(() => {
     if (fetchError === EXPIRED_RESTORE_PASSWORD_SESSION) {
       setRestSessionExpiredStatus(true);
@@ -92,6 +83,14 @@ export const RestorePassword = () => {
       setActiveStep(3);
     }
   }, [getCredentialsFetchStatusFS, verifyRestPasswordConfirmCodeFS, createNewPasswordFS]);
+
+  const stepperIcons = {
+    1: <AlternateEmailIcon />,
+    2: <VerifiedUserIcon />,
+    3: <VpnKeyIcon />,
+    4: <CheckIcon />,
+  };
+  const steps = ['Email', 'Verification', 'New password', 'Done'];
 
   if (isExpiredRestSession) return <RestoreSessionEnded {...{ handleReset }} />;
   return (

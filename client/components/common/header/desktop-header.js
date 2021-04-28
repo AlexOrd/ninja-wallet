@@ -9,9 +9,12 @@ import { Grid, Link } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { useStyles } from './header.styles';
 import { MENU_LINKS } from '../../../shared/menu-links';
+import { useDispatch } from 'react-redux';
+import { signOutCurrentDevice } from '../../../actions/auth';
 
 const DesktopHeader = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [auth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -48,6 +51,13 @@ const DesktopHeader = () => {
               </Link>
             </Grid>
           ))}
+          <button
+            onClick={() => {
+              dispatch(signOutCurrentDevice());
+            }}
+          >
+            sign out
+          </button>
         </Grid>
 
         <Grid item xs="auto">

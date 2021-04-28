@@ -1,34 +1,53 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import loadable from '@loadable/component';
 
 // Import custom components
 import PrivateRoute from './PrivateRoute';
-import RestrictRoute from './RestrictRoute';
 import MainLayout from '../components/common/layout/MainLayout';
-import NotFound from '../components/error/NotFound';
+import { NotFound } from '../components/error/not_found/NotFound';
 import { ROUTES } from '../shared/routes-list';
+import { useSelector } from 'react-redux';
+import { getAuthorizationStatus } from '../selectors/auth';
+import SettingsPage from '../containers/Settings/Settings';
 
-const AsyncLoginForm = loadable(() => import('../containers/auth/LoginContainer'));
-const AsyncSignUpForm = loadable(() => import('../containers/auth/SignUpContainer'));
 const AsyncDashboard = loadable(() => import('../containers/dashboard/DashboardContainer'));
 const AsyncAuthPage = loadable(() => import('../containers/Authorization/AuthPage'));
-// const AsyncAuthPage = loadable(() => import('../containers/Authorization/TestPage'));
+// const AsyncSettingsPage = loadable(() => import('../containers/Settings/Settings'));
 
-const Router = () => (
-  <>
-    <Switch>
-      <RestrictRoute exact path="/" component={AsyncLoginForm} />
-      <RestrictRoute exact path="/signup" component={AsyncSignUpForm} />
-      <RestrictRoute exact path={ROUTES.auth} component={AsyncAuthPage} />
+const AuthRoute = ({ component: Component, ...rest }) => {
+  const isAuthorized = useSelector(getAuthorizationStatus);
 
-      <RestrictRoute exact path={ROUTES.categories} component={() => 'categories'} />
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isAuthorized ? (
+          <Redirect
+            to={{
+              pathname: '/dashboard',
+              state: { from: props.location },
+            }}
+          />
+        ) : (
+          <Component {...props} />
+        )
+      }
+    />
+  );
+};
 
-      <PrivateRoute exact path="/dashboard" layout={MainLayout} component={AsyncDashboard} />
-
-      <Route component={NotFound} />
-    </Switch>
-  </>
-);
+const Router = () => {
+  return (
+    <>
+      <Switch>
+        <AuthRoute path="/auth" component={AsyncAuthPage} />
+        <PrivateRoute exact path={ROUTES.categories} component={SettingsPage} />
+        <PrivateRoute exact path="/dashboard" layout={MainLayout} component={AsyncDashboard} />
+        <Route component={SettingsPage} />
+      </Switch>
+    </>
+  );
+};
 
 export default Router;

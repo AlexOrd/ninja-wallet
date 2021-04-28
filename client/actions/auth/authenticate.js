@@ -15,7 +15,7 @@ export const signUp = (email, password) => async (dispatch) => {
     const response = await authAPI.signUp(email, password);
     dispatch({
       type: AUTHORIZATION,
-      payload: { isAuthorized: true, isEmailError: response.data.isEmailError },
+      payload: { isAuthorized: false, isEmailError: response.data.isEmailError },
     });
     setFetchStatus(SUCCEEDED);
     setFetchError(null, dispatch);
