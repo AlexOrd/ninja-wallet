@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   gridList: {
     display: 'inline-block',
     padding: '0',
-    maxHeight: '100%',
+    minHeight: 'calc(90vh - 3.8em)',
   },
   cardItem: {
     padding: '20px',
@@ -77,14 +77,13 @@ const CardComponent = () => {
   const [updateType, setUpdateType] = useState('');
   const [transaction, setTransaction] = useState({});
   const [monobankToken, setMonobankToken] = useState('');
+  const [monobankAccountId, setMonobankAccountId] = useState('');
   const [openType, setOpenType] = useState('');
   const [monbankTransactions, setMonobankTransactions] = useState(null);
   const statementsMonobankData = useSelector((state) => state.monobank.statementsData);
   const userMonobankAccounts = useSelector((state) => state.monobank.userMonobankAccounts);
   const cards = useSelector((state) => state.card.card.cards);
   const monobankInfo = useSelector((state) => state.monobank.monobankInfo);
-  // const monobankAccoutToken = useSelector((state) => state.monobank.userMonobankAccounts)
-  const [monobankAccountId, setMonobankAccountId] = useState('');
 
   const dispatch = useDispatch();
 
@@ -137,7 +136,11 @@ const CardComponent = () => {
         break;
       case 'transaction':
         setAdded(true);
-        setUpdateType('monobank');
+        setUpdateType('transaction');
+        break;
+      case 'monobank_cards':
+        setAdded(true);
+        setUpdateType('monobank_cards');
         break;
       case 'close':
         setAdded(false);
@@ -195,6 +198,8 @@ const CardComponent = () => {
     );
   };
 
+  console.log(card);
+
   return (
     <Box component="div" className={classes.box}>
       <Grid container>
@@ -242,10 +247,13 @@ const CardComponent = () => {
             statementsMonobankData={statementsMonobankData}
             setUpdateType={setUpdateType}
             setMonobankAccountId={setMonobankAccountId}
+            applyMonobankTransaction={applyMonobankTransaction}
+            monbankTransactions={monbankTransactions}
+            dismissMonobankTransaction={dismissMonobankTransaction}
           />
         </Grid>
 
-        <Grid container xs={2} item>
+        {/* <Grid container xs={2} item>
           <Paper className={classes.transactionsList} variant="outlined">
             <Transactions
               transactions={monbankTransactions || card.transactions}
@@ -255,7 +263,7 @@ const CardComponent = () => {
               dismissMonobankTransaction={dismissMonobankTransaction}
             />
           </Paper>
-        </Grid>
+        </Grid> */}
 
         <Grid xs={12} container item></Grid>
       </Grid>

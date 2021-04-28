@@ -36,6 +36,7 @@ const CreateCardForm = ({
   updateType,
   monobankToken,
   setMonobankToken,
+  openCardCreator,
   submitMonobankToken,
 }) => {
   const onSubmit = (e) => {
@@ -67,6 +68,7 @@ const CreateCardForm = ({
             monobankToken={monobankToken}
             setMonobankToken={setMonobankToken}
             submitMonobankToken={submitMonobankToken}
+            openCardCreator={openCardCreator}
           />
         ))}
     </div>
@@ -146,7 +148,12 @@ const CreateSimpleCard = ({ onSubmit, setCard, card }) => {
   );
 };
 
-const CreateMonoBankCard = ({ monobankToken, setMonobankToken, submitMonobankToken }) => {
+const CreateMonoBankCard = ({
+  monobankToken,
+  setMonobankToken,
+  submitMonobankToken,
+  openCardCreator,
+}) => {
   const classes = useStyles();
 
   return (
@@ -163,7 +170,10 @@ const CreateMonoBankCard = ({ monobankToken, setMonobankToken, submitMonobankTok
         </Box>
         <br />
         <Box>
-          <Button onClick={() => submitMonobankToken(monobankToken)} color="primary">
+          <Button
+            onClick={() => (submitMonobankToken(monobankToken), openCardCreator('monobank_cards'))}
+            color="primary"
+          >
             Send Token
           </Button>
         </Box>

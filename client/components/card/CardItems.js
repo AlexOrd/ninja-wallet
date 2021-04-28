@@ -6,8 +6,8 @@ import './style.css';
 import OtherCardInfo from './OtherCardInfo';
 import Grid from '@material-ui/core/Grid';
 import CreateCardForm from './CreateCardForm';
-import TransactionInfo from './TransactionInfo';
-import { Box, Button, List, ListItem, ListItemText, Typography } from '@material-ui/core';
+import Transactions from './Transactions';
+import { Box, Button, List, ListItem, ListItemText, Typography, Paper } from '@material-ui/core';
 import { createMonobankThunk, setMonobankAccout } from '../../actions/monobankAction';
 
 const useStyles = makeStyles({
@@ -33,6 +33,9 @@ const CardItems = ({
   transaction,
   getStatementsDataForMonobankCard,
   statementsMonobankData,
+  applyMonobankTransaction,
+  monbankTransactions,
+  dismissMonobankTransaction,
   setUpdateType,
   setMonobankAccountId,
 }) => {
@@ -120,25 +123,63 @@ const CardItems = ({
       )}
       {
         <Grid container justify="center" alignItems="center">
-          {monobankData?.clientId ? (
+          {(monobankData?.clientId && updateType === 'monobank_cards' && (
             <MonobankCards
               monobankData={monobankData}
               openCardCreator={openCardCreator}
               monobankToken={monobankToken}
             />
-          ) : (
-            <CreateCardForm
-              createCard={createCard}
-              card={card}
-              setCard={setCard}
-              updateType={updateType}
-              openType={openType}
-              monobankToken={monobankToken}
-              setMonobankToken={setMonobankToken}
-              submitMonobankToken={submitMonobankToken}
-            />
-            // <TransactionInfo  />
-          )}
+          )) ||
+            (updateType === 'create' && (
+              <CreateCardForm
+                createCard={createCard}
+                card={card}
+                setCard={setCard}
+                updateType={updateType}
+                openType={openType}
+                openCardCreator={openCardCreator}
+                monobankToken={monobankToken}
+                setMonobankToken={setMonobankToken}
+                submitMonobankToken={submitMonobankToken}
+              />
+            )) ||
+            (updateType === 'update' && (
+              <CreateCardForm
+                createCard={createCard}
+                card={card}
+                setCard={setCard}
+                updateType={updateType}
+                openType={openType}
+                openCardCreator={openCardCreator}
+                monobankToken={monobankToken}
+                setMonobankToken={setMonobankToken}
+                submitMonobankToken={submitMonobankToken}
+              />
+            )) ||
+            (updateType === 'monobank' && (
+              <CreateCardForm
+                createCard={createCard}
+                card={card}
+                setCard={setCard}
+                updateType={updateType}
+                openType={openType}
+                openCardCreator={openCardCreator}
+                monobankToken={monobankToken}
+                setMonobankToken={setMonobankToken}
+                submitMonobankToken={submitMonobankToken}
+              />
+            ))}
+          <Grid container xs={12} item>
+            <Paper className={classes.transactionsList} variant="outlined">
+              <Transactions
+                transactions={monbankTransactions || card.transactions}
+                openCardCreator={openCardCreator}
+                // setTransaction={setTransaction}
+                applyMonobankTransaction={applyMonobankTransaction}
+                dismissMonobankTransaction={dismissMonobankTransaction}
+              />
+            </Paper>
+          </Grid>
         </Grid>
       }
     </Grid>
