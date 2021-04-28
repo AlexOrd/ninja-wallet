@@ -11,13 +11,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { commonFetchStatuses } from '../../../../utils/auth/constants';
 import { authFetchStatusNames, fetchErrorsNames } from '../../../../utils/auth/names';
 import { authValidators } from '../../../../utils/auth/validation';
-import { setFetchError } from '../../../../actions/fetch_statuses';
 import { isSuccessFetchStatus } from '../../../../utils/fetch_statuses/aux_functions';
-import {
-  getAuthPrivateFS,
-  getFetchError,
-  getRestorePasswordCredentials,
-} from '../../../../selectors/auth';
+import { getFetchError } from '../../../../selectors/common';
+import { getAuthPrivateFS, getRestorePasswordCredentials } from '../../../../selectors/auth';
 import {
   createNewPassword,
   requestVerify,

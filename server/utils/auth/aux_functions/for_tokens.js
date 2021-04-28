@@ -1,13 +1,13 @@
 import jwt from 'jsonwebtoken';
 import { authErrors } from '../errors';
-import { tokensNames, tokensDevKeys } from '../constants';
+import { tokensNames } from '../constants';
 
 export const getTokensInfo = (tokenName) => {
   const { ACCESS, REFRESH, RESTORE } = tokensNames;
   const settings = {
     [ACCESS]: {
       key: process.env.ACCESS_TOKEN_KEY,
-      options: { expiresIn: `${1000 * 60 * 25}` },
+      options: { expiresIn: `${1000 * 60 * 4}` },
     },
 
     [REFRESH]: {

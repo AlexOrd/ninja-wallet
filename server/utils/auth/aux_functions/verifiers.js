@@ -40,9 +40,8 @@ export const authVerifiers = {
   verifyingAndDecodeJWT: function (token, tokenName) {
     if (!token) return { err: MISSING_TOKEN };
     const { key } = getTokensInfo(tokenName);
-    const parsedToken = token.split(' ')[1]
-    console.log('tokens', token)
-    console.log('parsedToken', parsedToken)
+    const parsedToken = token.split(' ')[1];
+    
     let result = { err: null, tokenPayload: undefined };
     try {
       result.tokenPayload = jwt.verify(parsedToken, key);

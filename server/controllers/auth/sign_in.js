@@ -2,7 +2,7 @@ import User from '../../models/user.model';
 import { unexpectedError, authErrors } from '../../utils/auth/errors';
 import { authVerifiers } from '../../utils/auth/aux_functions/verifiers';
 import { createJWToken } from '../../utils/auth/aux_functions/for_tokens';
-import { setAuthHeaders } from '../../utils/auth/aux_functions/common';
+import { generateRandomString, setAuthHeaders } from '../../utils/auth/aux_functions/common';
 import { tokensNames } from '../../utils/auth/constants';
 import { getDeviceInfo } from '../../utils/auth/aux_functions/get_device_info';
 import { telegramBot } from '../../bots/telegram_bot';
@@ -21,8 +21,10 @@ export const signIn = async (req, res, next) => {
     const { err: passwordVerifyError } = await authVerifiers.password(user, password);
     if (passwordVerifyError) return next(passwordVerifyError);
 
+    const confirmCode = generateRandomString();
     user.auth.openedOnDevices.push({
       lastLogin: new Date(),
+      confirmCode,
       ...getDeviceInfo(req),
     });
 
@@ -30,14 +32,14 @@ export const signIn = async (req, res, next) => {
     const deviceID = user.auth.openedOnDevices[lastAddedDeviceIdx]._id;
 
     const accessToken = createJWToken({ userID: user._id, deviceID }, tokensNames.ACCESS);
-    const refreshToken = createJWToken({}, tokensNames.REFRESH);
+    const refreshToken = createJWToken({ confirmCode }, tokensNames.REFRESH);
     user.save();
 
     const isConnectedBot = user.bots.telegram.chatID;
     if (user.auth.notifyAboutSignIn && !user.auth.doubleAuthenticate && isConnectedBot) {
       try {
         const { device, browser, platform } = parseDeviceInfo(req);
-        const notification = messageAboutSignIn(device, browser, platform)
+        const notification = messageAboutSignIn(device, browser, platform);
         telegramBot.sendMessage(user.bots.telegram.chatID, notification);
       } catch (error) {}
     }
@@ -57,7 +59,7 @@ export const signIn = async (req, res, next) => {
           telegramBot.deleteMessage(348781339, resp.message.message_id);
           return next(authErrors.DOUBLE_AUTHENTICATED_DENIED);
         }
-        
+
         telegramBot.removeListener('callback_query', callBackQueryListener);
       };
 
@@ -80,7 +82,6 @@ export const signIn = async (req, res, next) => {
     return unexpectedError(err, next);
   }
 };
-
 
 // function loadScript(src, callback) {
 //   let script = document.createElement('script');
