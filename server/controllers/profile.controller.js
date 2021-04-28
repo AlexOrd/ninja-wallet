@@ -27,7 +27,7 @@ export async function getProfile(req, res, next) {
 } 
 
 export async function updateProfile(req, res, next) {
-  const { firstName, lastName, email } = req.body;
+  const { firstName, lastName } = req.body;
   const id = req.userID;
 
   const check = await profileExist(id);
@@ -39,7 +39,7 @@ export async function updateProfile(req, res, next) {
   }
 
   try {
-    const updated = await User.findByIdAndUpdate(id, { firstName, lastName, email }, {new: true});
+    const updated = await User.findByIdAndUpdate(id, { firstName, lastName }, {new: true});
     res.status(200).json({
       success: true,
       data: {
