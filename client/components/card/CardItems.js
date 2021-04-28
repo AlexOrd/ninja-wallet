@@ -15,6 +15,9 @@ const useStyles = makeStyles({
     margin: '0',
     padding: '0',
   },
+  transactionsList: {
+    width: '100%',
+  },
 });
 
 const CardItems = ({
