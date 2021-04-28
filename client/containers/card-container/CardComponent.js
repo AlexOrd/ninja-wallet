@@ -14,8 +14,10 @@ import {
   fetchUserInfo,
   fetchUserMonobankAccounts,
   getStatementDataThunk,
+  setError,
 } from '../../actions/monobankAction';
 
+import { Alert, AlertTitle } from '@material-ui/lab';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -33,6 +35,16 @@ const useStyles = makeStyles((theme) => ({
     margin: '30px',
     padding: '30px',
   },
+  alert: {
+    position: 'absolute',
+    bottom: '0',
+    width: '100vw',
+  },
+  // box: {
+  //   minHeight: 'calc(100vh - 4em)',
+  //   alignContent: 'flex-start',
+  //   alignItems: 'flex-start',
+  // },
   gridList: {
     display: 'inline-block',
     padding: '0',
@@ -81,19 +93,24 @@ const CardComponent = () => {
   const userMonobankAccounts = useSelector((state) => state.monobank.userMonobankAccounts);
   const cards = useSelector((state) => state.card.card.cards);
   const monobankInfo = useSelector((state) => state.monobank.monobankInfo);
+  const monobankError = useSelector((state) => state.monobank.errorMessage);
   const dispatch = useDispatch();
+
+  const setRequestError = (err) => {
+    dispatch(setError(err));
+  };
 
   useEffect(() => {
     if (fetchCards() !== undefined) dispatch(fetchCards());
   }, []);
 
   useEffect(() => {
-    dispatch(fetchUserMonobankAccounts());
+    dispatch(fetchUserMonobankAccounts(setRequestError));
   }, [cards]);
 
   const submitMonobankToken = (token) => {
     if (token) {
-      dispatch(fetchUserInfo(token));
+      dispatch(fetchUserInfo(token, setRequestError));
     }
   };
 
@@ -153,7 +170,9 @@ const CardComponent = () => {
     monobankUserDataId
   ) => {
     // const currentAccount = userMonobankAccounts.find();
-    dispatch(getStatementDataThunk(monobankToken, monobankAccountId, monobankUserDataId));
+    dispatch(
+      getStatementDataThunk(monobankToken, monobankAccountId, monobankUserDataId, setRequestError)
+    );
   };
 
   return (
@@ -229,6 +248,12 @@ const CardComponent = () => {
         )}
         <Grid xs={12} container item></Grid>
       </Grid>
+      {monobankError && (
+        <Alert className={classes.alert} severity="error">
+          <AlertTitle>Error</AlertTitle>
+          Monobank error: {monobankError}, try again in 1 minute
+        </Alert>
+      )}
     </Box>
   );
 };

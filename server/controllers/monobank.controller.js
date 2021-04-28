@@ -22,6 +22,13 @@ export const getUserInfo = async (req, res) => {
       data: { monobankInfo: monobankApiRes.data },
     });
   } catch (err) {
+    if (err.response.status === 429) {
+      return res.status(HttpStatus.TOO_MANY_REQUESTS).json({
+        success: false,
+        msg: 'Try again in 1 minute',
+      });
+    }
+
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
     });
@@ -60,7 +67,13 @@ export const addMonobankAccountToUser = async (req, res) => {
       data: { monobankUserData: createdMonobankUserData },
     });
   } catch (err) {
-    console.log(err);
+    if (err.response.status === 429) {
+      return res.status(HttpStatus.TOO_MANY_REQUESTS).json({
+        success: false,
+        msg: 'Try again in 1 minute',
+      });
+    }
+
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
     });
@@ -75,12 +88,23 @@ export const getUserMonobankDataAccounts = async (req, res) => {
       success: true,
       data: { monobankUserAccountsData: monobankUserAccountsData },
     });
-  } catch (err) {}
+  } catch (err) {
+    if (err.response.status === 429) {
+      return res.status(HttpStatus.TOO_MANY_REQUESTS).json({
+        success: false,
+        msg: 'Try again in 1 minute',
+      });
+    }
+
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+      success: false,
+    });
+  }
 };
 
 export const getStatementData = async (req, res) => {
   const sevenDaysAgoData = new Date();
-  sevenDaysAgoData.setDate(sevenDaysAgoData.getDate() - 10);
+  sevenDaysAgoData.setDate(sevenDaysAgoData.getDate() - 30);
 
   const monobankToken = req.headers['monobank-token'];
   const monobankAccountId = req.body.monobankAccountId;
@@ -120,7 +144,13 @@ export const getStatementData = async (req, res) => {
       data: { monobankTransactions: onlyExpenses },
     });
   } catch (err) {
-    console.log(err);
+    if (err.response.status === 429) {
+      return res.status(HttpStatus.TOO_MANY_REQUESTS).json({
+        success: false,
+        msg: 'Try again in 1 minute',
+      });
+    }
+
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
     });
@@ -158,7 +188,13 @@ export const dismissTransaction = async (req, res) => {
       data: { monobankUserData: updatedMonobankUserData },
     });
   } catch (err) {
-    console.log(err);
+    if (err.response.status === 429) {
+      return res.status(HttpStatus.TOO_MANY_REQUESTS).json({
+        success: false,
+        msg: 'Try again in 1 minute',
+      });
+    }
+
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
     });
@@ -209,7 +245,13 @@ export const applyTransaction = async (req, res) => {
       },
     });
   } catch (err) {
-    console.log(err);
+    if (err.response.status === 429) {
+      return res.status(HttpStatus.TOO_MANY_REQUESTS).json({
+        success: false,
+        msg: 'Try again in 1 minute',
+      });
+    }
+
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       success: false,
     });

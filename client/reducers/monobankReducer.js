@@ -4,6 +4,7 @@ import {
   ADD_DATA_TO_STATEMENTS,
   SET_USER_MONOBANK_ACCOUNTS,
   SET_STATEMENT_DATA,
+  SET_ERROR,
 } from '../constants/actionType';
 
 const initialState = {
@@ -12,15 +13,16 @@ const initialState = {
   userMonobankAccounts: [],
   statementsData: [], // array of transactions from monobank cards
   monobankLocalCardsIds: [],
+  errorMessage: '',
 };
 
 const monobankReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_MONOBANK_ACCOUT: {
-      return { ...state, monobankInfo: action.data.monobankInfo };
+      return { ...state, errorMessage: '', monobankInfo: action.data.monobankInfo };
     }
     case SET_NEW_MONOBANK_ACCOUNT: {
-      return { ...state, newMonobankAccount: action.data.newMonobankAccount };
+      return { ...state, errorMessage: '', newMonobankAccount: action.data.newMonobankAccount };
     }
     // case SET_STATEMENT_DATA: {
     //   return { ...state, statementsData: action.data.statementsData };
@@ -31,6 +33,7 @@ const monobankReducer = (state = initialState, action) => {
       );
 
       if (statementsMonobankAccountsIds.includes(action.data.monobankAccountId)) {
+        //  TODO: check without if
         const newStatementsData = state.statementsData.map((statement) => {
           if (statement.monobankAccountId === action.data.monobankAccountId) {
             return {
@@ -43,6 +46,7 @@ const monobankReducer = (state = initialState, action) => {
       } else {
         return {
           ...state,
+          errorMessage: '',
           statementsData: [
             ...state.statementsData,
             {
@@ -56,9 +60,13 @@ const monobankReducer = (state = initialState, action) => {
     case SET_USER_MONOBANK_ACCOUNTS: {
       return {
         ...state,
+        errorMessage: '',
         userMonobankAccounts: action.data.userMonobankAccounts,
         monobankLocalCardsIds: action.data.userMonobankAccounts.map((account) => account.card),
       };
+    }
+    case SET_ERROR: {
+      return { ...state, errorMessage: action.data.msg };
     }
     default: {
       return { ...state };

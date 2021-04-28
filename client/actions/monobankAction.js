@@ -4,6 +4,7 @@ import {
   SET_NEW_MONOBANK_ACCOUNT,
   ADD_DATA_TO_STATEMENTS,
   SET_USER_MONOBANK_ACCOUNTS,
+  SET_ERROR,
 } from '../constants/actionType';
 import { fetchCards } from './cardAction';
 
@@ -27,13 +28,18 @@ const setUserMonobankAccounts = (userMonobankAccounts) => ({
   data: { userMonobankAccounts },
 });
 
-export const fetchUserInfo = (header) => async (dispatch) => {
-  const res = await api.monobankApi.getUserInfo(header);
+export const setError = (msg) => ({
+  type: SET_ERROR,
+  data: { msg },
+});
+
+export const fetchUserInfo = (header, handleError) => async (dispatch) => {
+  const res = await api.monobankApi.getUserInfo(header, handleError);
   dispatch(setMonobankAccout(res.data.monobankInfo));
 };
 
-export const fetchUserMonobankAccounts = () => async (dispatch) => {
-  const res = await api.monobankApi.getMonobankUserAccounts();
+export const fetchUserMonobankAccounts = (handleError) => async (dispatch) => {
+  const res = await api.monobankApi.getMonobankUserAccounts(handleError);
 
   dispatch(setUserMonobankAccounts(res.data.monobankUserAccountsData));
 };
@@ -48,13 +54,15 @@ export const createMonobankThunk = (createMonobank, header) => async (dispatch) 
 export const getStatementDataThunk = (
   monobankToken,
   monobankAccountId,
-  monobankUserDataId
+  monobankUserDataId,
+  handleError
 ) => async (dispatch) => {
   try {
     const res = await api.monobankApi.getStatementInfo(
       monobankToken,
       monobankAccountId,
-      monobankUserDataId
+      monobankUserDataId,
+      handleError
     );
 
     dispatch(addStatementData(monobankAccountId, res.data.monobankTransactions));
