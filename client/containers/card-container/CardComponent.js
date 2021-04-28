@@ -85,8 +85,11 @@ const CardComponent = () => {
 
   useEffect(() => {
     if (fetchCards() !== undefined) dispatch(fetchCards());
-    dispatch(fetchUserMonobankAccounts());
   }, []);
+
+  useEffect(() => {
+    dispatch(fetchUserMonobankAccounts());
+  }, [cards]);
 
   const submitMonobankToken = (token) => {
     if (token) {
@@ -213,7 +216,7 @@ const CardComponent = () => {
           Monobank:
           {monbankTransactions &&
             monbankTransactions.map((transaction) => (
-              <div>
+              <div key={transaction.id}>
                 {transaction.description}
                 {transaction.amount}
               </div>
