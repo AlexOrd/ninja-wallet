@@ -12,6 +12,7 @@ import { MENU_LINKS } from '../../../shared/menu-links';
 import { useDispatch, useSelector } from 'react-redux';
 import { signOutCurrentDevice } from '../../../actions/auth';
 import { getAuthorizationStatus } from '../../../selectors/auth';
+import { Link as RouterLink } from 'react-router-dom';
 
 const DesktopHeader = () => {
   const classes = useStyles();
@@ -33,9 +34,11 @@ const DesktopHeader = () => {
     <AppBar className={classes.headerWrapper} position="static">
       <Grid container direction="row">
         <Grid item container alignItems="center" xs={2}>
-          <Typography noWrap variant="h6">
-            Ninja-wallet
-          </Typography>
+          <RouterLink to="/dashboard" className={classes.logoLink}>
+            <Typography variant="h6" noWrap>
+              Ninja-wallet
+            </Typography>
+          </RouterLink>
         </Grid>
         <Grid
           item
