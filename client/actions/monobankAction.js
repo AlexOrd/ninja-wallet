@@ -65,15 +65,15 @@ export const getStatementDataThunk = (
   }
 };
 
-export const removeMonobankTransaction = (transactionId, monobankUserDataId) => ({
+export const removeMonobankTransaction = (transactionId, monobankAccountId) => ({
   type: REMOVE_MONOBANK_TRANSACTION,
-  data: { transactionId, monobankUserDataId },
+  data: { transactionId, monobankAccountId },
 });
 
 export const applyTransaction = (transaction, header) => async (dispatch) => {
   try {
     const res = await api.monobankApi.applyTransaction(transaction, header);
-    // console.log('apply transaction')
-    dispatch(removeMonobankTransaction(transaction._id, transaction.monobankUserDataId));
+
+    dispatch(removeMonobankTransaction(transaction.transactionId, transaction.monobankAccountId));
   } catch (err) {}
 };

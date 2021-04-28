@@ -63,9 +63,24 @@ const monobankReducer = (state = initialState, action) => {
     }
     case REMOVE_MONOBANK_TRANSACTION: {
       const transactionId = action.data.transactionId;
-      const monobankUserDataId = action.data.monobankUserDataId;
-      const newStatementsData = state.statementsData.map((statement) => {});
-      return {};
+      const monobankAccountId = action.data.monobankAccountId;
+
+      const newStatementsData = state.statementsData.map((statementData) => {
+        if (statementData.monobankAccountId === monobankAccountId) {
+          return {
+            monobankAccountId: statementData.monobankAccountId,
+            statements: statementData.statements.filter(
+              (transaction) => transaction.id !== transactionId
+            ),
+          };
+        } else {
+          return statementData;
+        }
+      });
+      return {
+        ...state,
+        statementsData: newStatementsData,
+      };
     }
     default: {
       return { ...state };

@@ -167,7 +167,11 @@ const CardComponent = () => {
     // console.log(monobankAccountToken);
     dispatch(
       applyTransaction(
-        { ...transaction, monobankUserDataId: userMonobankData._id },
+        {
+          ...transaction,
+          monobankUserDataId: userMonobankData._id,
+          monobankAccountId: userMonobankData.monobankAccountId,
+        },
         userMonobankData.monobankToken
       )
     );
