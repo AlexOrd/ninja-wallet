@@ -4,7 +4,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Filter from './Filter';
+import FilterByCard from './FilterByCard';
+import FilterByCategory from './FilterByCard';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
 function TransactionTableHead(props) {
@@ -59,8 +60,20 @@ function TransactionTableHead(props) {
             padding="2"
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            {headCell.label === 'Card' || headCell.label === 'Category' ? (
-              <Filter id={headCell.id} label={headCell.label} type={headCell.label} />
+            {headCell.label === 'Card' ? (
+              <FilterByCard
+                id={headCell.id}
+                label={headCell.label}
+                type={headCell.label}
+                changeFilter={props.setFilterByCard}
+              />
+            ) : headCell.label === 'Category' ? (
+              <FilterByCategory
+                id={headCell.id}
+                label={headCell.label}
+                type={headCell.label}
+                changeFilter={props.setFilterByCategory}
+              />
             ) : (
               <TableSortLabel
                 active={orderBy === headCell.id}

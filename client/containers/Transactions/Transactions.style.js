@@ -15,8 +15,9 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   paper: {
-    width: '100%',
+    width: '80%',
     marginBottom: theme.spacing(0),
+    margin: 'auto',
   },
   table: {
     // minWidth: 750

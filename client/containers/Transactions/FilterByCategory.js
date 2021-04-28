@@ -8,20 +8,13 @@ import { useStyles } from './Transactions.style';
 import axios from 'axios';
 import { axiosInstance } from '../../config/axios';
 
-export default function Filter(props) {
+export default function FilterByCategory(props) {
   const classes = useStyles();
   const [value, setValue] = useState('');
   const [categories, setCategories] = useState();
   const [category, setCategory] = useState();
-  const [card, setCard] = useState();
-  const [cards, setCards] = useState();
 
   useEffect(() => {
-    const apiUrlCards = '/api/card';
-    axiosInstance.get(apiUrlCards).then((res) => {
-      const allCards = res.data.cards;
-      setCards(allCards);
-    });
     const apiUrlCategories = '/api/categories';
     axiosInstance.get(apiUrlCategories).then((res) => {
       const allCategories = res.data.categories;
@@ -29,27 +22,19 @@ export default function Filter(props) {
     });
   }, []);
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const handleChangeCategory = (event) => {
+    props.changeFilter(event.target.value);
+    setCategory(event.target.value);
   };
 
   return (
     <div>
       <FormControl className={classes.formControl}>
         <InputLabel id={props.label}>{props.label}</InputLabel>
-        <Select
-          label={props.label}
-          id={props.id}
-          // value={props.label}
-          onChange={handleChange}
-        >
-          {props.type === 'Card'
-            ? cards?.map((el) => {
-                return <MenuItem value={el._id}>{el.cardName}</MenuItem>;
-              })
-            : categories?.map((el) => {
-                return <MenuItem value={el._id}>{el.name}</MenuItem>;
-              })}
+        <Select label={props.label} id={props.id} value={category} onChange={handleChangeCategory}>
+          {categories?.map((el) => {
+            return <MenuItem value={el._id}>{el.name}</MenuItem>;
+          })}
         </Select>
       </FormControl>
     </div>

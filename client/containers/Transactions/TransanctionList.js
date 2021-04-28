@@ -67,14 +67,20 @@ export default function TransactionsList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [transactions, setTransactions] = React.useState();
+  const [transactionsFromApi, setTransactionsFromApi] = React.useState();
+  const [filterByCard, setFilterByCard] = React.useState();
+  const [filterByCategory, setFilterByCategory] = React.useState();
 
   useEffect(() => {
     const apiUrl = '/api/transactions';
     axiosInstance.get(apiUrl).then((res) => {
       const allTransactions = res.data.transactions;
-      setTransactions(allTransactions);
+      setTransactionsFromApi(allTransactions);
     });
   }, []);
+  useEffect(() => {
+    setTransactions(transactionsFromApi);
+  }, [transactionsFromApi]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -111,6 +117,8 @@ export default function TransactionsList() {
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
               rowCount={transactions?.length}
+              setFilterByCard={setFilterByCard}
+              setFilterByCategory={setFilterByCategory}
             />
             {transactions && (
               <TableBody>

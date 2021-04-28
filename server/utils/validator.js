@@ -19,7 +19,7 @@ export default {
   transaction: Joi.object({
     transactionType: Joi.string().alphanum().min(3).max(30).required(),
     transactionCategory: Joi.string().alphanum().min(3).max(30).required(),
-    // userId: Joi.objectId(),
+    userId: Joi.objectId(),
     cardId: Joi.objectId().required(),
     sum: Joi.number().positive().required(),
     merchantName: Joi.string().alphanum().min(3).max(30),

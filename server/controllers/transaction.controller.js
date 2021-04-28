@@ -76,8 +76,9 @@ exports.createTransaction = async (req, res) => {
 };
 exports.getTransaction = async (req, res) => {
   try {
-    const transaction = await Transaction.findById(req.params.id).populate('cardId');
-    // check if transaction exists, it can be null
+    const transaction = await Transaction
+    .findById(req.params.id)
+    .populate('cardId');
     res.status(200).json({
       success: true,
       transaction,
