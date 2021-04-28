@@ -54,4 +54,9 @@ export const useStyles = makeStyles((theme) => ({
   signOut: {
     color: theme.palette.getContrastText(theme.palette.primary.main),
   },
+  logoLink: {
+    color: '#ffffff',
+    textDecoration: 'none',
+    cursor: 'pointer',
+  },
 }));
