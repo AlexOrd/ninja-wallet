@@ -26,7 +26,12 @@ const Router = () => {
           layout={MainLayout}
           component={() => 'categories'}
         />
-        <PrivateRoute exact path="/dashboard" layout={MainLayout} component={AsyncDashboard} />
+        <PrivateRoute
+          exact
+          path={ROUTES.dashboard}
+          layout={MainLayout}
+          component={AsyncDashboard}
+        />
         <PrivateRoute
           exact
           path={ROUTES.settings}
