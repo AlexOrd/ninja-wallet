@@ -10,7 +10,9 @@ import { useDispatch } from 'react-redux';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+
   const styles = useStyles();
+
   return (
     <div
       className={styles.tabPanel}

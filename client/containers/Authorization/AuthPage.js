@@ -8,7 +8,9 @@ import { getAuthorizationStatus, getEmailProviderError } from '../../selectors/a
 
 function AuthPage() {
   const styles = useStyles();
+
   const [isVisibleWarnMessage, setVisibleWarnMessage] = React.useState(false);
+
   const siAuthorized = useSelector(getAuthorizationStatus);
 
   return (
