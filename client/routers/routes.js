@@ -19,8 +19,8 @@ import { AuthRoute } from './AuthRoute';
 import { RootRoute } from './RootRoute';
 
 const AsyncDashboard = loadable(() => import('../containers/dashboard/DashboardContainer'));
-const AsyncAuthPage = loadable(() => import('../containers/authorization/AuthPage'));
-const AsyncSettingsPage = loadable(() => import('../containers/settings/Settings'));
+const AsyncAuthPage = loadable(() => import('../containers/Authorization/AuthPage'));
+const AsyncSettingsPage = loadable(() => import('../containers/Settings/Settings'));
 
 const Router = () => {
   return (

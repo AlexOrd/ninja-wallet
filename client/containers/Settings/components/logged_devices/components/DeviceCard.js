@@ -4,7 +4,7 @@ import { getLoginDate } from '../../../../../utils/auth/tools';
 import { getIcons } from '../../../../../utils/auth/get_device_info';
 import WatchLaterOutlinedIcon from '@material-ui/icons/WatchLaterOutlined';
 import DateRangeOutlinedIcon from '@material-ui/icons/DateRangeOutlined';
-import { AuthButton } from '../../../../authorization/components/common';
+import { AuthButton } from '../../../../Authorization/components/common';
 
 export const DeviceCard = ({
   deviceType,
