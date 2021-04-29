@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const transactions = useSelector(({ dashboard }) => dashboard.transactions.data);
   const [centeredCardIdx, setCenteredCardIdx] = useState(0);
   const cards = useSelector(({ dashboard }) => dashboard.cards.data);
+  const transactions = useSelector(({ dashboard }) => dashboard.transactions.data);
 
   useEffect(() => {
     dispatch(getAllCards());

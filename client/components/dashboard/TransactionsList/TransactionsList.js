@@ -58,7 +58,7 @@ const styles = () => ({
   },
 });
 
-const TransactionsList = ({ data, classes, cards, selectedCard }) => {
+const TransactionsList = React.memo(({ data, classes, cards, selectedCard }) => {
   if (!cards || !cards.length) {
     return null;
   }
@@ -126,7 +126,7 @@ const TransactionsList = ({ data, classes, cards, selectedCard }) => {
       </Card>
     </div>
   );
-};
+});
 
 TransactionsList.propTypes = {
   classes: PropTypes.object.isRequired,

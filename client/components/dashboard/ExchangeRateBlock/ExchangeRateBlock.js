@@ -47,11 +47,12 @@ const useStyles = makeStyles(() => ({
 const ExchangeRateBlock = React.memo(() => {
   const classes = useStyles();
   const [data, setData] = React.useState();
+
   React.useEffect(() => {
     axios
       .get('https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11')
-      .then(({ data }) => setData(data));
-    return () => {};
+      .then(({ data }) => setData(data))
+      .catch(console.log);
   }, []);
 
   return (
