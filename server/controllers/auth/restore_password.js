@@ -2,6 +2,7 @@ import User from '../../models/user.model';
 import {
   encryptData,
   generateRandomNumbers,
+  generateRandomString,
   setAuthHeaders,
 } from '../../utils/auth/aux_functions/common';
 import { authErrors, unexpectedError } from '../../utils/auth/errors';
@@ -21,13 +22,14 @@ export const issueCredentials = async (req, res, next) => {
     if (!user) return next(USER_BY_EMAIL_NOT_FOUND);
 
     const confirmCode = generateRandomNumbers();
-    const saltedConfirmCode = encryptData(confirmCode);
+    const saltedConfirmCodeForToken = await encryptData(confirmCode);
     const confirmToken = createJWToken(
-      { code: encryptData(confirmCode), userID: user._id },
+      { code: saltedConfirmCodeForToken, userID: user._id },
       tokensNames.RESTORE
     );
 
-    user.auth.codeForPasswordChanging = encryptData(confirmCode);
+    const saltedConfirmCodeForDB = await encryptData(confirmCode); 
+    user.auth.codeForPasswordChanging = saltedConfirmCodeForDB 
     user.save();
 
     const message = `Code for restore password: ${confirmCode}`;
@@ -50,11 +52,12 @@ export const createNewPassword = async (req, res, next) => {
     const { err: errFindingUser, user } = await findUserById(req.tokenPayload.userID);
     if (errFindingUser) return next(errFindingUser);
 
-    const refreshTokenConfirmCode = generateRandomNumbers();
+    const confirmCode = generateRandomString();
+    const saltedPassword = await encryptData(req.body.newPassword);
 
-    user.auth.password = encryptData(req.body.newPassword);
+    user.auth.password = saltedPassword
     user.auth.openedOnDevices.push({
-      confirmCode: encryptData(refreshTokenConfirmCode),
+      confirmCode,
       lastLogin: new Date(),
       ...getDeviceInfo(req),
     });
@@ -64,7 +67,7 @@ export const createNewPassword = async (req, res, next) => {
     const lastAddedDeviceIdx = user.auth.openedOnDevices.length - 1;
     const deviceID = user.auth.openedOnDevices[lastAddedDeviceIdx]._id;
 
-    const refreshToken = createJWToken({ confirmCode: refreshTokenConfirmCode, deviceID }, REFRESH);
+    const refreshToken = createJWToken({ confirmCode, deviceID }, REFRESH);
     const accessToken = createJWToken({ userID: user._id, deviceID }, ACCESS);
 
     setAuthHeaders(accessToken, refreshToken, res);
@@ -82,7 +85,7 @@ export const reissueCredentials = async (req, res, next) => {
     if (errFindingUser) return errFindingUser;
 
     const confirmCode = generateRandomNumbers();
-    const saltedConfirmCode = encryptData(confirmCode);
+    const saltedConfirmCode = await encryptData(confirmCode);
     const confirmToken = createJWToken(
       { code: saltedConfirmCode, userID: user._id },
       tokensNames.RESTORE
