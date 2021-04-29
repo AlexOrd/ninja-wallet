@@ -1,9 +1,9 @@
 {
-  "openapi": "3.0.2",
+  "openapi": "3.0.0",
   "info": {
     "title": "Ninja wallet API",
     "description": "Documentation for our API",
-    "version": "1.0.0"
+    "version": "2.0.0"
   },
   "servers": [
     {
@@ -20,7 +20,7 @@
       "bearerAuth": {
         "type": "http",
         "description": "You must sign up in our system to get access token",
-        "schema": "bearer",
+        "schema": "Bearer",
         "bearerFormat": "JWT"
       }
     },
@@ -1486,7 +1486,6 @@
     },
     "/transactions": {
       "get": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Get all transactions",
         "parameters": [
@@ -1540,7 +1539,6 @@
         }
       },
       "post": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Create a transaction",
         "parameters": [
@@ -1608,7 +1606,6 @@
     },
     "/transactions/{id}": {
       "get": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Get one transaction by id",
         "parameters": [
@@ -1664,7 +1661,6 @@
         }
       },
       "patch": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Update transaction by id",
         "parameters": [
@@ -1736,7 +1732,6 @@
         }
       },
       "delete": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Delete transaction by id",
         "parameters": [
@@ -1790,7 +1785,6 @@
 
     "/transactions/cardId/{cardId}": {
       "get": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Get all transactions from one specific card",
         "parameters": [
@@ -1854,7 +1848,6 @@
     },
     "/transactions/category/{transactionCategory}": {
       "get": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Get all transactions from one specific category",
         "parameters": [
@@ -1919,7 +1912,6 @@
 
     "/card": {
       "post": {
-        "security": [],
         "tags": ["Cards"],
         "summary": "Create card",
         "parameters": [
@@ -1983,7 +1975,6 @@
         }
       },
       "get": {
-        "security": [],
         "tags": ["Cards"],
         "summary": "Get all user card",
         "parameters": [
@@ -2028,7 +2019,6 @@
 
     "/card/{id}": {
       "put": {
-        "security": [],
         "tags": ["Cards"],
         "summary": "Update card",
         "parameters": [
@@ -2100,7 +2090,6 @@
         }
       },
       "get": {
-        "security": [],
         "tags": ["Cards"],
         "summary": "Get user card by id",
         "parameters": [
@@ -2147,7 +2136,6 @@
         }
       },
       "delete": {
-        "security": [],
         "tags": ["Cards"],
         "summary": "Delete user card by id",
         "parameters": [
@@ -2194,7 +2182,6 @@
 
     "/categories": {
       "post": {
-        "security": [],
         "tags": ["Categories"],
         "summary": "Create category",
         "parameters": [
@@ -2258,7 +2245,6 @@
         }
       },
       "get": {
-        "security": [],
         "tags": ["Categories"],
         "summary": "Get all user categories",
         "parameters": [
@@ -2308,7 +2294,6 @@
 
     "/categories/{id}": {
       "put": {
-        "security": [],
         "tags": ["Categories"],
         "summary": "Update category",
         "parameters": [
@@ -2380,7 +2365,6 @@
         }
       },
       "delete": {
-        "security": [],
         "tags": ["Categories"],
         "summary": "Delete user category by id",
         "parameters": [
@@ -2426,7 +2410,6 @@
     },
     "/profile": {
       "get": {
-        "security": [],
         "tags": ["Profile"],
         "summary": "Get user data",
         "parameters": [
@@ -2467,7 +2450,6 @@
         }
       },
       "put": {
-        "security": [],
         "tags": ["Profile"],
         "summary": "Update user data",
         "parameters": [
@@ -2527,7 +2509,6 @@
         }
       },
       "delete": {
-        "security": [],
         "tags": ["Profile"],
         "summary": "Delete profile by id",
         "parameters": [
@@ -2570,7 +2551,6 @@
     },
     "/userphoto": {
       "post": {
-        "security": [],
         "tags": ["userphoto"],
         "summary": "Add user photo",
         "parameters": [
@@ -2627,7 +2607,6 @@
         }
       },
       "put": {
-        "security": [],
         "tags": ["userphoto"],
         "summary": "Update user photo",
         "parameters": [

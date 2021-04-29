@@ -10,7 +10,7 @@ import TransactionList from '../containers/Transactions/TransanctionList';
 import CreateOrUpdateTransaction from '../containers/Transactions/CreateOrUpdateTransaction';
 import View from '../containers/Transactions/View';
 
-import NotFound from '../components/error/NotFound';
+//import NotFound from '../components/error/NotFound';
 import { NotFound } from '../components/error/not_found/NotFound';
 import { ROUTES } from '../shared/routes-list';
 import ManageCategories from '../containers/manage-categories/manage-categories-container';
