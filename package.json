@@ -9,10 +9,9 @@
     "clean": "rimraf node_modules && rimraf dist && npm install",
     "webpack:dev": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.config.dev.js",
     "webpack:prod": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
-    // "build": "rimraf dist && npm run webpack:dev",
-    // "build:prod": "rimraf dist && npm run webpack:prod",
     "lint": "eslint client server; exit 0"
   },
+  "postinstall": "npm rebuild node-sass && npm install --unsafe-perm -f node-sass",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Bikranshu/express-react-boilerplate.git"
