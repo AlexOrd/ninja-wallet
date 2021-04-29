@@ -54,11 +54,11 @@ const Router = () => {
           layout={MainLayout}
           component={AsyncSettingsPage}
         />
-        <Route exact path="/card" component={CardComponent} />
+        <PrivateRoute exact path="/card" component={CardComponent} />
 
-        <Route exact path="/transactions" component={TransactionList} />
-        <Route exact path="/transactions/view/:id" component={View} />
-        <Route path="/transactions/:type/:id?" component={CreateOrUpdateTransaction} />
+        <PrivateRoute exact path="/transactions" component={TransactionList} />
+        <PrivateRoute exact path="/transactions/view/:id" component={View} />
+        <PrivateRoute path="/transactions/:type/:id?" component={CreateOrUpdateTransaction} />
 
         <Route component={NotFound} />
       </Switch>
