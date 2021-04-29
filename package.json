@@ -1,7 +1,7 @@
 {
-  "name": "express-mysql-react-redux",
+  "name": "ninja-wallet",
   "version": "1.0.0",
-  "description": "MySQL, Express, React/Redux Boilerplate Application",
+  "description": "Ninja Wallet",
   "scripts": {
     "seed": "babel-node server/seeds/seed.js",
     "start": "babel-node server/app.js",
@@ -9,8 +9,8 @@
     "clean": "rimraf node_modules && rimraf dist && npm install",
     "webpack:dev": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.config.dev.js",
     "webpack:prod": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
-    "build": "rimraf dist && npm run webpack:dev && npm run start",
-    "build:prod": "rimraf dist && npm run webpack:prod && npm run start",
+    "build": "rimraf dist && npm run webpack:dev",
+    "build:prod": "rimraf dist && npm run webpack:prod",
     "lint": "eslint client server; exit 0"
   },
   "repository": {

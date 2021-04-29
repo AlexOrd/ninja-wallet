@@ -3,7 +3,6 @@
 .env
 .env.example
 /logs
-/dist
 
 
 npm-debug.log
