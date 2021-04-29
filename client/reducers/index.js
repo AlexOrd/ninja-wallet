@@ -7,7 +7,6 @@ import { settingsReducer } from './settings';
 import { fetchStatusesReducer } from './fetch_statuses';
 
 // Import custom components
-import authReducer from './authReducer';
 import profileReducer from './profileReducer';
 import cardReducer from './cardReducer';
 import monobankReducer from './monobankReducer';

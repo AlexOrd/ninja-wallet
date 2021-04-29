@@ -17,7 +17,6 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack/webpack.config.dev';
 import telegramBot from './bots/telegram_bot';
-import Transaction from './models/transaction.model';
 
 if (process.env.NODE_ENV === 'development') {
     const compiler = webpack(webpackConfig);
