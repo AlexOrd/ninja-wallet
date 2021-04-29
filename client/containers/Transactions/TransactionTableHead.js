@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import FilterByCard from './FilterByCard';
-import FilterByCategory from './FilterByCard';
+import FilterByCategory from './FilterByCategory';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { axiosInstance } from '../../config/axios';
 
 function TransactionTableHead(props) {
   const { classes, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const [categories, setCategories] = useState();
+  const [cards, setCards] = useState();
+  const [category, setCategory] = useState();
+  const [card, setCard] = useState();
+
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -50,6 +56,25 @@ function TransactionTableHead(props) {
     { id: 'sum', numeric: true, disablePadding: false, label: 'Amount' },
   ];
 
+  useEffect(() => {
+    axiosInstance.get('/api/card').then((res) => {
+      const allCards = res.data.cards;
+      setCards(allCards);
+    });
+    axiosInstance.get('/api/categories').then((res) => {
+      const allCategories = res.data.data.categories;
+      setCategories(allCategories);
+    });
+  }, []);
+
+  useEffect(() => {
+    props.setFilterByCategory(category);
+  }, [category]);
+
+  useEffect(() => {
+    props.setFilterByCard(card);
+  }, [card]);
+
   return (
     <TableHead>
       <StyledTableRow>
@@ -62,17 +87,21 @@ function TransactionTableHead(props) {
           >
             {headCell.label === 'Card' ? (
               <FilterByCard
+                cards={cards}
                 id={headCell.id}
                 label={headCell.label}
                 type={headCell.label}
-                changeFilter={props.setFilterByCard}
+                card={card}
+                setCard={setCard}
               />
             ) : headCell.label === 'Category' ? (
               <FilterByCategory
+                categories={categories}
                 id={headCell.id}
                 label={headCell.label}
                 type={headCell.label}
-                changeFilter={props.setFilterByCategory}
+                category={category}
+                setCategory={setCategory}
               />
             ) : (
               <TableSortLabel

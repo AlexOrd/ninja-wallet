@@ -10,29 +10,23 @@ import { axiosInstance } from '../../config/axios';
 
 export default function FilterByCategory(props) {
   const classes = useStyles();
-  const [value, setValue] = useState('');
-  const [categories, setCategories] = useState();
-  const [category, setCategory] = useState();
-
-  useEffect(() => {
-    const apiUrlCategories = '/api/categories';
-    axiosInstance.get(apiUrlCategories).then((res) => {
-      const allCategories = res.data.categories;
-      setCategories(allCategories);
-    });
-  }, []);
 
   const handleChangeCategory = (event) => {
-    props.changeFilter(event.target.value);
-    setCategory(event.target.value);
+    props.setCategory(event.target.value);
   };
 
   return (
     <div>
       <FormControl className={classes.formControl}>
         <InputLabel id={props.label}>{props.label}</InputLabel>
-        <Select label={props.label} id={props.id} value={category} onChange={handleChangeCategory}>
-          {categories?.map((el) => {
+        <Select
+          label={props.label}
+          id={props.id}
+          value={props.category || ''}
+          onChange={handleChangeCategory}
+        >
+          <MenuItem value="">All</MenuItem>;
+          {props.categories?.map((el) => {
             return <MenuItem value={el._id}>{el.name}</MenuItem>;
           })}
         </Select>

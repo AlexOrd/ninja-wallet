@@ -78,9 +78,30 @@ export default function TransactionsList() {
       setTransactionsFromApi(allTransactions);
     });
   }, []);
+
   useEffect(() => {
-    setTransactions(transactionsFromApi);
-  }, [transactionsFromApi]);
+    if (!filterByCard && !filterByCategory) {
+      setTransactions(transactionsFromApi);
+    } else {
+      setTransactions(
+        transactionsFromApi.filter((transactions) => {
+          if (filterByCategory && filterByCard) {
+            return (
+              transactions.cardId?._id === filterByCard &&
+              transactions.transactionCategory?._id === filterByCategory
+            );
+          }
+          if (filterByCard) {
+            return transactions.cardId?._id === filterByCard;
+          }
+          if (filterByCategory) {
+            return transactions.transactionCategory?._id === filterByCategory;
+          }
+          return false;
+        })
+      );
+    }
+  }, [transactionsFromApi, filterByCard, filterByCategory]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
