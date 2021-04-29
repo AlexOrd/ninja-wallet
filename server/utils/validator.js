@@ -72,10 +72,8 @@ export default {
   }),
   
   card: Joi.object({
-//     userId: Joi.objectId().required(),
     transactionIds: Joi.array().items(Joi.objectId()),
     transactionId: Joi.objectId(),
-//     cardNumber: Joi.string().creditCard().required(),
     cardNumber: Joi.string().min(16).max(16).required(),
     currency: Joi.string().required(),
     cardName: Joi.string()
