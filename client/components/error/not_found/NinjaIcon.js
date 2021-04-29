@@ -2,73 +2,71 @@ import React from 'react';
 
 export function NinjaIcon(props) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-      height={428}
-      viewBox="0 0 344 428"
-      width={344}
-      {...props}
-    >
+    <svg height={428} viewBox="0 0 344 428" width={344} {...props}>
       <style>
         {
-          '@keyframes a1_t{0%{transform:translate(233.210496px,133.362445px);animation-timing-function:cubic-bezier(.77,0,.175,1)}16.6666%,to{transform:translate(233.210496px,133.362445px)}}@keyframes a2_t{0%,16.6666%{transform:rotate(24.649411deg) skewX(0deg) scale(1,1);animation-timing-function:cubic-bezier(.77,0,.175,1)}28.3333%,71.6666%{transform:rotate(43.443389deg) skewX(0deg) scale(1,1);animation-timing-function:cubic-bezier(.77,0,.175,1)}83.3333%{transform:rotate(24.65deg) skewX(0deg) scale(1,1);animation-timing-function:cubic-bezier(.77,0,.175,1)}to{transform:rotate(24.65deg) skewX(0deg) scale(1,1)}}@keyframes a0_t{0%{transform:translate(-92.077018px,-96.260906px);animation-timing-function:cubic-bezier(.77,0,.175,1)}16.6666%,to{transform:translate(-92.077018px,-96.260906px)}}@keyframes a4_t{0%{transform:translate(23.991851px,88.025196px)}16.6666%{transform:translate(23.991851px,88.025196px);animation-timing-function:cubic-bezier(.77,0,.175,1)}28.3333%,71.6666%{transform:translate(23.073713px,95.781292px);animation-timing-function:cubic-bezier(.77,0,.175,1)}83.3333%,to{transform:translate(23.9919px,88.0252px);animation-timing-function:cubic-bezier(.77,0,.175,1)}}@keyframes a5_t{0%,16.6666%,83.3333%,to{transform:rotate(0deg);animation-timing-function:cubic-bezier(.77,0,.175,1)}28.3333%,71.6666%{transform:rotate(-6.401262deg);animation-timing-function:cubic-bezier(.77,0,.175,1)}}@keyframes a3_t{0%{transform:translate(-23.991851px,-88.025196px);animation-timing-function:cubic-bezier(.77,0,.175,1)}to{transform:translate(-23.991851px,-88.025196px)}}@keyframes a7_t{0%{transform:translate(130.276271px,101.558508px)}16.6666%{transform:translate(130.276271px,101.558508px);animation-timing-function:cubic-bezier(.77,0,.175,1)}28.3333%,71.6666%{transform:translate(130.429937px,95.903741px);animation-timing-function:cubic-bezier(.77,0,.175,1)}83.3333%,to{transform:translate(130.276px,101.559px);animation-timing-function:cubic-bezier(.77,0,.175,1)}}@keyframes a8_t{0%,16.6666%,83.3333%,to{transform:rotate(0deg);animation-timing-function:cubic-bezier(.77,0,.175,1)}28.3333%,71.6666%{transform:rotate(-8.898684deg);animation-timing-function:cubic-bezier(.77,0,.175,1)}}@keyframes a6_t{0%{transform:translate(-130.276271px,-101.558508px);animation-timing-function:cubic-bezier(.77,0,.175,1)}to{transform:translate(-130.276271px,-101.558508px)}}@keyframes a9_t{0%,to{transform:translate(138.500028px,116.500429px) rotate(-65deg) scale(1,1) translate(-12.499999px,-12.5px)}16.6666%,83.3333%{transform:translate(138.500028px,116.500429px) rotate(-65deg) scale(1,1) translate(-12.499999px,-12.5px);animation-timing-function:cubic-bezier(.77,0,.175,1)}28.3333%,71.6666%{transform:translate(138.500028px,116.500429px) rotate(-180deg) scale(1,1) translate(-12.499999px,-12.5px);animation-timing-function:cubic-bezier(.77,0,.175,1)}}@keyframes a9_o{0%,to{opacity:0}16.6667%,83.3333%{opacity:0;animation-timing-function:cubic-bezier(.77,0,.175,1)}28.3333%,71.6667%{opacity:1;animation-timing-function:cubic-bezier(.77,0,.175,1)}}@keyframes a10_t{0%,to{transform:translate(0,0) rotate(0deg) translate(11.096085px,11px)}16.6666%,83.3333%{transform:translate(0,0) rotate(0deg) translate(11.096085px,11px);animation-timing-function:cubic-bezier(.77,0,.175,1)}28.3333%,71.6666%{transform:translate(.001557px,-.001557px) rotate(.007138deg) translate(11.096085px,2px);animation-timing-function:cubic-bezier(.77,0,.175,1)}}@keyframes a10_h{0%,to{height:3px}16.6667%,83.3333%{height:3px;animation-timing-function:cubic-bezier(.77,0,.175,1)}28.3333%,71.6667%{height:21px;animation-timing-function:cubic-bezier(.77,0,.175,1)}}@keyframes a11_t{0%,to{transform:translate(25px,0) rotate(90deg) translate(11px,11px)}16.6666%,83.3333%{transform:translate(25px,0) rotate(90deg) translate(11px,11px);animation-timing-function:cubic-bezier(.77,0,.175,1)}28.3333%,71.6666%{transform:translate(25.001557px,.001557px) rotate(90.007138deg) translate(11px,2.129952px);animation-timing-function:cubic-bezier(.77,0,.175,1)}}@keyframes a11_h{0%,to{height:3px}16.6667%,83.3333%{height:3px;animation-timing-function:cubic-bezier(.77,0,.175,1)}28.3333%,71.6667%{height:20.7401px;animation-timing-function:cubic-bezier(.77,0,.175,1)}}'
+          '@keyframes a1_t { 0% { transform: translate(233.210496px,133.362445px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 16.6666% { transform: translate(233.210496px,133.362445px); } 100% { transform: translate(233.210496px,133.362445px); } } @keyframes a2_t { 0% { transform: rotate(24.649411deg) skewX(-0deg) scale(1,1); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 16.6666% { transform: rotate(24.649411deg) skewX(-0deg) scale(1,1); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 28.3333% { transform: rotate(43.443389deg) skewX(-0deg) scale(1,1); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 71.6666% { transform: rotate(43.443389deg) skewX(-0deg) scale(1,1); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 83.3333% { transform: rotate(24.65deg) skewX(-0deg) scale(1,1); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 100% { transform: rotate(24.65deg) skewX(-0deg) scale(1,1); } } @keyframes a0_t { 0% { transform: translate(-92.077018px,-96.260906px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 16.6666% { transform: translate(-92.077018px,-96.260906px); } 100% { transform: translate(-92.077018px,-96.260906px); } } @keyframes a4_t { 0% { transform: translate(23.991851px,88.025196px); } 16.6666% { transform: translate(23.991851px,88.025196px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 28.3333% { transform: translate(23.073713px,95.781292px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 71.6666% { transform: translate(23.073713px,95.781292px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 83.3333% { transform: translate(23.9919px,88.0252px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 100% { transform: translate(23.9919px,88.0252px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } } @keyframes a5_t { 0% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 16.6666% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 28.3333% { transform: rotate(-6.401262deg); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 71.6666% { transform: rotate(-6.401262deg); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 83.3333% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 100% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } } @keyframes a3_t { 0% { transform: translate(-23.991851px,-88.025196px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 100% { transform: translate(-23.991851px,-88.025196px); } } @keyframes a7_t { 0% { transform: translate(130.276271px,101.558508px); } 16.6666% { transform: translate(130.276271px,101.558508px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 28.3333% { transform: translate(130.429937px,95.903741px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 71.6666% { transform: translate(130.429937px,95.903741px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 83.3333% { transform: translate(130.276px,101.559px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 100% { transform: translate(130.276px,101.559px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } } @keyframes a8_t { 0% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 16.6666% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 28.3333% { transform: rotate(-8.898684deg); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 71.6666% { transform: rotate(-8.898684deg); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 83.3333% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 100% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } } @keyframes a6_t { 0% { transform: translate(-130.276271px,-101.558508px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 100% { transform: translate(-130.276271px,-101.558508px); } } @keyframes a9_t { 0% { transform: translate(138.500028px,116.500429px) rotate(-65deg) scale(1,1) translate(-12.499999px,-12.5px); } 16.6666% { transform: translate(138.500028px,116.500429px) rotate(-65deg) scale(1,1) translate(-12.499999px,-12.5px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 28.3333% { transform: translate(138.500028px,116.500429px) rotate(-180deg) scale(1,1) translate(-12.499999px,-12.5px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 71.6666% { transform: translate(138.500028px,116.500429px) rotate(-180deg) scale(1,1) translate(-12.499999px,-12.5px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 83.3333% { transform: translate(138.500028px,116.500429px) rotate(-65deg) scale(1,1) translate(-12.499999px,-12.5px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 100% { transform: translate(138.500028px,116.500429px) rotate(-65deg) scale(1,1) translate(-12.499999px,-12.5px); } } @keyframes a9_o { 0% { opacity: 0; } 16.6667% { opacity: 0; animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 28.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 71.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 83.3333% { opacity: 0; animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 100% { opacity: 0; } } @keyframes a10_t { 0% { transform: translate(0px,0px) rotate(0deg) translate(11.096085px,11px); } 16.6666% { transform: translate(0px,0px) rotate(0deg) translate(11.096085px,11px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 28.3333% { transform: translate(0.001557px,-0.001557px) rotate(0.007138deg) translate(11.096085px,2px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 71.6666% { transform: translate(0.001557px,-0.001557px) rotate(0.007138deg) translate(11.096085px,2px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 83.3333% { transform: translate(0px,0px) rotate(0deg) translate(11.096085px,11px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 100% { transform: translate(0px,0px) rotate(0deg) translate(11.096085px,11px); } } @keyframes a10_h { 0% { height: 3px; } 16.6667% { height: 3px; animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 28.3333% { height: 21px; animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 71.6667% { height: 21px; animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 83.3333% { height: 3px; animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 100% { height: 3px; } } @keyframes a11_t { 0% { transform: translate(25px,0px) rotate(90deg) translate(11px,11px); } 16.6666% { transform: translate(25px,0px) rotate(90deg) translate(11px,11px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 28.3333% { transform: translate(25.001557px,0.001557px) rotate(90.007138deg) translate(11px,2.129952px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 71.6666% { transform: translate(25.001557px,0.001557px) rotate(90.007138deg) translate(11px,2.129952px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 83.3333% { transform: translate(25px,0px) rotate(90deg) translate(11px,11px); animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 100% { transform: translate(25px,0px) rotate(90deg) translate(11px,11px); } } @keyframes a11_h { 0% { height: 3px; } 16.6667% { height: 3px; animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 28.3333% { height: 20.7401px; animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 71.6667% { height: 20.7401px; animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 83.3333% { height: 3px; animation-timing-function: cubic-bezier(0.77,0,0.175,1); } 100% { height: 3px; } }'
         }
       </style>
       <defs>
-        <ellipse id="prefix__a" rx={172} ry={18.5} transform="translate(172 18.5)" />
+        <ellipse id="a" rx={172} ry={18.5} transform="translate(0,0) translate(172,18.5)" />
       </defs>
-      <g fill="none" fillRule="evenodd">
-        <g fillRule="nonzero" transform="translate(0 391)">
-          <use fill="#8a9fa2" xlinkHref="#prefix__a" />
-          <use fill="#8a9fa2" xlinkHref="#prefix__a" />
+      <g fill="none" fillRule="evenodd" transform="translate(0,-18)">
+        <g fillRule="nonzero" transform="translate(0,409)">
+          <use fill="#8a9fa2" xlinkHref="#a" />
+          <use fill="#8a9fa2" xlinkHref="#a" />
           <path
-            d="M41.381 17.947L71 32.97l1.188.618S139 38 178 37c61 0 110.697-4.894 110.697-4.894L202-3z"
+            d="M41.381,17.947L71,32.97L72.1881,33.5876C72.1881,33.5876,139,38,178,37C239,37,288.697,32.1062,288.697,32.1062L202,-3Z"
             fill="#7f8f92"
           />
         </g>
         <path
-          d="M145.202 156C100.401 166.183 78 194.535 78 241.056c2.308 32.881 13.49 58.002 33.545 75.365 20.056 17.363 44.472 18.736 73.248 4.119 19.232-9.025 32.705-9.025 40.419 0 7.715 9.026 11.88 26.725 12.498 53.099-2.043 3.256-3.064 6.391-3.064 9.406 0 2.071 1.469 6.8 10.253 12.041 5.855 3.494 11.569 5.125 17.143 4.892 1.716-7.178 2.304-12.218 1.764-15.119-1.715-9.223-11.552-12.412-11.69-12.429 8.46-18.715 10.912-41.905 7.358-69.569-4.451-25.571-20.013-34.61-46.687-27.117-40.009 11.239-55.83 4.503-52.233-23.653 3.108-23.357 30.407-51.405 14.505-60.696-10.602-6.195-20.554-17.993-29.857-35.395z"
+          d="M145.202,174C100.401,184.183,78,212.535,78,259.056C80.3079,291.937,91.4896,317.058,111.545,334.421C131.601,351.784,156.017,353.157,184.793,338.54C204.025,329.515,217.498,329.515,225.212,338.54C232.927,347.566,237.092,365.265,237.71,391.639C235.667,394.895,234.646,398.03,234.646,401.045C234.646,403.116,236.115,407.845,244.899,413.086C250.754,416.58,256.468,418.211,262.042,417.978C263.758,410.8,264.346,405.76,263.806,402.859C262.091,393.636,252.254,390.447,252.116,390.43C260.576,371.715,263.028,348.525,259.474,320.861C255.023,295.29,239.461,286.251,212.787,293.744C172.778,304.983,156.957,298.247,160.554,270.091C163.662,246.734,190.961,218.686,175.059,209.395C164.457,203.2,154.505,191.402,145.202,174Z"
           fill="#1e8dbb"
           fillRule="nonzero"
         />
         <path
-          d="M149 158.515C94.246 182.084 72.265 220.246 83.057 273v-6.124L79 248.117v-26.212l8.864-28.406 18.458-20.912c5.299-3.691 10.245-6.61 14.84-8.755 4.594-2.146 11.486-4.756 20.677-7.832z"
+          d="M149,176.515C94.2464,200.084,72.2653,238.246,83.0567,291L83.0567,284.876L79,266.117L79,239.905L87.8643,211.499L106.322,190.587C111.621,186.896,116.567,183.977,121.162,181.832C125.756,179.686,132.648,177.076,141.839,174Z"
           fill="#d6fdf6"
           fillRule="nonzero"
         />
         <path
-          d="M165.329 186c5.02 17.961 2.512 35.797-7.523 53.508-7.846 13.848-10.45 22.863-7.811 27.045.341.541-14.319 3.163-33.234 6.2-18.914 3.036-23.706 2.389-32.873.757-.477 2.018-.507 5.538 1.445 5.694 1.98.158 18.977-.98 50.992-3.415 11.347-1.42 17.07-1.42 17.169 0 1.236 17.65 11.175 24.445 29.818 20.384 20.893-4.551 34.86 1.21 41.902 17.285 8.19 26.448 12.286 46.434 12.286 59.956l-3.196 7.162v5.402l8.057 8.464L255.918 401l5.566-1.183L263 383.19c-1.323-2.136-2.752-3.881-4.287-5.236-1.535-1.354-3.798-2.868-6.791-4.54l6.791-28.461 1.52-21.167-3.137-27.613-4.212-11.038-8.378-7.552-11.289-4.073-18.782 1.632-24.999 5.472h-13.127l-9.757-3.608-5.157-6.906-1.815-9.59 2.623-18.397 9.637-20.118 4.9-12.258-1.671-12.267-1.728-5.289z"
+          d="M165.329,204C170.349,221.961,167.841,239.797,157.806,257.508C149.96,271.356,147.356,280.371,149.995,284.553C150.336,285.094,135.676,287.716,116.761,290.753C97.8466,293.789,93.0547,293.142,83.8876,291.51C83.4109,293.528,83.3806,297.048,85.3329,297.204C87.3122,297.362,104.31,296.224,136.325,293.789C147.672,292.369,153.395,292.369,153.494,293.789C154.73,311.439,164.669,318.234,183.312,314.173C204.205,309.622,218.172,315.383,225.214,331.458C233.404,357.906,237.5,377.892,237.5,391.414L234.304,398.576L234.304,403.978L242.361,412.442L255.918,419L261.484,417.817L263,401.19C261.677,399.054,260.248,397.309,258.713,395.954C257.178,394.6,254.915,393.086,251.922,391.414L258.713,362.953L260.233,341.786L257.096,314.173L252.884,303.135L244.506,295.583L233.217,291.51L214.435,293.142L189.436,298.614L176.309,298.614L166.552,295.006L161.395,288.1L159.58,278.51L162.203,260.113L171.84,239.995L176.74,227.737L175.069,215.47L173.341,210.181Z"
           fill="#1773a2"
           fillRule="nonzero"
         />
         <path
-          d="M145.202 156C100.401 166.183 78 194.535 78 241.056c2.308 32.881 13.49 58.002 33.545 75.365 20.056 17.363 44.472 18.736 73.248 4.119 19.232-9.025 32.705-9.025 40.419 0 7.715 9.026 11.88 26.725 12.498 53.099-2.043 3.256-3.064 6.391-3.064 9.406 0 2.071 1.469 6.8 10.253 12.041 5.855 3.494 11.569 5.125 17.143 4.892 1.716-7.178 2.304-12.218 1.764-15.119-1.715-9.223-11.552-12.412-11.69-12.429 8.46-18.715 10.912-41.905 7.358-69.569-4.451-25.571-20.013-34.61-46.687-27.117-40.009 11.239-55.83 4.503-52.233-23.653 3.108-23.357 30.407-51.405 14.505-60.696-10.602-6.195-20.554-17.993-29.857-35.395z"
+          d="M145.202,174C100.401,184.183,78,212.535,78,259.056C80.3079,291.937,91.4896,317.058,111.545,334.421C131.601,351.784,156.017,353.157,184.793,338.54C204.025,329.515,217.498,329.515,225.212,338.54C232.927,347.566,237.092,365.265,237.71,391.639C235.667,394.895,234.646,398.03,234.646,401.045C234.646,403.116,236.115,407.845,244.899,413.086C250.754,416.58,256.468,418.211,262.042,417.978C263.758,410.8,264.346,405.76,263.806,402.859C262.091,393.636,252.254,390.447,252.116,390.43C260.576,371.715,263.028,348.525,259.474,320.861C255.023,295.29,239.461,286.251,212.787,293.744C172.778,304.983,156.957,298.247,160.554,270.091C163.662,246.734,190.961,218.686,175.059,209.395C164.457,203.2,154.505,191.402,145.202,174Z"
           stroke="#182022"
           strokeWidth={4}
         />
-        <g fill="#35424a" fillRule="nonzero" stroke="#182022">
+        <g
+          fill="#35424a"
+          fillRule="nonzero"
+          stroke="#182022"
+          transform="translate(47.708,297.329) rotate(-20)"
+        >
           <path
-            d="M160.273 264.32c-32.424 9.909-57.554 14.246-75.39 13.01-1.274 1.67-1.48 3.361-.616 5.076.863 1.715 12.106 1.151 33.729-1.692 11.573-2.046 26.196-6.052 43.87-12.02l.5-.523-1.317-3.823z"
+            d="M110.91,24.3953C77.0524,22.6173,51.9546,18.0978,35.6164,10.8367C33.8482,11.9691,33.0765,13.4886,33.3014,15.3954C33.5263,17.3022,44.2841,20.6175,65.575,25.3412C77.1501,27.3771,92.2616,28.6138,110.91,29.0514C111.343,28.8375,111.56,28.7306,111.56,28.7306L111.63,24.6872Z"
             strokeWidth={2}
           />
           <g strokeWidth={3}>
-            <path d="M83.877 282.446c-1.69 1.806-3.2 1.149-4.53-1.974-1.331-3.122.023-4.403 4.062-3.841l.953 1.134c-.711 1.189-.91 2.65-.593 4.385.025.099.06.197.108.296z" />
-            <path d="M81.243 276.148c-.135-3.913-2.135-5.865-5.998-5.856-2.576.005-6.171.782-9.381 15.494-.842 3.86-3.196 11.317-7.06 22.371 8.827 5.116 13.47 5.399 13.929.848.459-4.55.656-7.565.592-9.043-.51-21.867 1.239-29.48 5.244-22.84l-.213.727-.84 1.072c-1.379 1.834-2.24 3.741-2.586 5.722-.144 4.932 1.721 7.199 2.34 11.45.42 2.9.077 7.481-1.032 13.743l10.824-4.018c.81-3.98.039-8.113-2.314-12.4-2.353-4.288-4.242-8.548-5.668-12.78l-.791-2.48.957-1.283z" />
+            <path d="M32.9213,15.2992C30.7156,16.419,29.5216,15.2843,29.3393,11.8952C29.157,8.50612,30.8675,7.76595,34.4706,9.6747L34.9787,11.0667C33.9033,11.9405,33.2175,13.2464,32.9213,14.9846C32.9109,15.086,32.9109,15.1908,32.9213,15.2992Z" />
+            <path d="M32.6005,8.48071C33.8116,4.75734,32.6005,2.23903,28.9671,0.925774C26.5451,0.0503558,22.9006,-0.449522,14.8525,12.2772C12.7408,15.6164,7.97878,21.8189,0.566433,30.8846C7.11136,38.7112,11.3777,40.5648,13.3656,36.4453C15.3535,32.3259,16.5701,29.5609,17.0155,28.1502C24.0158,7.42773,28.2622,0.871234,29.7546,8.48071L29.3055,9.09116L28.1493,9.8117C26.227,11.0633,24.765,12.5608,23.7632,14.3041C21.9408,18.889,22.9181,21.6572,22.045,25.8627C21.4491,28.7327,19.5592,32.9202,16.3754,38.4251L27.9209,38.3518C30.0433,34.8892,30.7323,30.741,29.9877,25.9074C29.243,21.0737,28.9246,16.4246,29.0323,11.9599L29.1372,9.35879L30.4755,8.48071Z" />
           </g>
         </g>
         <path
-          d="M114.883 208c-7.488 30.067-.39 52.981 21.294 68.741 21.685 15.761 26.433 13.362 14.244-7.197-13.363-20.613-13.363-39.183 0-55.709"
+          d="M114.883,226C107.395,256.067,114.493,278.981,136.177,294.741C157.862,310.502,162.61,308.103,150.421,287.544C137.058,266.931,137.058,248.361,150.421,231.835"
           fill="#1e8dbb"
           fillRule="nonzero"
         />
         <path
-          d="M145.79 218.392c-15.249 21.169-14.691 42.613 1.675 64.332l3.608 4.057 4.732-.253.851-4.838-5.596-11.26-8.556-16.742-1.897-13.742 1.897-8.155z"
+          d="M145.79,236.392C130.541,257.561,131.099,279.005,147.465,300.724C149.87,303.429,151.073,304.781,151.073,304.781C154.227,304.613,155.805,304.528,155.805,304.528C156.372,301.303,156.656,299.69,156.656,299.69L151.06,288.43L142.504,271.688L140.607,257.946L142.504,249.791Z"
           fill="#1773a2"
           fillRule="nonzero"
         />
         <path
-          d="M114.883 208c-7.488 30.067-.39 52.981 21.294 68.741 21.685 15.761 26.433 13.362 14.244-7.197-13.363-20.613-13.363-39.183 0-55.709"
+          d="M114.883,226C107.395,256.067,114.493,278.981,136.177,294.741C157.862,310.502,162.61,308.103,150.421,287.544C137.058,266.931,137.058,248.361,150.421,231.835"
           stroke="#182022"
           strokeWidth={4}
         />
@@ -84,12 +82,13 @@ export function NinjaIcon(props) {
               }}
             >
               <g
+                transform="translate(233.21,133.362) rotate(24.6494) translate(-92.077,-96.2609)"
                 style={{
                   animation: 'a0_t 6s linear infinite both',
                 }}
               >
                 <path
-                  d="M247.024 20.819c6.088 4.733 15.373 11.373 27.856 19.92 23.8 14.148 38.615 34.136 44.444 59.96 5.83 25.827 1.35 49.843-13.442 72.05-19.554 26.503-46.078 38.934-79.568 37.291-33.492-1.643-58.908-17.425-76.25-47.346-14.844-31.07-14.77-59.712.227-85.929 14.995-26.217 37.159-41.648 66.49-46.295 15.71-4.142 19.995-11.645 12.851-22.51z"
+                  d="M65.2015,4.57141C72.7089,6.33428,83.9175,8.49682,98.8272,11.0591C126.359,13.9919,148.16,25.9789,164.229,47.0198C180.299,68.0608,186.243,91.757,182.061,118.109C175.342,150.353,156.42,172.713,125.296,185.188C94.171,197.663,64.4886,193.919,36.2485,173.957C9.79839,151.91,-2.07906,125.846,0.616173,95.7638C3.31141,65.6819,17.0193,42.4127,41.7398,25.9561C54.2915,15.6396,55.0553,7.03325,44.0311,0.137098Z"
                   fill="#1e8dbb"
                 />
                 <g
@@ -103,8 +102,9 @@ export function NinjaIcon(props) {
                     }}
                   >
                     <path
-                      d="M141.563 136.852c7.923-51.938 35.19-87.83 81.798-107.677l-19.036 4.107c-16.52 5.375-29.806 13.479-39.86 24.312-10.052 10.833-17.678 24.538-22.877 41.116-1.932 8.16-2.9 14.5-2.902 19.023-.003 4.523.956 10.896 2.877 19.119z"
+                      d="M17.7439,154.015C3.28391,103.506,13.096,59.5133,47.1802,22.0355L31.5916,33.7075C18.8184,45.4822,10.1226,58.389,5.50411,72.4277C0.885616,86.4663,-0.329504,102.103,1.85875,119.339C3.50581,127.56,5.27126,133.726,7.15509,137.839C9.03893,141.951,12.5685,147.343,17.7439,154.015Z"
                       fill="#d6fdf6"
+                      transform="translate(23.9919,88.0252) translate(-23.9919,-88.0252)"
                       style={{
                         animation: 'a3_t 6s linear infinite both',
                       }}
@@ -122,8 +122,9 @@ export function NinjaIcon(props) {
                     }}
                   >
                     <path
-                      d="M280.074 43.34c4.623 32.53 1.179 61.34-10.334 86.43-11.513 25.089-36.26 45.274-74.242 60.552-3.284 1.785-5.846 2.949-7.685 3.49-1.84.542-4.546.93-8.12 1.164 29.736 18.542 61.098 20.08 94.088 4.613 32.99-15.467 48.89-43.907 47.701-85.32-2.953-21.708-10.633-40.028-23.04-54.959l-8.561-6.786z"
+                      d="M104.633,11.2562C122.402,38.8944,131.287,66.5159,131.287,94.1207C131.287,121.725,117.213,150.392,89.065,180.119C86.8244,183.111,84.9812,185.237,83.5355,186.496C82.0898,187.755,79.7916,189.236,76.6408,190.94C111.4,195.391,140.546,183.708,164.079,155.892C187.612,128.076,190.202,95.5961,171.85,58.4528C160.112,39.9536,145.491,26.5064,127.987,18.1113L117.376,15.5133Z"
                       fill="#1773a2"
+                      transform="translate(130.276,101.559) translate(-130.276,-101.559)"
                       style={{
                         animation: 'a6_t 6s linear infinite both',
                       }}
@@ -131,70 +132,108 @@ export function NinjaIcon(props) {
                   </g>
                 </g>
                 <path
-                  d="M247.024 20.819c6.088 4.733 15.373 11.373 27.856 19.92 23.8 14.148 38.615 34.136 44.444 59.96 5.83 25.827 1.35 49.843-13.442 72.05-19.554 26.503-46.078 38.934-79.568 37.291-33.492-1.643-58.908-17.425-76.25-47.346-14.844-31.07-14.77-59.712.227-85.929 14.995-26.217 37.159-41.648 66.49-46.295 15.71-4.142 19.995-11.645 12.851-22.51z"
+                  d="M65.2015,4.57141C72.7089,6.33428,83.9175,8.49682,98.8272,11.0591C126.359,13.9919,148.16,25.9789,164.229,47.0198C180.299,68.0608,186.243,91.757,182.061,118.109C175.342,150.353,156.42,172.713,125.296,185.188C94.171,197.663,64.4886,193.919,36.2485,173.957C9.79839,151.91,-2.07906,125.846,0.616173,95.7638C3.31141,65.6819,17.0193,42.4127,41.7398,25.9561C54.2915,15.6396,55.0553,7.03325,44.0311,0.137098Z"
                   stroke="#182022"
                   strokeWidth={4}
                 />
                 <path
-                  d="M296.14 175.05c-30.797 4.35-49.458.964-55.984-10.159-6.525-11.12-2.714-22.292 11.436-33.512 10.178-6.445 20.142-5.41 29.892 3.103 6.462 5.202 13.589 15.005 21.38 29.41 1.986 2.673 3.932 3.866 5.84 3.578-1.03 3.1-4.047 7.302-6.5 9.594-1.682-1.468-3.703-2.139-6.065-2.013z"
+                  d="M174.166,124.265C147.99,141.062,129.617,145.767,119.047,138.38C108.478,130.994,107.283,119.251,115.464,103.152C122.027,93.0496,131.514,89.8341,143.926,93.5053C151.969,95.5377,162.535,101.476,175.625,111.319C178.544,112.92,180.81,113.192,182.424,112.135C182.781,115.381,181.791,120.459,180.518,123.565C178.377,122.933,176.26,123.166,174.166,124.265Z"
                   fill="#fff"
                   stroke="#182022"
                   strokeWidth={4}
                 />
+                <g
+                  fill="#182022"
+                  opacity={0}
+                  transform="translate(138.5,116.5) rotate(-65) translate(-12.5,-12.5)"
+                  style={{
+                    animation: 'a9_t 6s linear infinite both, a9_o 6s linear infinite both',
+                  }}
+                >
+                  <rect
+                    height={3}
+                    rx={1.5}
+                    width={2.80783}
+                    opacity={1}
+                    transform="translate(0,0) translate(11.0961,11)"
+                    style={{
+                      animation: 'a10_t 6s linear infinite both, a10_h 6s linear infinite both',
+                    }}
+                  />
+                  <rect
+                    height={3}
+                    rx={1.5}
+                    width={3}
+                    opacity={1}
+                    transform="translate(25,0) rotate(90) translate(11,11)"
+                    style={{
+                      animation: 'a11_t 6s linear infinite both, a11_h 6s linear infinite both',
+                    }}
+                  />
+                </g>
               </g>
             </g>
           </g>
           <path
-            d="M70.413 220.844l24.174-58.382 2.631.99-23.81 57.392c-6.689 16.169-11.953 29.12-15.794 38.856-3.84 9.734-9.565 24.273-17.173 43.617-1.147.536-2.029.031-2.646-1.513l17.722-44.12z"
+            d="M70.2006,238.795L93.3522,180L96,180.944L73.1942,238.743C66.7896,255.026,61.7521,268.067,58.0818,277.868C54.4116,287.668,48.9418,302.305,41.6726,321.779C40.5352,322.334,39.6444,321.845,39,320.312L55.9501,275.89Z"
             fill="#35424a"
             stroke="#182022"
             strokeWidth={2}
+            transform="translate(4.39083,-1.13981) rotate(1)"
           />
           <path
-            d="M173 192c3.346 6.961 4.271 14.295 2.776 22 .928-1.832 1.549-3.119 1.863-3.862 1.023-2.422 1.41-3.887 1.41-3.887l.82-4.081c.175-1.603.175-3.053 0-4.352-.174-1.298-.253-1.99-.236-2.076z"
+            d="M173,210C176.346,216.961,177.271,224.295,175.776,232C176.704,230.168,177.325,228.881,177.639,228.138C178.662,225.716,179.049,224.251,179.049,224.251C179.596,221.53,179.869,220.17,179.869,220.17C180.044,218.567,180.044,217.117,179.869,215.818C179.695,214.52,179.616,213.828,179.633,213.742Z"
             fill="#35424a"
             stroke="#182022"
             strokeWidth={3}
           />
           <path
-            d="M98 172l-19.163 44L70 211.838 86.769 172z"
+            d="M98,190L78.837,234L70,229.838L86.769,190Z"
             fill="#35424a"
             stroke="#182022"
             strokeWidth={4}
           />
-          <path d="M70.385 207.33l-1.559-2.395 10.945-26.413 2.765.487z" fill="#182022" />
           <path
-            d="M93.226 160.454l2.2-3.883a1 1 0 011.26-.428l3.634 1.537a1 1 0 01.541 1.288l-1.703 4.313a1 1 0 01-1.36.536l-4.132-1.967a1 1 0 01-.44-1.396z"
+            d="M72.951,226L71,223.913L77.192,196L80,196Z"
+            fill="#182022"
+            transform="translate(37.7868,-9.90487) rotate(10)"
+          />
+          <path
+            d="M93.2261,178.454L95.4259,174.571C95.6761,174.129,96.2178,173.945,96.6855,174.143L100.32,175.68C100.82,175.891,101.06,176.463,100.861,176.968L99.1577,181.281C98.9548,181.795,98.374,182.047,97.8603,181.844C97.8391,181.835,97.8183,181.826,97.7977,181.817L93.6665,179.85C93.1678,179.613,92.956,179.016,93.1933,178.517C93.2035,178.496,93.2145,178.475,93.2261,178.454Z"
             fill="#35424a"
             stroke="#182022"
             strokeWidth={2}
           />
           <path
-            d="M111.364 119.406c1.802-.702 3.026-.277 3.671 1.274L98.65 160.778c-1.529-.022-2.764-.57-3.705-1.645z"
+            d="M113.482,138.184C115.347,137.674,116.52,138.225,117,139.835L96.513,178C94.995,177.819,93.8241,177.144,93,175.977Z"
             fill="#35424a"
             stroke="#182022"
             strokeWidth={2}
+            transform="translate(-15.9403,11.841) rotate(-6)"
           />
           <path
-            d="M54.688 314.515c-.154.952-.345 2.257-.574 3.911-.553 4.009-1.32 10.045-2.3 18.106-1.916 15.761-4.644 39.251-8.185 70.468h167.533l-9.608-88.847a5369.21 5369.21 0 01-20.226 5.324c-2.455.639-2.605.69-9.67 3.194-8.797 3.116-14.325 4.436-21.199 4.436-11.092 0-22.51-1.439-39.339-4.735-7.476-1.465-42.745-9.031-56.432-11.857z"
+            d="M54.6884,332.515C54.5344,333.467,54.3427,334.772,54.1143,336.426C53.5607,340.435,52.7937,346.471,51.814,354.532C49.8981,370.293,47.1698,393.783,43.6293,425L211.162,425L201.554,336.153C193.347,338.327,186.605,340.102,181.328,341.477C178.873,342.116,178.723,342.167,171.658,344.671C162.861,347.787,157.333,349.107,150.459,349.107C139.367,349.107,127.949,347.668,111.12,344.372C103.644,342.907,68.3749,335.341,54.6884,332.515Z"
             fill="#35424a"
             stroke="#182022"
             strokeWidth={4}
           />
         </g>
         <path
-          d="M97.5 152.5l4 2m0-11l3 2m1-11l3 2m1-11l3 2"
+          d="M97.5,170.5L101.5,172.5M101.5,161.5L104.5,163.5M105.5,152.5L108.5,154.5M109.5,143.5L112.5,145.5"
           stroke="#182022"
           strokeLinecap="square"
         />
       </g>
       <text
-        fill="#fff"
+        fill="#ffffff"
         fontSize={28}
         fontFamily="Montserrat"
         letterSpacing="0em"
         wordSpacing="0em"
-        transform="translate(100.896 376.162)"
+        stroke="none"
+        textDecoration=""
+        direction="ltr"
+        transform="translate(100.896,376.162)"
         style={{
           lineHeight: 16,
           whiteSpace: 'pre',
