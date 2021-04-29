@@ -34,4 +34,4 @@ export const isCardExist = async cardId => {
 }
 
 
-export const checkCardOwner = (card, userId) => userId === card.userId ? true: false
+export const checkCardOwner = (card, userId) => card.userId.toString() === userId.toString() ? true: false

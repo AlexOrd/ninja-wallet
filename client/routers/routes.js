@@ -5,12 +5,12 @@ import loadable from '@loadable/component';
 // Import custom components
 import PrivateRoute from './PrivateRoute';
 import MainLayout from '../components/common/layout/MainLayout';
+import CardComponent from '../containers/card-container/CardComponent';
 
 import TransactionList from '../containers/Transactions/TransanctionList';
 import CreateOrUpdateTransaction from '../containers/Transactions/CreateOrUpdateTransaction';
 import View from '../containers/Transactions/View';
 
-//import NotFound from '../components/error/NotFound';
 import { NotFound } from '../components/error/not_found/NotFound';
 import { ROUTES } from '../shared/routes-list';
 import ManageCategories from '../containers/manage-categories/manage-categories-container';
@@ -54,6 +54,7 @@ const Router = () => {
           layout={MainLayout}
           component={AsyncSettingsPage}
         />
+        <Route exact path="/card" component={CardComponent} />
 
         <Route exact path="/transactions" component={TransactionList} />
         <Route exact path="/transactions/view/:id" component={View} />

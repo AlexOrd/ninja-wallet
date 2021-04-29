@@ -8,12 +8,8 @@ const schema = new Schema({
     ref: 'User',
     required: true
   },
-  transactionId: {
-    type: Schema.Types.ObjectId,
-  },
-  transactionIds: {
-    type: [Schema.Types.ObjectId],
-    ref: "Transaction"
+  transactions: {
+    type: [],
   },
   cardNumber: {
     type: String,
@@ -30,6 +26,9 @@ const schema = new Schema({
   balance: {
     type: Number,
     default: 0
+  },
+  monobankAccoutId: {
+    type: String
   }
 }, { timestamps: true, collection: 'card' });
 
