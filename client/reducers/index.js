@@ -7,6 +7,7 @@ import { settingsReducer } from './settings';
 import { fetchStatusesReducer } from './fetch_statuses';
 
 // Import custom components
+import categoriesReducer from './categoriesReducer';
 import dashboardReducer from './dashboardReducer';
 
 const appReducer = (history) =>
@@ -16,6 +17,8 @@ const appReducer = (history) =>
     settings: settingsReducer,
     fetchStatuses: fetchStatusesReducer,
     form: formReducer, // ← redux-form
+    auth: authReducer,
+    categories: categoriesReducer,
     dashboard: dashboardReducer,
   });
 
