@@ -37,7 +37,7 @@ const ManageCategories = (props) => {
 
   return (
     <Grid container className={classes.manageCategoryWrapper}>
-      <Grid item xs={12} md={4}>
+      <Grid className={classes.manageCategoriesStatsWrapper} item xs={12} md={4}>
         <StatsBlock categories={categories} />
       </Grid>
       <Grid item xs={12} md={true}>

@@ -21,4 +21,9 @@ export const useStyles = makeStyles((theme) => ({
   viewAnalyticsLinkWrapper: {
     padding: theme.spacing(1),
   },
+  manageCategoriesStatsWrapper: {
+    [theme.breakpoints.up('md')]: {
+      paddingRight: '1em',
+    },
+  },
 }));
