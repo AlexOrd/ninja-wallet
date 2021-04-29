@@ -14,7 +14,8 @@ export const changePassword = async (req, res, next) => {
     const { err: errVerifyingPassword } = await authVerifiers.password(user, req.body.oldPassword);
     if (errVerifyingPassword) return next(authErrors.INCORRECT_OLD_PASSWORD);
 
-    user.auth.password = encryptData(req.body.newPassword);
+    const saltedNewPassword = await encryptData(req.body.newPassword); 
+    user.auth.password = saltedNewPassword
     user.save();
     return res.status(200).end();
   } catch (error) {

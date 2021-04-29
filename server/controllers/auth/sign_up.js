@@ -20,11 +20,11 @@ export const signUp = async (req, res, next) => {
 
     const codeForEmailVerification = generateRandomNumbers();
     const confirmCode = generateRandomString();
-
+    const saltedPassword = await encryptData(password);
     const user = new User({
       email,
       auth: {
-        password: encryptData(password),
+        password: saltedPassword,
         openedOnDevices: [
           {
             lastLogin: new Date(),

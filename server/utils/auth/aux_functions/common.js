@@ -12,7 +12,7 @@ export const generateRandomNumbers = (length = 6) => {
   return code.join('');
 };
 
-export const encryptData = (data) => bcrypt.hashSync(data, 10);
+export const encryptData = async (data) => bcrypt.hash(data, 10);
 export const setAuthHeaders = function (accessToken = null, refreshToken = null, res) {
   res.header('Access-Token', accessToken);
   res.header('Refresh-Token', refreshToken);
