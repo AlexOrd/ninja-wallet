@@ -1,18 +1,5 @@
-import React, { useState } from 'react';
-import {
-  Box,
-  Grid,
-  Typography,
-  Card,
-  CardContent,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Slide,
-} from '@material-ui/core';
+import React from 'react';
+import { Box, Grid, Typography, Card, CardContent, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import UserPhoto from './userPhoto/UserPhoto.jsx';
@@ -25,94 +12,47 @@ const useStyles = makeStyles({
   },
 });
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
-const ProfileData = () => {
-  const [open, setOpen] = useState(false);
+const ProfileData = (props) => {
   const styles = useStyles();
 
-  const deleteClickHandler = () => {
-    setOpen(true);
-  };
-  const closeDialogHandler = () => {
-    setOpen(false);
+  const exportClickHandler = () => {
+    props.exportCsv();
   };
 
   return (
     <Card className={styles.cardBasis}>
-      <UserPhoto />
+      <UserPhoto
+        profilePhoto={props.profileInfo.avatarId.image || props.profileInfo.avatarId}
+        avatarId={props.profileInfo.avatarId._id}
+        createPhoto={props.createPhoto}
+        updatePhoto={props.updatePhoto}
+      />
       <CardContent>
         <Grid container>
           <Grid item xs={12} sm={12} md={12}>
             <Box mt={3}>
               <Typography variant="overline">First Name: </Typography>
-              <Typography component="h2">Andrew</Typography>
+              <Typography component="h2">{props.profileInfo.firstName}</Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <Box mt={3}>
               <Typography variant="overline">Last Name: </Typography>
-              <Typography component="p">Kinal</Typography>
+              <Typography component="p">{props.profileInfo.lastName}</Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <Box mt={3}>
               <Typography variant="overline">Email: </Typography>
-              <Typography component="p">testemail@email.com</Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <Box mt={3}>
-              <Typography variant="overline">Last login: </Typography>
-              <Typography component="p">25/05/2050</Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <Box mt={3}>
-              <Typography variant="overline">Transactions: </Typography>
-              <Typography component="p">10</Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <Box mt={3}>
-              <Typography variant="overline">Profile created At: </Typography>
-              <Typography component="p">25/05/2050</Typography>
+              <Typography component="p">{props.profileInfo.email}</Typography>
             </Box>
           </Grid>
         </Grid>
         <Box mt={3}>
-          <Button color="primary" onClick={deleteClickHandler}>
-            Delete Profile
+          <Button color="primary" onClick={exportClickHandler}>
+            Export Transactions
           </Button>
         </Box>
-        <Dialog
-          open={open}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={closeDialogHandler}
-          aria-labelledby="alert-dialog-slide-title"
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle id="alert-dialog-slide-title">
-            {'Do you want to delete your profile?'}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              If you delete profile, you won't have an opportunity to restore it and use our
-              application.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={closeDialogHandler} color="secondary">
-              Cancel
-            </Button>
-            <Button onClick={closeDialogHandler} color="primary">
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
       </CardContent>
     </Card>
   );

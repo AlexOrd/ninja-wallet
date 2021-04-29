@@ -20,7 +20,7 @@ export async function createPhoto(req, res, next) {
       image: fileString,
     });
     const saved = await newPhoto.save();
-    const updatedUser = await User.findByIdAndUpdate(id, {avatarId: saved._id}, {new: true});
+    const updatedUser = await User.findByIdAndUpdate(id, {avatarId: saved._id}, {new: true}).populate('avatarId').exec();
     res.status(200).json({
       success: true,
       data: {

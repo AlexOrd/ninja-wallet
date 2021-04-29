@@ -5,7 +5,7 @@ import schema from '../utils/validator';
 
 const router = express.Router();
 
-router.route('/:id')
+router.route('/')
   .get((req, res, next) => {
     profileCtrl.getProfile(req, res, next);
   })
@@ -14,6 +14,10 @@ router.route('/:id')
   })
   .delete((req, res, next) => {
     profileCtrl.deleteProfile(req, res, next);
+  });
+router.route('/export')
+  .get((req, res, next) => {
+    profileCtrl.exportTransactions(req, res, next);
   });
 
 export default router;

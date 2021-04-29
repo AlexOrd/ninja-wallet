@@ -1,10 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
+import {
+  updateProfile,
+  fetchProfile,
+  updatePhoto,
+  createPhoto,
+  exportCsv,
+} from '../../actions/profileAction';
+
 import ProfileData from '../../components/profile/ProfileData.jsx';
 import ProfileForm from '../../components/profile/ProfileForm.jsx';
-import { axiosInstance } from '../../config/axios';
 
 const useStyles = makeStyles({
   cardPaddings: {
@@ -28,17 +36,42 @@ const useStyles = makeStyles({
   },
 });
 
+const checkProps = (obj) => {
+  console.log(obj);
+  if (!obj.avatarId) {
+    obj.avatarId = '';
+    return obj;
+  } else if (!obj.avatarId._id) {
+    obj.avatarId._id = '';
+    return obj;
+  }
+  return obj;
+};
+
 const ProfileContainer = () => {
+  const dispatch = useDispatch();
+  const profileInfo = useSelector((state) => state.profile);
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, []);
+
+  const modified = checkProps(profileInfo);
+
   const styles = useStyles();
 
   return (
     <Container>
       <Grid container className={styles.cardMarginTop}>
         <Grid item xs={12} sm={12} md={8} className={styles.cardPaddings}>
-          <ProfileForm />
+          <ProfileForm updateProfile={updateProfile || ''} />
         </Grid>
         <Grid item xs={12} sm={12} md={4} className={styles.cardPaddings}>
-          <ProfileData />
+          <ProfileData
+            profileInfo={modified || ''}
+            createPhoto={createPhoto || ''}
+            updatePhoto={updatePhoto || ''}
+            exportCsv={exportCsv}
+          />
         </Grid>
       </Grid>
     </Container>

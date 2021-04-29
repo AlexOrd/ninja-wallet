@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   TextField,
   Box,
@@ -33,11 +34,18 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const ProfileForm = () => {
+const ProfileForm = (props) => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const styles = useStyles();
 
+  const fn = React.createRef();
+  const ln = React.createRef();
+
   const updateClickHandler = () => {
+    dispatch(props.updateProfile({ firstName: fn.current.value, lastName: ln.current.value }));
+    fn.current.value = '';
+    ln.current.value = '';
     setOpen(true);
   };
   const closeSnackHandle = () => {
@@ -51,20 +59,17 @@ const ProfileForm = () => {
         subheader="Update your profile"
         color="primary"
         className={styles.cardHeader}
-      >
-        <h4>Edit Profile</h4>
-        <p>Complete your profile</p>
-      </CardHeader>
+      ></CardHeader>
       <CardContent>
         <Grid container justify="space-around">
           <Grid item xs={12} sm={12} md={5}>
             <FormControl>
-              <TextField id="firstName" label="First Name" />
+              <TextField id="firstName" inputRef={fn} label="First Name" />
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={12} md={5}>
             <FormControl>
-              <TextField id="lastName" label="Last Name" />
+              <TextField id="lastName" inputRef={ln} label="Last Name" />
             </FormControl>
           </Grid>
         </Grid>
