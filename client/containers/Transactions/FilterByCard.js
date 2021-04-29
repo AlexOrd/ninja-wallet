@@ -27,7 +27,11 @@ export default function FilterByCard(props) {
         >
           <MenuItem value="">All</MenuItem>;
           {props.cards?.map((el) => {
-            return <MenuItem value={el._id}>{el.cardName}</MenuItem>;
+            return (
+              <MenuItem key={el._id} value={el._id}>
+                {el.cardName}
+              </MenuItem>
+            );
           })}
         </Select>
       </FormControl>

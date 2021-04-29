@@ -27,7 +27,11 @@ export default function FilterByCategory(props) {
         >
           <MenuItem value="">All</MenuItem>;
           {props.categories?.map((el) => {
-            return <MenuItem value={el._id}>{el.name}</MenuItem>;
+            return (
+              <MenuItem key={el._id} value={el._id}>
+                {el.name}
+              </MenuItem>
+            );
           })}
         </Select>
       </FormControl>

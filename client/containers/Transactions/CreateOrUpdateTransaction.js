@@ -36,8 +36,8 @@ export default function CreateOrUpdateTransaction() {
       const apiUrlTransaction = `/api/transactions/${id}`;
       axiosInstance.get(apiUrlTransaction).then((res) => {
         const transaction = res.data.transaction;
-        console.log(transaction);
         setTransaction(transaction);
+
         setMerchant(transaction.merchantName);
         setDescription(transaction.transactionType);
         setSum(transaction.sum);
@@ -97,17 +97,7 @@ export default function CreateOrUpdateTransaction() {
       const apiUrlCreate = `/api/transactions`;
 
       axiosInstance
-        .post(
-          apiUrlCreate,
-          newTransaction,
-
-          {
-            headers: {
-              authorization: ACCESS_TOKEN,
-              'refresh-token': REFRESH_TOKEN,
-            },
-          }
-        )
+        .post(apiUrlCreate, newTransaction)
         .then((res) => {
           setIsRedirected(true);
           console.log(res.data);
