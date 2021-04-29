@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
 const CardList = ({ cards, switchCard, deleteCard }) => {
   const classes = useStyles();
 
+  const confirmCardDelete = (id) => {
+    return confirm('Are you sure you want to delete this card?') && deleteCard(id);
+  };
+
   return (
     <List
       m={0}
@@ -34,7 +38,7 @@ const CardList = ({ cards, switchCard, deleteCard }) => {
                 : card.cardName
             }
           />
-          <DeleteIcon onClick={() => deleteCard(card._id)} />
+          <DeleteIcon onClick={() => confirmCardDelete(card._id)} />
         </ListItem>
       ))}
     </List>

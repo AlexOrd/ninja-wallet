@@ -16,7 +16,7 @@ import {
   Paper,
   Grid,
 } from '@material-ui/core';
-import { createMonobankThunk, setMonobankAccout } from '../../actions/monobankAction';
+import { createMonobankThunk } from '../../actions/monobankAction';
 
 const useStyles = makeStyles({
   root: {
@@ -116,10 +116,10 @@ const CardItems = ({
           </Box>
         </Grid>
       </Grid>
-      <Grid md={6} item>
-        <Box m={3}>
+      <Grid md={6} container justify="center" item>
+        <Grid item>
           <OtherCardInfo isMonoCard={isMonoCard} card={card} />
-        </Box>
+        </Grid>
       </Grid>
       {!isAdded && (
         <Grid xs={12} md={12} container justify="center" item>

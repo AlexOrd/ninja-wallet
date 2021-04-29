@@ -63,7 +63,6 @@ export const getCards = async (req, res) => {
     const newCardsResponse = await Promise.all(cards.map(async (card) => {
       const transactionsResponse = await Transaction.find({ cardId: card._id })
       card.transactions.push(...transactionsResponse)
-      console.log(card)
       return card
     }))
 

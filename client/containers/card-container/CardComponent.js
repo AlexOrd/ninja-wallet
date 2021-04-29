@@ -7,7 +7,6 @@ import {
   createCardThunk,
   editCardThunk,
   deleteCardThunk,
-  changeCard,
 } from '../../actions/cardAction';
 
 import {
@@ -18,17 +17,10 @@ import {
   dismissTransaction,
 } from '../../actions/monobankAction';
 
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import { Container, Grid, Box, ListItem, ListItemText, Typography, Paper } from '@material-ui/core';
+
 import CardList from '../../components/card/CardList';
 import CardItems from '../../components/card/CardItems';
-import Transactions from '../../components/card/Transactions';
-import TransactionInfo from '../../components/card/TransactionInfo';
-import Paper from '@material-ui/core/Paper';
-import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -146,10 +138,6 @@ const CardComponent = () => {
         setAdded(false);
         setUpdateType(type);
         break;
-      // default:
-      //   setAdded(false);
-      //   setUpdateType('transaction');
-      //   break;
     }
   };
 
@@ -205,10 +193,10 @@ const CardComponent = () => {
   return (
     <Box component="div" className={classes.box}>
       <Grid container>
-        <Grid item xs={3}>
+        <Grid item xs={12} md={3}>
           <Paper style={{ height: '100%' }} variant="outlined">
             <Container className={classes.gridList}>
-              <h3>Your card</h3>
+              <Typography>Your cards</Typography>
               <ListItem
                 className={classes.addCard}
                 onClick={() => openCardCreator('create')}
@@ -254,7 +242,6 @@ const CardComponent = () => {
             dismissMonobankTransaction={dismissMonobankTransaction}
           />
         </Grid>
-        <Grid xs={12} container item></Grid>
       </Grid>
     </Box>
   );

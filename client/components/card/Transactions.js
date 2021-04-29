@@ -30,51 +30,53 @@ const Transactions = ({
 }) => {
   const classes = useStyles();
 
-  const lastSevenTranaction = transactions?.slice(0, 7);
+  const lastSixTranaction = transactions?.slice(0, 6);
 
   return (
     <Grid container item xs={12} md={12}>
       <List spacing={2} component="nav" aria-label="secondary mailbox folders">
         <ListItem>Card transactions</ListItem>
-        {lastSevenTranaction?.map((transaction) => (
+        {lastSixTranaction?.map((transaction) => (
           <ListItem
             className={classes.checkboxBox}
             key={transaction._id || transaction.id}
             alignItems="center"
             button
           >
-            <ListItemText
-              onClick={() => (setTransaction(transaction), openCardCreator('transaction'))}
-            >
-              Description: {transaction.merchantName || transaction.description}
-              <br />
-              Payment price: {transaction.amount}
-            </ListItemText>
+            <Grid container>
+              <ListItemText
+                onClick={() => (setTransaction(transaction), openCardCreator('transaction'))}
+              >
+                Description: {transaction.merchantName || transaction.description}
+                <br />
+                Payment price: {transaction.amount}
+              </ListItemText>
 
-            {transaction.id !== undefined && (
-              <ListItemSecondaryAction>
-                <Box className={classes.checkboxBox}>
-                  <Checkbox
-                    color="primary"
-                    defaultChecked
-                    onClick={() =>
-                      applyMonobankTransaction({
-                        transactionId: transaction.id,
-                        transactionSum: transaction.amount,
-                        transactionDescription: transaction.description,
-                      })
-                    }
-                    inputProps={{ 'aria-label': 'secondary checkbox' }}
-                  />
-                  <Checkbox
-                    defaultChecked
-                    indeterminate
-                    inputProps={{ 'aria-label': 'indeterminate checkbox' }}
-                    onClick={() => dismissMonobankTransaction(transaction.id)}
-                  />
-                </Box>
-              </ListItemSecondaryAction>
-            )}
+              {transaction.id !== undefined && (
+                <ListItemSecondaryAction>
+                  <Box className={classes.checkboxBox}>
+                    <Checkbox
+                      color="primary"
+                      defaultChecked
+                      onClick={() =>
+                        applyMonobankTransaction({
+                          transactionId: transaction.id,
+                          transactionSum: transaction.amount,
+                          transactionDescription: transaction.description,
+                        })
+                      }
+                      inputProps={{ 'aria-label': 'secondary checkbox' }}
+                    />
+                    <Checkbox
+                      defaultChecked
+                      indeterminate
+                      inputProps={{ 'aria-label': 'indeterminate checkbox' }}
+                      onClick={() => dismissMonobankTransaction(transaction.id)}
+                    />
+                  </Box>
+                </ListItemSecondaryAction>
+              )}
+            </Grid>
           </ListItem>
         ))}
       </List>
