@@ -27,6 +27,9 @@ const useStyles = makeStyles({
     width: '100%',
     minHeight: 'calc(63vh - 4em)',
   },
+  cardInformation: {
+    paddingTop: '22px',
+  },
 });
 
 const CardItems = ({
@@ -116,7 +119,7 @@ const CardItems = ({
           </Box>
         </Grid>
       </Grid>
-      <Grid md={6} container justify="center" item>
+      <Grid md={6} className={classes.cardInformation} container justify="center" item>
         <Grid item>
           <OtherCardInfo isMonoCard={isMonoCard} card={card} />
         </Grid>

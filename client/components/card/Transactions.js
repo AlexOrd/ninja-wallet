@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
   checkboxBox: {
     display: 'inline-block',
   },
+  list: {
+    width: '100%',
+  },
 }));
 
 const Transactions = ({
@@ -33,7 +36,12 @@ const Transactions = ({
 
   return (
     <Grid container item xs={12} md={12}>
-      <List spacing={2} component="nav" aria-label="secondary mailbox folders">
+      <List
+        className={classes.list}
+        spacing={2}
+        component="nav"
+        aria-label="secondary mailbox folders"
+      >
         <ListItem>Card transactions</ListItem>
         {lastSixTranaction?.map((transaction) => (
           <ListItem
