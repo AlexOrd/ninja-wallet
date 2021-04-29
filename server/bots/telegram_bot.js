@@ -11,15 +11,17 @@ import {
 import { validate } from '../utils/validation/validate';
 
 const API_KEY = process.env.TELEGRAM_BOT_API_KEY;
-export const telegramBot = new TelegramBot(API_KEY, {
-  polling: {
-    interval: 300,
-    autoStart: true,
-    params: {
-      timeout: 10,
-    },
-  },
-});
+export const telegramBot = new TelegramBot(
+//   API_KEY, {
+//   polling: {
+//     interval: 300,
+//     autoStart: true,
+//     params: {
+//       timeout: 10,
+//     },
+//   },
+// }
+);
 
 console.log('Bot has been started...');
 
