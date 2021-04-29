@@ -5,7 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {
   Button,
   Grid,
-  Link,
+  Link as MUILink,
   ListItemIcon,
   ListItemSecondaryAction,
   Typography,
@@ -13,6 +13,7 @@ import {
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import Select from '@material-ui/core/Select';
+import { Link } from 'react-router-dom';
 
 const sortByDateOptions = [
   {
@@ -132,26 +133,32 @@ const CategoriesList = ({
         <Grid item xs={12}>
           <List style={{ padding: '0' }} aria-label="secondary mailbox folders">
             {categories.map((category, index) => (
-              <ListItem
-                key={category._id}
-                button
-                autoFocus={activeCategory?._id === category._id}
-                selected={activeCategory?._id === category._id}
+              <Link
+                underline="none"
+                className={classes.categoryLinkWrapper}
+                to={`/transactions?categoryId=${category._id}`}
               >
-                <ListItemIcon>
-                  <FiberManualRecordIcon style={{ color: category.color }} />
-                </ListItemIcon>
-                <ListItemText
-                  className={classes.categoryItem}
-                  secondary={category.description || null}
-                  primary={category.name}
-                />
-                <ListItemSecondaryAction>
-                  <Typography variant="h6">
-                    {category.expensesSum}$ ({calcPersentage(category.expensesSum)})
-                  </Typography>
-                </ListItemSecondaryAction>
-              </ListItem>
+                <ListItem
+                  key={category._id}
+                  button
+                  autoFocus={activeCategory?._id === category._id}
+                  selected={activeCategory?._id === category._id}
+                >
+                  <ListItemIcon>
+                    <FiberManualRecordIcon style={{ color: category.color }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    className={classes.categoryItem}
+                    secondary={category.description || null}
+                    primary={category.name}
+                  />
+                  <ListItemSecondaryAction>
+                    <Typography variant="h6">
+                      {category.expensesSum}$ ({calcPersentage(category.expensesSum)})
+                    </Typography>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              </Link>
             ))}
           </List>
         </Grid>
@@ -163,7 +170,7 @@ const CategoriesList = ({
         You don't have any categories
       </Typography>
       <Typography align="center" variant="h6">
-        Click <Link>here</Link> and create them
+        Click <MUILink>here</MUILink> and create them
       </Typography>
     </>
   );
