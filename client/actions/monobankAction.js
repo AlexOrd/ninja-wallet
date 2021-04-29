@@ -42,7 +42,6 @@ export const fetchUserMonobankAccounts = () => async (dispatch) => {
 export const createMonobankThunk = (createMonobank, header) => async (dispatch) => {
   try {
     const res = await api.monobankApi.createMonobankAccount(createMonobank, header);
-    console.log('');
     dispatch(fetchCards());
   } catch (error) {}
 };
@@ -61,7 +60,7 @@ export const getStatementDataThunk = (
 
     dispatch(addStatementData(monobankAccountId, res.data.monobankTransactions));
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };
 
@@ -79,7 +78,6 @@ export const applyTransaction = (transaction, header) => async (dispatch) => {
 };
 
 export const dismissTransaction = (transaction, header) => async (dispatch) => {
-  console.log(transaction);
   try {
     const res = await api.monobankApi.dismissTransaction(transaction, header);
 

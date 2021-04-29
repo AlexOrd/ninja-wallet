@@ -195,14 +195,7 @@
 .rccs__expiry > * {
   vertical-align: middle;
 }
-.rccs__expiry__valid {
-  font-size: 10px;
-  margin-bottom: 5px;
-}
-.rccs__expiry__value {
-  font-family: Consolas, Courier, monospace;
-  font-size: 16px;
-}
+
 .rccs__number,
 .rccs__name,
 .rccs__expiry,

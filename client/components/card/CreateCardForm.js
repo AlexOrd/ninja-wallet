@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import { TextField, Link, Box, Grid, Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
   cardNumber: {
@@ -46,7 +40,6 @@ const CreateCardForm = ({
       return createCard(card, updateType);
     }
     if (updateType === 'update') {
-      console.log(card);
       return createCard(card, updateType, card._id);
     }
   };
@@ -54,13 +47,19 @@ const CreateCardForm = ({
   return (
     <div>
       {(updateType === 'create' && (
-        <CreateSimpleCard onSubmit={(e) => onSubmit(e, updateType)} setCard={setCard} card={card} />
+        <CreateSimpleCard
+          onSubmit={(e) => onSubmit(e, updateType)}
+          setCard={setCard}
+          card={card}
+          openCardCreator={openCardCreator}
+        />
       )) ||
         (updateType === 'update' && (
           <CreateSimpleCard
             onSubmit={(e) => onSubmit(e, updateType)}
             setCard={setCard}
             card={card}
+            openCardCreator={openCardCreator}
           />
         )) ||
         (updateType === 'monobank' && (
@@ -75,7 +74,7 @@ const CreateCardForm = ({
   );
 };
 
-const CreateSimpleCard = ({ onSubmit, setCard, card }) => {
+const CreateSimpleCard = ({ onSubmit, setCard, card, openCardCreator }) => {
   const classes = useStyles();
 
   return (
@@ -142,7 +141,9 @@ const CreateSimpleCard = ({ onSubmit, setCard, card }) => {
         <Button type="submit" color="primary" value="submit">
           Update
         </Button>
-        <Button color="secondary">Close</Button>
+        <Button color="secondary" onClick={() => openCardCreator('close')}>
+          Close
+        </Button>
       </Grid>
     </form>
   );
@@ -159,6 +160,9 @@ const CreateMonoBankCard = ({
   return (
     <Grid className={classes.formContainer} justify="center" alignItems="center" xs={12} container>
       <Grid item xs={12}>
+        <Box>
+          <Link href="https://api.monobank.ua/">Get monobank token</Link>
+        </Box>
         <Box>
           <TextField
             fullWidth

@@ -8,7 +8,6 @@ import { deleteCardThunk } from '../../actions/cardAction';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // backgroundColor: 'rgba(247, 255, 249)',
     margin: '0px',
     padding: '0px',
   },

@@ -146,6 +146,10 @@ const CardComponent = () => {
         setAdded(false);
         setUpdateType(type);
         break;
+      // default:
+      //   setAdded(false);
+      //   setUpdateType('transaction');
+      //   break;
     }
   };
 
@@ -197,8 +201,6 @@ const CardComponent = () => {
       )
     );
   };
-
-  console.log(card);
 
   return (
     <Box component="div" className={classes.box}>
@@ -252,19 +254,6 @@ const CardComponent = () => {
             dismissMonobankTransaction={dismissMonobankTransaction}
           />
         </Grid>
-
-        {/* <Grid container xs={2} item>
-          <Paper className={classes.transactionsList} variant="outlined">
-            <Transactions
-              transactions={monbankTransactions || card.transactions}
-              openCardCreator={openCardCreator}
-              setTransaction={setTransaction}
-              applyMonobankTransaction={applyMonobankTransaction}
-              dismissMonobankTransaction={dismissMonobankTransaction}
-            />
-          </Paper>
-        </Grid> */}
-
         <Grid xs={12} container item></Grid>
       </Grid>
     </Box>

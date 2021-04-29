@@ -1,12 +1,23 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { List, Box, ListItem, ListItemText, Checkbox, Grid } from '@material-ui/core';
+import {
+  List,
+  Box,
+  ListItem,
+  ListItemText,
+  Checkbox,
+  Grid,
+  ListItemSecondaryAction,
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: 'rgba(247, 255, 249)',
     margin: '0px',
     padding: '0px',
+  },
+  checkboxBox: {
+    display: 'inline-block',
   },
 }));
 
@@ -24,16 +35,26 @@ const Transactions = ({
       <List spacing={2} component="nav" aria-label="secondary mailbox folders">
         <ListItem>Card transactions</ListItem>
         {transactions?.map((transaction) => (
-          <ListItem key={transaction._id || transaction.id} alignItems="center" button>
+          <ListItem
+            className={classes.checkboxBox}
+            key={transaction._id || transaction.id}
+            alignItems="center"
+            button
+          >
             <ListItemText
               onClick={() => (setTransaction(transaction), openCardCreator('transaction'))}
             >
-              <Box>Description: {transaction.merchantName || transaction.description}</Box>
-              <Box>Payment price: {transaction.amount} </Box>
-              {transaction.id !== undefined && (
-                <Box>
+              Description: {transaction.merchantName || transaction.description}
+              <br />
+              Payment price: {transaction.amount}
+            </ListItemText>
+
+            {transaction.id !== undefined && (
+              <ListItemSecondaryAction>
+                <Box className={classes.checkboxBox}>
                   <Checkbox
                     color="primary"
+                    defaultChecked
                     onClick={() =>
                       applyMonobankTransaction({
                         transactionId: transaction.id,
@@ -50,8 +71,8 @@ const Transactions = ({
                     onClick={() => dismissMonobankTransaction(transaction.id)}
                   />
                 </Box>
-              )}
-            </ListItemText>
+              </ListItemSecondaryAction>
+            )}
           </ListItem>
         ))}
       </List>

@@ -4,10 +4,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import Cards from 'react-credit-cards';
 import './style.css';
 import OtherCardInfo from './OtherCardInfo';
-import Grid from '@material-ui/core/Grid';
 import CreateCardForm from './CreateCardForm';
 import Transactions from './Transactions';
-import { Box, Button, List, ListItem, ListItemText, Typography, Paper } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+  Paper,
+  Grid,
+} from '@material-ui/core';
 import { createMonobankThunk, setMonobankAccout } from '../../actions/monobankAction';
 
 const useStyles = makeStyles({
@@ -17,6 +25,7 @@ const useStyles = makeStyles({
   },
   transactionsList: {
     width: '100%',
+    minHeight: 'calc(63vh - 4em)',
   },
 });
 
@@ -172,17 +181,18 @@ const CardItems = ({
                 submitMonobankToken={submitMonobankToken}
               />
             ))}
-          <Grid container xs={12} item>
-            <Paper className={classes.transactionsList} variant="outlined">
-              <Transactions
-                transactions={monbankTransactions || card.transactions}
-                openCardCreator={openCardCreator}
-                // setTransaction={setTransaction}
-                applyMonobankTransaction={applyMonobankTransaction}
-                dismissMonobankTransaction={dismissMonobankTransaction}
-              />
-            </Paper>
-          </Grid>
+          {!isAdded && (
+            <Grid container xs={12} item>
+              <Paper className={classes.transactionsList} variant="outlined">
+                <Transactions
+                  transactions={monbankTransactions || card.transactions}
+                  openCardCreator={openCardCreator}
+                  applyMonobankTransaction={applyMonobankTransaction}
+                  dismissMonobankTransaction={dismissMonobankTransaction}
+                />
+              </Paper>
+            </Grid>
+          )}
         </Grid>
       }
     </Grid>
@@ -198,26 +208,31 @@ const MonobankCards = ({ monobankData, monobankToken, openCardCreator }) => {
       monobankAccountId: cardInfo.id,
       cardNumber: cardInfo.maskedPan[0],
     };
-    // console.log(createdAccount)
     dispatch(createMonobankThunk(createdAccount, monobankToken));
-    // dispatch(setMonobankAccout({}));
-    // console.log(createdAccount);
   };
 
   return (
-    <List>
-      <ListItem>Card owner: {monobankData.name}</ListItem>
-      Cards:
-      {monobankData.accounts.map((cardInfo) => (
+    <Paper variant="outlined" square>
+      <List>
+        <ListItem>Card owner: {monobankData.name}</ListItem>
         <ListItem>
-          <ListItemText>
-            {cardInfo.maskedPan[0]}
-            <button onClick={() => createMonobankAccout(cardInfo)}>Create monobank account</button>
-          </ListItemText>
+          <Box>
+            Cards:
+            {monobankData.accounts.map((cardInfo) => (
+              <ListItemText key={cardInfo.id}>
+                {cardInfo.maskedPan[0]}
+                <Button color="primary" onClick={() => createMonobankAccout(cardInfo)}>
+                  Create monobank account
+                </Button>
+              </ListItemText>
+            ))}
+          </Box>
         </ListItem>
-      ))}
-      <button onClick={() => openCardCreator('close')}>Close</button>
-    </List>
+        <Button color="secondary" onClick={() => openCardCreator('close')}>
+          Close
+        </Button>
+      </List>
+    </Paper>
   );
 };
 
