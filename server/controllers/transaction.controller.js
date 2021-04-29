@@ -3,7 +3,9 @@ import { doesCardIdExist, doesTransactionIdExist } from '../utils/transactions-v
 
 exports.getAllTransactions = async (req, res) => {
   try {
-    const transactions = await Transaction.find().populate('cardId transactionCategory');
+    const transactions = await Transaction.find({ userId: req.userID }).populate(
+      'cardId transactionCategory'
+    );
     res.status(200).json({
       success: true,
       results: transactions.length,
@@ -18,7 +20,7 @@ exports.getAllTransactions = async (req, res) => {
 };
 exports.getTransactionsByCardId = async (req, res) => {
   try {
-    const transactions = await Transaction.find({ cardId: req.params.cardId });
+    const transactions = await Transaction.find({ userId: req.userID, cardId: req.params.cardId });
     res.status(200).json({
       success: true,
       results: transactions.length,
@@ -34,6 +36,7 @@ exports.getTransactionsByCardId = async (req, res) => {
 exports.getTransactionsByCategory = async (req, res) => {
   try {
     const transactions = await Transaction.find({
+      userId: req.userID,
       transactionCategory: req.params.transactionCategory,
     });
     res.status(200).json({
@@ -58,9 +61,8 @@ exports.createTransaction = async (req, res) => {
     });
   }
   try {
-    console.log(req.userID)
-      const transactionFromRequest = {...req.body, userId: req.userID}
-      console.log(transactionFromRequest)
+    const transactionFromRequest = { ...req.body, userId: req.userID };
+
     const newTransaction = await Transaction.create(transactionFromRequest);
     res.status(201).json({
       success: true,
@@ -76,9 +78,7 @@ exports.createTransaction = async (req, res) => {
 };
 exports.getTransaction = async (req, res) => {
   try {
-    const transaction = await Transaction
-    .findById(req.params.id)
-    .populate('cardId');
+    const transaction = await Transaction.findById(req.params.id).populate('cardId');
     res.status(200).json({
       success: true,
       transaction,
