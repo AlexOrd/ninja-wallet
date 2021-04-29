@@ -15,5 +15,9 @@ router.route('/')
   .delete((req, res, next) => {
     profileCtrl.deleteProfile(req, res, next);
   });
+router.route('/export')
+  .get((req, res, next) => {
+    profileCtrl.exportTransactions(req, res, next);
+  });
 
 export default router;

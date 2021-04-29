@@ -19,6 +19,7 @@ import { AuthRoute } from './AuthRoute';
 import { RootRoute } from './RootRoute';
 
 const AsyncDashboard = loadable(() => import('../containers/dashboard/DashboardContainer'));
+const AsyncProfile = loadable(() => import('../containers/profile/ProfileContainer'));
 const AsyncAuthPage = loadable(() => import('../containers/Authorization/AuthPage'));
 const AsyncSettingsPage = loadable(() => import('../containers/Settings/Settings'));
 
@@ -41,6 +42,7 @@ const Router = () => {
           layout={MainLayout}
           component={CategoriesContainer}
         />
+        <PrivateRoute exact path={ROUTES.profile} layout={MainLayout} component={AsyncProfile} />
 
         <PrivateRoute
           exact
