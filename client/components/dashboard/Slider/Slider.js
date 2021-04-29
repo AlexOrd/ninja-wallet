@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const SliderWithCards = ({ cards, setCenteredCardIdx }) => {
+const SliderWithCards = React.memo(({ cards, setCenteredCardIdx }) => {
   const classes = useStyles();
   const settings = {
     infinite: false,
@@ -85,7 +85,7 @@ const SliderWithCards = ({ cards, setCenteredCardIdx }) => {
             <Typography classes={{ root: classes.alertMsg }}>
               You do not have any cards yet
             </Typography>
-            <Link to="/cards">
+            <Link to="/card">
               <Button variant="contained" color="primary">
                 Create one
               </Button>
@@ -95,6 +95,6 @@ const SliderWithCards = ({ cards, setCenteredCardIdx }) => {
       )}
     </div>
   );
-};
+});
 
 export default SliderWithCards;
