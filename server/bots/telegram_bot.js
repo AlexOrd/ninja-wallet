@@ -1,4 +1,4 @@
-/* import TelegramBot from 'node-telegram-bot-api';
+import TelegramBot from 'node-telegram-bot-api';
 import User from '../models/user.model';
 import { generateRandomString } from '../utils/auth/aux_functions/common';
 import { sendEmail } from '../utils/auth/aux_functions/for_mail';
@@ -12,15 +12,15 @@ import { validate } from '../utils/validation/validate';
 
 const API_KEY = process.env.TELEGRAM_BOT_API_KEY;
 export const telegramBot = new TelegramBot(
-//   API_KEY, {
-//   polling: {
-//     interval: 300,
-//     autoStart: true,
-//     params: {
-//       timeout: 10,
-//     },
-//   },
-// }
+  API_KEY, {
+  polling: {
+    interval: 300,
+    autoStart: true,
+    params: {
+      timeout: 10,
+    },
+  },
+}
 );
 
 console.log('Bot has been started...');
@@ -97,4 +97,3 @@ telegramBot.onText(/\/appLink/, async (msg, [source, match]) => {
   const message = 'Welcome to our app!';
   telegramBot.sendMessage(msg.chat.id, message);
 });
- */
