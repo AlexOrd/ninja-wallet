@@ -7,4 +7,5 @@ export const ROUTES = {
   profile: '/profile',
   authorization: '/auth',
   settings: '/settings',
+  cards: '/card',
 };
