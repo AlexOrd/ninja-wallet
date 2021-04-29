@@ -11,17 +11,35 @@ import axios from 'axios';
 import React from 'react';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 
+const ccyFlags = {
+  USD: 'https://flagpedia.net/data/flags/w1600/us.png',
+  EUR:
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Europe.svg/1024px-Flag_of_Europe.svg.png',
+  RUR: 'https://flagpedia.net/data/flags/w1600/ru.png',
+  BTC: 'https://images-na.ssl-images-amazon.com/images/I/41270A1ZbvL._AC_SL1280_.jpg',
+};
+
 const useStyles = makeStyles(() => ({
   wrapper: {
     marginLeft: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 32,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     '& svg': {
+      fontSize: 32,
       marginRight: 10,
+    },
+  },
+  cell: {
+    display: 'flex',
+    alignItems: 'center',
+    '& img': {
+      width: 28,
+      height: 17,
+      marginLeft: 10,
     },
   },
 }));
@@ -54,7 +72,10 @@ const ExchangeRateBlock = React.memo(() => {
           {data &&
             data.map((row) => (
               <TableRow key={row.ccy}>
-                <TableCell>{row.ccy}</TableCell>
+                <TableCell classes={{ root: classes.cell }}>
+                  {row.ccy}
+                  <img src={ccyFlags[row.ccy]} alt="" />
+                </TableCell>
                 <TableCell>{row.buy}</TableCell>
                 <TableCell>{row.sale}</TableCell>
               </TableRow>

@@ -1,13 +1,12 @@
 // import sgMail from '@sendgrid/mail';
-// // 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
-// const API_KEY = 'SG.6dj4BcPsS_eU_UY';
+
+// const API_KEY = process.env.SEND_GRID_API_KEY;
 // sgMail.setApiKey(API_KEY);
 
 // export const sendEmail = async (email, subject, data) => {
 //   let result = { err: null };
 //   const msg = {
-//     to: 'ghvitaliidrapaliuk@gmail.com',
-//     // to: email,
+//     to: email,
 //     from: 'vitadrapaliuk@gmail.com',
 //     subject: subject,
 //     text: data,
@@ -41,9 +40,7 @@ const transporter = nodemailer.createTransport(smtpConfig);
 const mailer = async (to, subject, text) => {
   const options = {
     from: 'valiakusil1945@gmail.com',
-    // to,
-    to: 'vitaliidrapaliuk@gmail.com',
-
+    to,
     subject,
     text,
   };

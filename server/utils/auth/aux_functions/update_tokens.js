@@ -1,43 +1,30 @@
 import { authVerifiers } from './verifiers';
-import { getDeviceByID, findUserById } from './selectors';
-import { generateRandomString, encryptData } from './common';
 import { createJWToken } from './for_tokens';
 import { tokensNames } from '../constants';
+import { generateRandomString } from './common';
+import { authErrors } from '../errors';
 
-export const updateTokens = async (userID, refreshToken) => {
-  const { err: findingUserErr, user } = await findUserById(userID);
-  if (findingUserErr) return { err: findingUserErr };
 
-  const {
-    err: errRefreshToken,
-    tokenPayload: refreshTokenPayload,
-  } = authVerifiers.verifyingAndDecodeJWT(refreshToken, tokensNames.REFRESH);
-  if (errRefreshToken) return { err: errRefreshToken };
 
-  const { deviceID, confirmCode } = refreshTokenPayload;
 
-  const { err: errFindingDevice, deviceObject } = getDeviceByID(user, deviceID);
-  if (errFindingDevice) return { err: errFindingDevice };
+export const updateTokens = async (accessTokenPayload, refreshToken, user, device) => {
+  const { userID, deviceID } = accessTokenPayload;
 
-  const { err: errVerifyConfirmCodeForRefreshTok } = await authVerifiers.confirmCodeForRefreshToken(
-    deviceObject,
-    confirmCode
-  );
-  if (errVerifyConfirmCodeForRefreshTok) {
-    return { err: errVerifyConfirmCodeForRefreshTok };
-  }
-
-  const newConfirmCode = generateRandomString();
-  const newRefreshToken = createJWToken(
-    { deviceID, confirmCode: newConfirmCode },
+  const { err: errRefreshToken, tokenPayload } = authVerifiers.verifyingAndDecodeJWT(
+    refreshToken,
     tokensNames.REFRESH
   );
+  if (errRefreshToken) return { err: errRefreshToken };
+
+  const isVerifiedConfirmCode = device.confirmCode === tokenPayload.confirmCode
+  if(!isVerifiedConfirmCode) return {err: authErrors.INVALID_TOKEN}
+
+  const confirmCode = generateRandomString();
   const newAccessToken = createJWToken({ deviceID, userID }, tokensNames.ACCESS);
-  deviceObject.confirmCode = encryptData(newConfirmCode);
-
-  user.lastLogin = new Date();
-
+  const newRefreshToken = createJWToken({ confirmCode }, tokensNames.REFRESH);
+  device.lastLogin = new Date();
+  device.confirmCode = confirmCode;
   user.save();
 
-  return { err: null, newTokens: { newRefreshToken, newAccessToken }, deviceID };
+  return { err: null, newTokens: { newRefreshToken, newAccessToken } };
 };

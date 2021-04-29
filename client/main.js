@@ -14,7 +14,7 @@ const mountNode = document.getElementById('root');
 const theme = createMuiTheme({});
 
 // Used to log in if token is valid
-store.dispatch(verifyToken());
+// store.dispatch(verifyToken());
 
 ReactDOM.render(
   <Suspense fallback={<div>Error! Please refresh the page</div>}>

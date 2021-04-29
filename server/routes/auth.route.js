@@ -23,12 +23,12 @@ import {
   validateNewPassCreating,
 } from '../middlewares/auth/route_validators';
 
-
-
 router
-  .post('/sign-up',  validateAuthData, deviceDetector, signUp)
+  .post('/sign-up', validateAuthData, deviceDetector, signUp)
   .post('/sign-in', validateAuthData, deviceDetector, signIn)
   .delete('/sign-out', checkAccessAndProvideUserID, signOut)
+
+  .get('/check-auth', checkAccessAndProvideUserID, (req, res) => res.status(200).end())
 
   .post('/restore-password/get-credentials', validateCredentialsIssue, issueCredentials)
   .post('/restore-password/verify-code', validateConfirmCode, verifyCredentials, verifyConfirmCode)
