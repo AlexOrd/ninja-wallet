@@ -32,4 +32,10 @@ export const useStyles = makeStyles((theme) => ({
   filtersWrapper: {
     padding: theme.spacing(0, 1),
   },
+  categoryLinkWrapper: {
+    '&:hover': {
+      textDecoration: 'none !important',
+    },
+    color: 'black',
+  },
 }));
