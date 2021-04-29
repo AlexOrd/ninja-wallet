@@ -82,7 +82,6 @@ function TransactionTableHead(props) {
           <StyledTableCell
             key={headCell.id}
             align={headCell.label === 'Description' ? 'left' : 'right'}
-            padding="2"
             sortDirection={orderBy === headCell.id ? order : false}
           >
             {headCell.label === 'Card' ? (
