@@ -1,4 +1,4 @@
-import TelegramBot from 'node-telegram-bot-api';
+/* import TelegramBot from 'node-telegram-bot-api';
 import User from '../models/user.model';
 import { generateRandomString } from '../utils/auth/aux_functions/common';
 import { sendEmail } from '../utils/auth/aux_functions/for_mail';
@@ -97,3 +97,4 @@ telegramBot.onText(/\/appLink/, async (msg, [source, match]) => {
   const message = 'Welcome to our app!';
   telegramBot.sendMessage(msg.chat.id, message);
 });
+ */

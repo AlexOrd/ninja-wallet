@@ -7,9 +7,12 @@ import {
 } from '../constants/actionType';
 
 export const getAllCards = () => (dispatch) => {
-  axiosInstance.get('/api/card').then(({ data }) => {
-    dispatch(success(data.cards));
-  });
+  axiosInstance
+    .get('/api/card')
+    .then(({ data }) => {
+      dispatch(success(data.cards));
+    })
+    .catch((err) => console.log(err));
 
   const success = (payload) => ({
     type: GET_CARDS_SUCCESS,
@@ -19,9 +22,12 @@ export const getAllCards = () => (dispatch) => {
 
 export const getCardTransactions = (cardId, quantity) => (dispatch) => {
   dispatch(setLoadingStatus('transactions', true));
-  axiosInstance.get('/api/transactions/cardId/' + cardId).then(({ data: { data } }) => {
-    dispatch(success(data.transactions));
-  });
+  axiosInstance
+    .get('/api/transactions/cardId/' + cardId)
+    .then(({ data }) => {
+      dispatch(success(data.transactions));
+    })
+    .catch((err) => console.log(err));
 
   const success = (payload) => ({
     type: GET_TRANSACTIONS_SUCCESS,
@@ -30,9 +36,12 @@ export const getCardTransactions = (cardId, quantity) => (dispatch) => {
 };
 
 export const getSummaryInfo = () => (dispatch) => {
-  axiosInstance.get('/api/summary').then(({ data }) => {
-    dispatch(success(data.data));
-  });
+  axiosInstance
+    .get('/api/summary')
+    .then(({ data }) => {
+      dispatch(success(data.data));
+    })
+    .catch((err) => console.log(err));
 
   const success = (payload) => ({
     type: GET_SUMMARY_SUCCESS,
