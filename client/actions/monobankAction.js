@@ -1,4 +1,4 @@
-import api from '../API/api';
+import API from '../API/API';
 import {
   SET_MONOBANK_ACCOUT,
   SET_NEW_MONOBANK_ACCOUNT,
@@ -29,19 +29,19 @@ const setUserMonobankAccounts = (userMonobankAccounts) => ({
 });
 
 export const fetchUserInfo = (header) => async (dispatch) => {
-  const res = await api.monobankApi.getUserInfo(header);
+  const res = await API.monobankApi.getUserInfo(header);
   dispatch(setMonobankAccout(res.data.monobankInfo));
 };
 
 export const fetchUserMonobankAccounts = () => async (dispatch) => {
-  const res = await api.monobankApi.getMonobankUserAccounts();
+  const res = await API.monobankApi.getMonobankUserAccounts();
 
   dispatch(setUserMonobankAccounts(res.data.monobankUserAccountsData));
 };
 
 export const createMonobankThunk = (createMonobank, header) => async (dispatch) => {
   try {
-    const res = await api.monobankApi.createMonobankAccount(createMonobank, header);
+    const res = await API.monobankApi.createMonobankAccount(createMonobank, header);
     dispatch(fetchCards());
   } catch (error) {}
 };
@@ -52,7 +52,7 @@ export const getStatementDataThunk = (
   monobankUserDataId
 ) => async (dispatch) => {
   try {
-    const res = await api.monobankApi.getStatementInfo(
+    const res = await API.monobankApi.getStatementInfo(
       monobankToken,
       monobankAccountId,
       monobankUserDataId
@@ -71,7 +71,7 @@ export const removeMonobankTransaction = (transactionId, monobankAccountId) => (
 
 export const applyTransaction = (transaction, header) => async (dispatch) => {
   try {
-    const res = await api.monobankApi.applyTransaction(transaction, header);
+    const res = await API.monobankApi.applyTransaction(transaction, header);
 
     dispatch(removeMonobankTransaction(transaction.transactionId, transaction.monobankAccountId));
   } catch (err) {}
@@ -79,7 +79,7 @@ export const applyTransaction = (transaction, header) => async (dispatch) => {
 
 export const dismissTransaction = (transaction, header) => async (dispatch) => {
   try {
-    const res = await api.monobankApi.dismissTransaction(transaction, header);
+    const res = await API.monobankApi.dismissTransaction(transaction, header);
 
     dispatch(removeMonobankTransaction(transaction.transactionId, transaction.monobankAccountId));
   } catch (err) {}
