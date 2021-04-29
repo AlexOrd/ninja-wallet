@@ -1,13 +1,13 @@
 {
-  "openapi": "3.0.2",
+  "openapi": "3.0.0",
   "info": {
     "title": "Ninja wallet API",
     "description": "Documentation for our API",
-    "version": "1.0.0"
+    "version": "2.0.0"
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "http://localhost:3000/api"
     }
   ],
   "security": [
@@ -20,7 +20,7 @@
       "bearerAuth": {
         "type": "http",
         "description": "You must sign up in our system to get access token",
-        "schema": "bearer",
+        "schema": "Bearer",
         "bearerFormat": "JWT"
       }
     },
@@ -36,7 +36,7 @@
         "required": true
       },
       "refreshToken": {
-        "name": "Refesh-Token",
+        "name": "Refresh-Token",
         "in": "header",
         "description": "token for refresh access token, you must attach it to header \"Refresh-Token\" with every request to server (if you have it)",
         "schema": {
@@ -113,6 +113,23 @@
             "description": "how much money were transformed by the transaction",
             "required": true,
             "example": 10000
+          }
+        }
+      },
+      "userPhoto": {
+        "type": "object",
+        "description": "userPhoto schema",
+        "properties": {
+          "_id": {
+            "type": "ObjectId",
+            "description": "Unique identifier",
+            "example": "607421b518477308ec1969ab"
+          },
+          "image": {
+            "type": "string",
+            "description": "Image in dataURI",
+            "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAAAlCAYAAACkqsAEAAAA...",
+            "required": true
           }
         }
       },
@@ -1469,7 +1486,6 @@
     },
     "/transactions": {
       "get": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Get all transactions",
         "parameters": [
@@ -1523,7 +1539,6 @@
         }
       },
       "post": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Create a transaction",
         "parameters": [
@@ -1591,7 +1606,6 @@
     },
     "/transactions/{id}": {
       "get": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Get one transaction by id",
         "parameters": [
@@ -1647,7 +1661,6 @@
         }
       },
       "patch": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Update transaction by id",
         "parameters": [
@@ -1719,7 +1732,6 @@
         }
       },
       "delete": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Delete transaction by id",
         "parameters": [
@@ -1773,7 +1785,6 @@
 
     "/transactions/cardId/{cardId}": {
       "get": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Get all transactions from one specific card",
         "parameters": [
@@ -1837,7 +1848,6 @@
     },
     "/transactions/category/{transactionCategory}": {
       "get": {
-        "security": [],
         "tags": ["Transactions"],
         "summary": "Get all transactions from one specific category",
         "parameters": [
@@ -1902,7 +1912,6 @@
 
     "/card": {
       "post": {
-        "security": [],
         "tags": ["Cards"],
         "summary": "Create card",
         "parameters": [
@@ -1966,7 +1975,6 @@
         }
       },
       "get": {
-        "security": [],
         "tags": ["Cards"],
         "summary": "Get all user card",
         "parameters": [
@@ -2011,7 +2019,6 @@
 
     "/card/{id}": {
       "put": {
-        "security": [],
         "tags": ["Cards"],
         "summary": "Update card",
         "parameters": [
@@ -2083,7 +2090,6 @@
         }
       },
       "get": {
-        "security": [],
         "tags": ["Cards"],
         "summary": "Get user card by id",
         "parameters": [
@@ -2130,7 +2136,6 @@
         }
       },
       "delete": {
-        "security": [],
         "tags": ["Cards"],
         "summary": "Delete user card by id",
         "parameters": [
@@ -2177,7 +2182,6 @@
 
     "/categories": {
       "post": {
-        "security": [],
         "tags": ["Categories"],
         "summary": "Create category",
         "parameters": [
@@ -2241,7 +2245,6 @@
         }
       },
       "get": {
-        "security": [],
         "tags": ["Categories"],
         "summary": "Get all user categories",
         "parameters": [
@@ -2291,7 +2294,6 @@
 
     "/categories/{id}": {
       "put": {
-        "security": [],
         "tags": ["Categories"],
         "summary": "Update category",
         "parameters": [
@@ -2363,7 +2365,6 @@
         }
       },
       "delete": {
-        "security": [],
         "tags": ["Categories"],
         "summary": "Delete user category by id",
         "parameters": [
@@ -2400,6 +2401,261 @@
           },
           "400": {
             "$ref": "#/components/responses/invalidDataError"
+          },
+          "500": {
+            "$ref": "#/components/responses/serverError"
+          }
+        }
+      }
+    },
+    "/profile": {
+      "get": {
+        "tags": ["Profile"],
+        "summary": "Get user data",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accessToken"
+          },
+          {
+            "$ref": "#/components/parameters/refreshToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/invalidDataError"
+          },
+          "500": {
+            "$ref": "#/components/responses/serverError"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Profile"],
+        "summary": "Update user data",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accessToken"
+          },
+          {
+            "$ref": "#/components/parameters/refreshToken"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "example": "Andrew"
+                  },
+                  "lastName": {
+                    "example": "Kinal"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/invalidDataError"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Profile"],
+        "summary": "Delete profile by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accessToken"
+          },
+          {
+            "$ref": "#/components/parameters/refreshToken"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "object",
+                      "example": "Profile does not exist"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/serverError"
+          }
+        }
+      }
+    },
+    "/userphoto": {
+      "post": {
+        "tags": ["userphoto"],
+        "summary": "Add user photo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accessToken"
+          },
+          {
+            "$ref": "#/components/parameters/refreshToken"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileString": {
+                    "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAAAlCAYAAACkqsAEAAAA..."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "example": true
+                    },
+                    "fileString": {
+                      "type": "object",
+                      "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAAAlCAYAAACkqsAEAAAA..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/invalidDataError"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/serverError"
+          }
+        }
+      },
+      "put": {
+        "tags": ["userphoto"],
+        "summary": "Update user photo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accessToken"
+          },
+          {
+            "$ref": "#/components/parameters/refreshToken"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileString": {
+                    "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAAAlCAYAAACkqsAEAAAA..."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "example": true
+                    },
+                    "fileString": {
+                      "type": "object",
+                      "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAAAlCAYAAACkqsAEAAAA..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/invalidDataError"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFoundError"
           },
           "500": {
             "$ref": "#/components/responses/serverError"

@@ -9,7 +9,11 @@ class DashboardContainer extends Component {
   }
 
   render() {
-    return <Dashboard />;
+    return (
+      <div style={{ padding: 50 }}>
+        <Dashboard />
+      </div>
+    );
   }
 }
 

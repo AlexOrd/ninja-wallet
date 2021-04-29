@@ -12,6 +12,7 @@ var config = {
     context: path.resolve(CURRENT_WORKING_DIR, 'client'),
     entry: {
         app: [
+            'babel-polyfill',
             './main.js'
         ]
     },
@@ -35,7 +36,8 @@ var config = {
                     presets: ['@babel/preset-env', '@babel/preset-react'],
                     plugins: ['@babel/plugin-proposal-function-bind', '@babel/plugin-proposal-class-properties'],
                 },
-            }
+            },
+            { test: /\.css$/, use: ['style-loader', 'css-loader'] },
         ]
     },
     resolve: {

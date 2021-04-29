@@ -16,3 +16,9 @@ export const getLoginDate = (lastLogin) => {
     loginTime: `${hour}:${minutes < 10 ? '0' + minutes : minutes}`,
   };
 };
+
+export const invokeAfterDelay = (handler, delay) => {
+  setTimeout(() => {
+    handler();
+  }, delay);
+};

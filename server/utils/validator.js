@@ -19,7 +19,7 @@ export default {
   transaction: Joi.object({
     transactionType: Joi.string().alphanum().min(3).max(30).required(),
     transactionCategory: Joi.string().alphanum().min(3).max(30).required(),
-    userId: Joi.objectId().required(),
+    userId: Joi.objectId(),
     cardId: Joi.objectId().required(),
     sum: Joi.number().positive().required(),
     merchantName: Joi.string().alphanum().min(3).max(30),
@@ -54,12 +54,27 @@ export default {
       .message('color shoul be provided as a hex (fro example #000000)'), // hex
   }),
   
+  updateCategory: Joi.object({
+    name: Joi.string()
+      .min(1)
+      .message('name must contain at least 1 letter')
+      .max(30)
+      .message('name can\'t be longer than 30 letters')
+      .required(),
+    description: Joi.string()
+      .min(1)
+      .message('description must contain at least 1 letter')
+      .max(100)
+      .message('description can\'t be longer than 100 letters'),
+    color: Joi.string()
+      .regex(/^#[A-Fa-f0-9]{5}/)
+      .message('color shoul be provided as a hex (fro example #000000)'), // hex
+  }),
+  
   card: Joi.object({
-    userId: Joi.objectId().required(),
     transactionIds: Joi.array().items(Joi.objectId()),
     transactionId: Joi.objectId(),
-    cardNumber: Joi.string().creditCard().required(),
-    // cardNumber: Joi.string().min(16).max(16).required(),
+    cardNumber: Joi.string().min(16).max(16).required(),
     currency: Joi.string().required(),
     cardName: Joi.string()
       .min(2)

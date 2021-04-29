@@ -10,6 +10,8 @@ router.route('/')
     .get(categoriesCtrl.getUserCategories)
     .post(categoriesCtrl.createCategory)
 
+router.route('/get-categories-with-total-transactions-sum-by-date')
+    .post(categoriesCtrl.getUserCategoriesWithTotalTransactionsSum)
 
 router.route('/:id')
     .put(categoriesCtrl.editCategory)

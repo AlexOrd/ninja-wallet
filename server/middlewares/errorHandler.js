@@ -18,7 +18,8 @@ export function notFound(req, res, next) {
   //     message: HttpStatus.getStatusText(HttpStatus.NOT_FOUND),
   //   },
   // });
-  return next(createRespErr('NOT_FOUND', 404, 'request resource not found'));
+  // return sendFile(path.join(__dirname, '../docs/404.html'));
+   next(createRespErr('NOT_FOUND', 404, 'request resource not found'));
 }
 
 /**
