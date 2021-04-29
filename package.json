@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Ninja Wallet",
   "scripts": {
-    "seed": "node server/seeds/seed.js",
-    "start": "node --experimental-modules server/app.js",
+    "seed": "babel-node server/seeds/seed.js",
+    "start": "babel-node --experimental-modules server/app.js",
     "dev": "nodemon --exec npm run start",
     "clean": "rimraf node_modules && rimraf dist && npm install",
     "webpack:dev": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.config.dev.js",
