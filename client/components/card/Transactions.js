@@ -32,7 +32,7 @@ const Transactions = ({
   const lastSixTranaction = transactions?.slice(0, 6);
 
   return (
-    <Grid container item xs={12} md={12}>
+    <Grid container direction="row" item xs={12} md={12}>
       <List spacing={2} component="nav" aria-label="secondary mailbox folders">
         <ListItem>Card transactions</ListItem>
         {lastSixTranaction?.map((transaction) => (

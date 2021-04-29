@@ -19,7 +19,7 @@ import { AuthRoute } from './AuthRoute';
 import { RootRoute } from './RootRoute';
 
 const AsyncDashboard = loadable(() => import('../containers/dashboard/DashboardContainer'));
-const AsyncAuthPage = loadable(() => import('../containers/authorization/AuthPage'));
+const AsyncAuthPage = loadable(() => import('../containers/authorization/AuthPage')); //import('../containers/authorization/AuthPage'));
 const AsyncSettingsPage = loadable(() => import('../containers/settings/Settings'));
 
 const Router = () => {
@@ -54,7 +54,7 @@ const Router = () => {
           layout={MainLayout}
           component={AsyncSettingsPage}
         />
-        <Route exact path="/card" component={CardComponent} />
+        <PrivateRoute exact path="/card" layout={MainLayout} component={CardComponent} />
 
         <Route exact path="/transactions" component={TransactionList} />
         <Route exact path="/transactions/view/:id" component={View} />
