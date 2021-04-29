@@ -7,7 +7,7 @@ import { ROUTES } from './routes-list';
 
 export const MENU_LINKS = [
   {
-    name: 'transaction',
+    name: 'transactions',
     path: ROUTES.transactions,
     icon: <ReceiptIcon />,
   },

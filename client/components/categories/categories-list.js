@@ -87,9 +87,6 @@ const CategoriesList = ({
         alignItems="center"
         alignContent="center"
       >
-        <Grid item xs="auto">
-          <Typography variant="body1">Filter by date:</Typography>
-        </Grid>
         <Grid xs={true} justify="flex-end" spacing={2} container direction="row" item>
           <Grid
             item
@@ -111,7 +108,9 @@ const CategoriesList = ({
                 }}
               >
                 {sortByDateOptions.map((option) => (
-                  <option value={option.id}>{option.label}</option>
+                  <option ket={option.id} value={option.id}>
+                    {option.label}
+                  </option>
                 ))}
               </Select>
             </Grid>
@@ -122,8 +121,8 @@ const CategoriesList = ({
               </Grid>
             )}
           </Grid>
-          <Grid container alignItems="center" item xs={1}>
-            <Grid>
+          <Grid item xs="auto">
+            <Grid container justify="flex-end" aligncontent="center">
               <Button color="primary" onClick={handleApplyFilterByDate} variant="contained">
                 apply
               </Button>

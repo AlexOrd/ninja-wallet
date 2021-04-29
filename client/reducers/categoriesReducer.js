@@ -2,11 +2,13 @@ import {
   SET_CATEGORIES,
   SET_NEW_CATEGORY_DATA,
   CLEAR_NEW_CATEGORY_DATA,
+  SET_IS_LOADING,
 } from '../constants/actionType';
 
 const initialState = {
   categories: [],
   newCategoryData: null,
+  isLoading: false,
 };
 
 const sortCategoriesBySpendedSum = (categories) => {
@@ -23,6 +25,9 @@ const categoriesReducer = (state = initialState, action) => {
     }
     case CLEAR_NEW_CATEGORY_DATA: {
       return { ...state, newCategoryData: null };
+    }
+    case SET_IS_LOADING: {
+      return { ...state, isLoading: action.data.isLoading };
     }
     default: {
       return state;

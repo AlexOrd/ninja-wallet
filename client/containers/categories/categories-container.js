@@ -6,13 +6,16 @@ import { fetchCategories, fetchCategoriesFilteredByDate } from '../../actions/ca
 import { useStyles } from './categories-container.style';
 import Charts from '../../components/categories/charts/charts-wrapper';
 import CategoriesList from '../../components/categories/categories-list';
+import SkeletonCategories from '../../components/categories/skeleton-categories';
 
 const CategoriesContainer = (props) => {
   const categories = useSelector((state) => state.categories.categories);
+  const isLoading = useSelector((state) => state.categories.isLoading);
   const dispatch = useDispatch();
 
   const [activeCategory, setActiveCategory] = useState(null);
   const [allCategoriesSum, setAllCategoriesSum] = useState(null);
+  const [isCategoryLoading, setCategoryLoading] = useState(false);
 
   useEffect(() => {
     categories.length > 0 &&
@@ -41,13 +44,17 @@ const CategoriesContainer = (props) => {
         </Grid>
       )}
       <Grid className={classes.categoriesListContainer} item xs={12} md={12}>
-        <CategoriesList
-          filterByDate={getCategoriesFilteredByDate}
-          allCategoriesSum={allCategoriesSum}
-          classes={classes}
-          activeCategory={activeCategory}
-          categories={categories}
-        />
+        {isLoading ? (
+          <SkeletonCategories />
+        ) : (
+          <CategoriesList
+            filterByDate={getCategoriesFilteredByDate}
+            allCategoriesSum={allCategoriesSum}
+            classes={classes}
+            activeCategory={activeCategory}
+            categories={categories}
+          />
+        )}
       </Grid>
     </Grid>
   );

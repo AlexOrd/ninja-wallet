@@ -14,9 +14,11 @@ import {
   handleNewCategoryChange,
   deleteCategoryThunk,
 } from '../../actions/categoriesAction';
+import SkeletonCategories from '../../components/categories/skeleton-categories';
 
 const ManageCategories = (props) => {
   const categories = useSelector((state) => state.categories.categories);
+  const isLoading = useSelector((state) => state.categories.isLoading);
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -56,17 +58,21 @@ const ManageCategories = (props) => {
 
           <CreateNewCategory classes={classes} />
 
-          <List>
-            {categories.map((category) => (
-              <CustomListItem
-                key={category._id}
-                classes={classes}
-                editCategory={editCategory}
-                category={category}
-                deleteCategory={(success) => deleteCategory(category._id, success)}
-              />
-            ))}
-          </List>
+          {isLoading ? (
+            <SkeletonCategories />
+          ) : (
+            <List>
+              {categories.map((category) => (
+                <CustomListItem
+                  key={category._id}
+                  classes={classes}
+                  editCategory={editCategory}
+                  category={category}
+                  deleteCategory={(success) => deleteCategory(category._id, success)}
+                />
+              ))}
+            </List>
+          )}
         </Paper>
       </Grid>
     </Grid>
