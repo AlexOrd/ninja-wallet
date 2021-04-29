@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Transactions = ({
   transactions,
-  setTransaction,
   openCardCreator,
   applyMonobankTransaction,
   dismissMonobankTransaction,
@@ -45,11 +44,14 @@ const Transactions = ({
           >
             <Grid container>
               <ListItemText
-                onClick={() => (setTransaction(transaction), openCardCreator('transaction'))}
+                onClick={() => {
+                  openCardCreator('transaction');
+                }}
               >
-                Description: {transaction.merchantName || transaction.description}
+                Description:{' '}
+                {transaction.merchantName || transaction.description || transaction.transactionType}
                 <br />
-                Payment price: {transaction.amount}
+                Payment price: {transaction.amount || transaction.sum}
               </ListItemText>
 
               {transaction.id !== undefined && (

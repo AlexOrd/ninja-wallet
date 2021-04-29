@@ -1,9 +1,7 @@
-import { cardApi } from './card-api';
-import { monobankApi } from './monobanl-api';
+import { categoriesAPI } from './categories-api';
 
-const api = {
-  cardApi,
-  monobankApi,
+const API = {
+  categoriesAPI,
 };
 
-export default api;
+export default API;
