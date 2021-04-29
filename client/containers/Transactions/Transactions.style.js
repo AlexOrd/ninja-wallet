@@ -3,7 +3,7 @@ import { lighten } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    width: '80%',
+    width: '100%',
     margin: 'auto',
     '& .MuiTextField-root': {
       margin: theme.spacing(1),

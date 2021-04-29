@@ -153,16 +153,15 @@ export default function TransactionsList() {
                       <TableRow
                         hover
                         tabIndex={-1}
-                        key={row.description}
+                        key={row._id}
                         selected={isItemSelected}
-                        padding="2"
                         className={classes.row}
                       >
-                        <TableCell component="th" id={labelId} scope="row" padding="2">
+                        <TableCell component="th" id={labelId} scope="row">
                           {`${row.transactionType}  ${row.merchant ? 'at' + row.merchant : ''}`}
                         </TableCell>
                         <TableCell align="right">{moment(row.createdAt).format('L')}</TableCell>
-                        <TableCell align="right">{row.cardId.cardName}</TableCell>
+                        <TableCell align="right">{row.cardId?.cardName}</TableCell>
                         <TableCell align="right">{row.transactionCategory?.name}</TableCell>
                         <TableCell align="right">{row.sum}</TableCell>
 
