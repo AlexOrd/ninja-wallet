@@ -8,6 +8,8 @@ import MainLayout from '../components/common/layout/MainLayout';
 import CardComponent from '../containers/card-container/CardComponent';
 import { NotFound } from '../components/error/not_found/NotFound';
 import { ROUTES } from '../shared/routes-list';
+import ManageCategories from '../containers/manage-categories/manage-categories-container';
+import CategoriesContainer from '../containers/categories/categories-container';
 import { AuthRoute } from './AuthRoute';
 import { RootRoute } from './RootRoute';
 
@@ -21,12 +23,20 @@ const Router = () => {
       <Switch>
         <RootRoute exact path={ROUTES.root} />
         <AuthRoute path={ROUTES.authorization} component={AsyncAuthPage} />
+
         <PrivateRoute
           exact
           path={ROUTES.categories}
           layout={MainLayout}
-          component={() => 'categories'}
+          component={ManageCategories}
         />
+        <PrivateRoute
+          exact
+          path={ROUTES.categoriesStats}
+          layout={MainLayout}
+          component={CategoriesContainer}
+        />
+
         <PrivateRoute
           exact
           path={ROUTES.dashboard}

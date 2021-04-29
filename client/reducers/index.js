@@ -9,6 +9,7 @@ import { fetchStatusesReducer } from './fetch_statuses';
 // Import custom components
 import cardReducer from './cardReducer';
 import monobankReducer from './monobankReducer';
+import categoriesReducer from './categoriesReducer';
 import dashboardReducer from './dashboardReducer';
 
 const appReducer = (history) =>
@@ -21,6 +22,7 @@ const appReducer = (history) =>
     auth: authReducer,
     card: cardReducer,
     monobank: monobankReducer,
+    categories: categoriesReducer,
     dashboard: dashboardReducer,
   });
 
