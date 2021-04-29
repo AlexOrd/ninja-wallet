@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router';
 
-import { isAuthenticated } from '../utils/jwtUtil';
+import { isAuthenticated } from '../utils/auth/for_tokens';
 
 export const verifyToken = () => {
   return (dispatch) => {

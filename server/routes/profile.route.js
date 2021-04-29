@@ -5,7 +5,7 @@ import schema from '../utils/validator';
 
 const router = express.Router();
 
-router.route('/:id')
+router.route('/')
   .get((req, res, next) => {
     profileCtrl.getProfile(req, res, next);
   })

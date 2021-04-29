@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 // Import custom components
-import Header from '../header/Header';
-import MiniDrawer from '../drawer/MiniDrawer';
-import Footer from '../footer/Footer';
 
 const styles = (theme) => ({
   root: {
@@ -23,30 +20,20 @@ const styles = (theme) => ({
   content: {
     width: '100%',
     flexGrow: 1,
-    padding: 24,
-    height: 'calc(100% - 56px)',
-    marginTop: 56,
-    [theme.breakpoints.up('sm')]: {
-      height: 'calc(100% - 64px)',
-      marginTop: 64,
-    },
+    padding: 50,
+    paddingRight: 30,
+    height: '100%',
+    boxSizing: 'border-box',
   },
 });
 
 const MainLayout = (props) => {
   const { classes, children } = props;
-  const [open, setOpen] = useState(true);
-
-  const handleToggle = () => setOpen(!open);
-
   return (
     <div className={classes.root}>
       <div className={classes.appFrame}>
-        <Header navDrawerOpen={open} handleToggleDrawer={handleToggle} />
-        <MiniDrawer navDrawerOpen={open} />
         <main className={classes.content}>{children}</main>
       </div>
-      <Footer />
     </div>
   );
 };

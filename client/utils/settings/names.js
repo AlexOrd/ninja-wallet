@@ -1,0 +1,15 @@
+export const settingsFetchStatusNames = {
+  ACCOUNT_SETTINGS: 'receiveAccountSettings',
+  NOTIFY_ABOUT_SIGN_IN_ON: 'notifyAboutSignInOn',
+  NOTIFY_ABOUT_SIGN_IN_OFF: 'notifyAboutSignInOff',
+  DOUBLE_AUTHENTICATE_ON: 'doubleAuthenticateOn',
+  DOUBLE_AUTHENTICATE_OFF: 'doubleAuthenticateOff',
+  GETTING_VERIFICATION_CODE_FOR_BOT: 'gettingVerificationCodeForBot',
+  DISCONNECT_BOT: 'disconnectBot',
+  SIGN_OUT_DEVICE_DEVICE_BY_ID: 'signOutDeviceByID',
+  CHANGE_PASSWORD: 'changePassword',
+  CHANGE_EMAIL: 'changeEmail',
+  RESEND_VERIFY_EMAIL_CODE: 'resendVerifyEmailCode',
+  SEND_VERIFY_EMAIL_CODE: 'sendVerifyEmailCode',
+  VERIFY_EMAIL: 'verifyEmail',
+};

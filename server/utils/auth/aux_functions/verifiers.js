@@ -40,13 +40,14 @@ export const authVerifiers = {
   verifyingAndDecodeJWT: function (token, tokenName) {
     if (!token) return { err: MISSING_TOKEN };
     const { key } = getTokensInfo(tokenName);
-
+    const parsedToken = token.split(' ')[1];
+    
     let result = { err: null, tokenPayload: undefined };
     try {
-      result.tokenPayload = jwt.verify(token, key);
+      result.tokenPayload = jwt.verify(parsedToken, key);
     } catch ({ name }) {
       if (name === 'TokenExpiredError') {
-        result.tokenPayload = jwt.decode(token, key);
+        result.tokenPayload = jwt.decode(parsedToken, key);
         result.err = EXPIRED_TOKEN;
       } else {
         result.err = INVALID_TOKEN;

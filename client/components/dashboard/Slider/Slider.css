@@ -1,0 +1,17 @@
+.slick-slide {
+  margin: 0px 15px;
+}
+
+.slick-track {
+  display: flex;
+}
+
+.slick-center .rccs__card {
+  width: 400px;
+  height: 250px;
+}
+
+.slick-center .rccs {
+  width: 400px;
+  height: 250px;
+}

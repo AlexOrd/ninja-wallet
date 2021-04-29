@@ -10,35 +10,25 @@ import {
   signUp,
   signIn,
   signOut,
-  signOutSomeDevice,
-  signOutEveryDevice,
   issueCredentials,
   verifyConfirmCode,
   reissueCredentials,
   createNewPassword,
-  changePassword,
-  checkAuthorization,
-  giveDevicesWithOpenedApp,
 } from '../controllers/auth';
 
 import {
   validateAuthData,
-  validateDeviceID,
-  validateChangingPassword,
   validateCredentialsIssue,
   validateConfirmCode,
   validateNewPassCreating,
 } from '../middlewares/auth/route_validators';
 
-
-
 router
-  .post('/sign-up',  validateAuthData, deviceDetector, signUp)
+  .post('/sign-up', validateAuthData, deviceDetector, signUp)
   .post('/sign-in', validateAuthData, deviceDetector, signIn)
   .delete('/sign-out', checkAccessAndProvideUserID, signOut)
 
-  .get('/devices-with-opened-app', checkAccessAndProvideUserID, giveDevicesWithOpenedApp)
-  .patch('/change-password', validateChangingPassword, checkAccessAndProvideUserID, changePassword)
+  .get('/check-auth', checkAccessAndProvideUserID, (req, res) => res.status(200).end())
 
   .post('/restore-password/get-credentials', validateCredentialsIssue, issueCredentials)
   .post('/restore-password/verify-code', validateConfirmCode, verifyCredentials, verifyConfirmCode)

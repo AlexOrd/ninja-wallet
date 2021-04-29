@@ -5,8 +5,11 @@ export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
-export const ENTITY_FAILURE = 'ENTITY_FAILURE';
-export const ENTITY_CREATE = 'ENTITY_CREATE';
+export const GET_CARDS_SUCCESS = 'dashboard/GET_CARDS_SUCCESS';
+export const GET_TRANSACTIONS_SUCCESS = 'dashboard/GET_TRANSACTIONS_SUCCESS';
+export const GET_SUMMARY_SUCCESS = 'dashboard/GET_SUMMARY_SUCCESS';
+export const SET_LOADING_STATUS = 'dashboard/SET_LOADING_STATUS';
+
 export const ENTITY_UPDATE = 'ENTITY_UPDATE';
 export const ENTITY_FETCH = 'ENTITY_FETCH';
 export const ENTITY_DELETE = 'ENTITY_DELETE';
