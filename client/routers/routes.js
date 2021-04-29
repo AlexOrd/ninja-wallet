@@ -23,10 +23,25 @@ const Router = () => {
         <RootRoute exact path={ROUTES.root} />
         <AuthRoute path={ROUTES.authorization} component={AsyncAuthPage} />
 
-        <PrivateRoute exact path={ROUTES.categories} layout={MainLayout} component={ManageCategories} />
-        <PrivateRoute exact path={ROUTES.categoriesStats} layout={MainLayout} component={CategoriesContainer} />
+        <PrivateRoute
+          exact
+          path={ROUTES.categories}
+          layout={MainLayout}
+          component={ManageCategories}
+        />
+        <PrivateRoute
+          exact
+          path={ROUTES.categoriesStats}
+          layout={MainLayout}
+          component={CategoriesContainer}
+        />
 
-        <PrivateRoute exact path="/dashboard" layout={MainLayout} component={AsyncDashboard} />
+        <PrivateRoute
+          exact
+          path={ROUTES.dashboard}
+          layout={MainLayout}
+          component={AsyncDashboard}
+        />
         <PrivateRoute
           exact
           path={ROUTES.settings}

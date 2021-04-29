@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { getLocalStorage } from '../storageUtil';
 import { AUTHORIZATION } from '../../actions/types/auth';
 
-const { MISSING_TOKEN, INVALID_TOKEN } = fetchErrorsNames;
+const { MISSING_TOKEN, INVALID_TOKEN, SIGN_OUT_FROM_ANOTHER_DEVICE } = fetchErrorsNames;
 const {
   ACCESS_TOKEN_STORAGE_NAME,
   REFRESH_TOKEN_STORAGE_NAME,
@@ -34,20 +34,9 @@ export const setTokensToRequest = (req) => {
   req.headers.common['authorization'] = accessToken;
 };
 
-export const setAuthStatus = (status) => {
-  const { isAuthorized } = store.getState().authorization;
-  if (isAuthorized && status) return;
-  if (!isAuthorized && !status) return;
-
-  return store.dispatch({
-    type: AUTHORIZATION,
-    payload: { isAuthorized: status },
-  });
-};
-
 export const isAuthError = (err) => {
   if (
-    // SIGN_OUT_FROM_ANOTHER_DEVICE
+    err?.response?.data?.error === SIGN_OUT_FROM_ANOTHER_DEVICE ||
     err?.response?.data?.error === MISSING_TOKEN ||
     err?.response?.data?.error === INVALID_TOKEN
   ) {

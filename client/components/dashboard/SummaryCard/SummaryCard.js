@@ -1,10 +1,7 @@
 import React from 'react';
-import { Avatar, Box, Card, CardContent, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Avatar, Card, CardContent, Grid, makeStyles, Typography } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpIcon from '@material-ui/icons/ArrowUpward';
-
-import MoneyIcon from '@material-ui/icons/Money';
-import { red, indigo } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(() => ({
   text: {
@@ -16,14 +13,28 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
     fontSize: 16,
   },
+  card: {
+    marginRight: 20,
+    minWidth: 300,
+    minHeight: 128,
+  },
+  cardContent: {
+    '&:last-child': {
+      paddingBottom: 10,
+    },
+  },
+  avatar: {
+    height: 56,
+    width: 56,
+  },
 }));
 
-const SummaryCard = ({ title, sum, icon, difference }) => {
+const SummaryCard = ({ title, sum, icon, difference, color }) => {
   const classes = useStyles();
 
   return (
-    <Card style={{ marginRight: 20, minWidth: 300 }}>
-      <CardContent>
+    <Card classes={{ root: classes.card }}>
+      <CardContent classes={{ root: classes.cardContent }}>
         <Grid container spacing={3}>
           <Grid item xs={9}>
             <Typography color="textSecondary" gutterBottom variant="h6">
@@ -32,7 +43,7 @@ const SummaryCard = ({ title, sum, icon, difference }) => {
             <Typography color="textPrimary" variant="h6">
               {sum}
             </Typography>
-            {difference && (
+            {!!difference && (
               <div className={classes.difference}>
                 <span
                   className={classes.difference}
@@ -46,7 +57,9 @@ const SummaryCard = ({ title, sum, icon, difference }) => {
             )}
           </Grid>
           <Grid item xs={3}>
-            <Avatar sx={{ backgroundColor: indigo[600], height: 56, width: 56 }}>{icon}</Avatar>
+            <Avatar style={{ backgroundColor: color }} classes={{ root: classes.avatar }}>
+              {icon}
+            </Avatar>
           </Grid>
         </Grid>
       </CardContent>

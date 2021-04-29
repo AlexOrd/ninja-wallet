@@ -8,6 +8,7 @@ import { fetchStatusesReducer } from './fetch_statuses';
 
 // Import custom components
 import categoriesReducer from './categoriesReducer';
+import dashboardReducer from './dashboardReducer';
 
 const appReducer = (history) =>
   combineReducers({
@@ -18,6 +19,7 @@ const appReducer = (history) =>
     form: formReducer, // ← redux-form
     auth: authReducer,
     categories: categoriesReducer,
+    dashboard: dashboardReducer,
   });
 
 const rootReducer = (state, action) => {

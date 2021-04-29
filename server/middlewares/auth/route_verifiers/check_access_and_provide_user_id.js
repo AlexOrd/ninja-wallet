@@ -26,8 +26,8 @@ export const checkAccessAndProvideUserID = async (req, res, next) => {
     }
 
     const { userID, deviceID } = accessTokenPayload;
-    const { err, user } = await findUserById(userID);
-    if (err) return next(createRespErr(authErrors.SIGN_OUT_FROM_ANOTHER_DEVICE));
+    const { err: errFindingUser, user } = await findUserById(userID);
+    if (errFindingUser) return next(errFindingUser)
     
     const { err: isExitedFromAnotherDevice, deviceObject } = getDeviceByID(user, deviceID);
     if (isExitedFromAnotherDevice) return next(isExitedFromAnotherDevice);
