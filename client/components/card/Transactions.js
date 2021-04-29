@@ -30,11 +30,13 @@ const Transactions = ({
 }) => {
   const classes = useStyles();
 
+  const lastSevenTranaction = transactions?.slice(0, 7);
+
   return (
     <Grid container item xs={12} md={12}>
       <List spacing={2} component="nav" aria-label="secondary mailbox folders">
         <ListItem>Card transactions</ListItem>
-        {transactions?.map((transaction) => (
+        {lastSevenTranaction?.map((transaction) => (
           <ListItem
             className={classes.checkboxBox}
             key={transaction._id || transaction.id}
